@@ -14,13 +14,13 @@ CREATE TABLE usuarios (
        user_experience VARCHAR2(30)
 );
 
--- Criando sequência USUARIOS
+-- Criando sequÃªncia USUARIOS
 CREATE SEQUENCE auto_increment_users
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código USUARIOS
+-- Criando trigger para incremento do cÃ³digo USUARIOS
 CREATE OR REPLACE TRIGGER increment_id_user
 BEFORE INSERT ON usuarios
 FOR EACH ROW
@@ -46,22 +46,29 @@ CREATE TABLE courses (
        course_learnings VARCHAR2(160),
        course_knowledge_level VARCHAR2(20) NOT NULL,
        course_message VARCHAR2(60),
+       id_user NUMBER, -- tabela usuarios
+       id_categorie NUMBER, -- tabela categorie
        id_course_price NUMBER -- tabela price courses
 );
 
--- Criando sequência CURSOS
+-- Criando sequÃªncia CURSOS
 CREATE SEQUENCE auto_increment_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código CURSOS
+-- Criando trigger para incremento do cÃ³digo CURSOS
 CREATE OR REPLACE TRIGGER increment_id_course
 BEFORE INSERT ON courses
 FOR EACH ROW
 BEGIN
   :new.id_course := auto_increment_courses.NEXTVAL;
 END;
+
+-- Adicionar uma chave estrangeira CURSOS
+ALTER TABLE courses
+ADD CONSTRAINT fk_id_usersc 
+FOREIGN KEY (id_user) REFERENCES usuarios(id_user);
 
 -----------------------------------
 -- Criando tabela USUARIOS e CURSOS (CREATE, READ, DELETE)
@@ -71,13 +78,13 @@ CREATE TABLE user_courses (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência USUARIOS e CURSOS
+-- Criando sequÃªncia USUARIOS e CURSOS
 CREATE SEQUENCE auto_increment_user_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código USUARIOS e CURSOS
+-- Criando trigger para incremento do cÃ³digo USUARIOS e CURSOS
 CREATE OR REPLACE TRIGGER increment_id_user_course
 BEFORE INSERT ON user_courses
 FOR EACH ROW
@@ -95,7 +102,7 @@ ADD CONSTRAINT fk_id_course
 FOREIGN KEY (id_course) REFERENCES courses(id_course);
 
 -----------------------------------
--- Criando tabela PREÇO CURSOS (CRUD)
+-- Criando tabela PREÃ‡O CURSOS (CRUD)
 CREATE TABLE price_courses (
        id_course_price NUMBER CONSTRAINT pk_id_course_price PRIMARY KEY,
        price_course_value NUMBER NOT NULL,
@@ -103,13 +110,13 @@ CREATE TABLE price_courses (
        price_discount NUMBER
 );
 
--- Criando sequência PREÇO CURSOS
+-- Criando sequÃªncia PREÃ‡O CURSOS
 CREATE SEQUENCE auto_increment_price_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código PREÇO CURSOS
+-- Criando trigger para incremento do cÃ³digo PREÃ‡O CURSOS
 CREATE OR REPLACE TRIGGER increment_id_price_course
 BEFORE INSERT ON price_courses
 FOR EACH ROW
@@ -129,19 +136,24 @@ CREATE TABLE categories (
        categorie_name VARCHAR(30) NOT NULL
 );
 
--- Criando sequência CATEGORIAS
+-- Criando sequÃªncia CATEGORIAS
 CREATE SEQUENCE auto_increment_categories
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código CATEGORIAS
+-- Criando trigger para incremento do cÃ³digo CATEGORIAS
 CREATE OR REPLACE TRIGGER increment_id_categorie
 BEFORE INSERT ON categories
 FOR EACH ROW
 BEGIN
   :new.id_categorie := auto_increment_categories.NEXTVAL;
 END;
+
+-- Adicionar uma chave estrangeira CURSOS
+ALTER TABLE courses
+ADD CONSTRAINT fk_id_categorie 
+FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie);
 
 -----------------------------------
 -- Criando tabela INTERESSES (CRUD)
@@ -150,13 +162,13 @@ CREATE TABLE interests (
        id_user NUMBER -- tabela usuarios
 );
 
--- Criando sequência INTERESSES
+-- Criando sequÃªncia INTERESSES
 CREATE SEQUENCE auto_increment_interests
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código INTERESSES
+-- Criando trigger para incremento do cÃ³digo INTERESSES
 CREATE OR REPLACE TRIGGER increment_id_interests
 BEFORE INSERT ON interests
 FOR EACH ROW
@@ -166,7 +178,7 @@ END;
 
 -- Adicionar uma chave estrangeira INTERESSES
 ALTER TABLE interests
-ADD CONSTRAINT fk_id_user 
+ADD CONSTRAINT fk_id_users 
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user);
 
 -----------------------------------
@@ -175,23 +187,16 @@ CREATE TABLE classes (
        id_class NUMBER CONSTRAINT pk_id_class PRIMARY KEY,
        class_title VARCHAR2(30),
        class_video VARCHAR2(150),
-       class_complete CHAR
+       class_complete NUMBER
 );
 
-ALTER TABLE classes
-ADD class_complete char(1) DEFAULT '1';
-
-ALTER TABLE classes ADD 
-CONSTRAINT validate_class
-class_complete (ONOFF in ( '1', '0' ));
-
--- Criando sequência AULAS
+-- Criando sequÃªncia AULAS
 CREATE SEQUENCE auto_increment_classes
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código AULAS
+-- Criando trigger para incremento do cÃ³digo AULAS
 CREATE OR REPLACE TRIGGER increment_id_class
 BEFORE INSERT ON classes
 FOR EACH ROW
@@ -200,7 +205,7 @@ BEGIN
 END;
 
 -----------------------------------
--- Criando tabela AVALIAÇÔES (CRUD)
+-- Criando tabela AVALIAÃ‡Ã”ES (CRUD)
 CREATE TABLE ratings (
        id_rating NUMBER CONSTRAINT pk_id_rating PRIMARY KEY,
        rating_text VARCHAR2(150),
@@ -208,13 +213,13 @@ CREATE TABLE ratings (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência AVALIAÇÔES
+-- Criando sequÃªncia AVALIAÃ‡Ã”ES
 CREATE SEQUENCE auto_increment_ratings
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código AVALIAÇÔES
+-- Criando trigger para incremento do cÃ³digo AVALIAÃ‡Ã”ES
 CREATE OR REPLACE TRIGGER increment_id_rating
 BEFORE INSERT ON ratings
 FOR EACH ROW
@@ -224,15 +229,15 @@ END;
 
 -- Adicionar uma chave estrangeira INTERESSES
 ALTER TABLE ratings
-ADD CONSTRAINT fk_id_user 
+ADD CONSTRAINT fk_id_usersi 
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user); 
 
 ALTER TABLE ratings
-ADD CONSTRAINT fk_id_course 
+ADD CONSTRAINT fk_id_courses
 FOREIGN KEY (id_course) REFERENCES courses(id_course); 
 
 -- PROCEDURES
--- Procedure para validar e não remover categoria caso tenha algum curso
+-- Procedure para validar e nÃ£o remover categoria caso tenha algum curso
 CREATE OR REPLACE PROCEDURE validate_removal (id_categ NUMBER, returns VARCHAR2)
 AS
     qtd_courses NUMBER;
@@ -244,38 +249,8 @@ BEGIN
    DELETE FROM categories WHERE id_categorie = id_categ;
    returns := 'A categoria foi removida com sucesso!';
       ELSE
-       returns := 'Não é possível remover a categoria, pois há cursos vinculados a ela.'; 
+       returns := 'NÃ£o Ã© possÃ­vel remover a categoria, pois hÃ¡ cursos vinculados a ela.'; 
    END IF;   
 END;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
