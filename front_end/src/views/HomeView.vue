@@ -6,7 +6,7 @@
     <section class="second carrousel">
       <div class="container">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
+          <div class="carousel-inner" style="background-color: blue;">
             <div class="carousel-item active">
               <img src="" class="d-block w-100" alt="...">
             </div>
@@ -34,6 +34,9 @@
     <section class="third">
 
     </section>
+    <section class="first">
+
+    </section>
   </div>
 </template>
 
@@ -45,6 +48,11 @@ export default {
 </script>
 
 <style>
+
+section{
+  padding: 10px;
+}
+
 .first {
   width: 1340px;
   height: 400px;
@@ -54,7 +62,6 @@ export default {
 
 .second {
   width: 1340px;
-  height: 400px;
   background-color: rgb(139, 139, 139);
   margin: auto;
 }
@@ -65,7 +72,8 @@ export default {
   margin: auto;
 }
 
-.carousel {
-  background-color: blue;
+.container {
+  
+  height: 100%;
 }
 </style>
