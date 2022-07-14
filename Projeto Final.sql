@@ -92,7 +92,7 @@ BEGIN
   :new.id_user_course := auto_increment_user_courses.NEXTVAL;
 END;
 
--- Adicionar uma chave estrangeira USUARIOS e CURSOS
+-- Adicionar duas chaves estrangeira USUARIOS e CURSOS
 ALTER TABLE user_courses
 ADD CONSTRAINT fk_id_user 
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user);
@@ -227,7 +227,7 @@ BEGIN
   :new.id_rating := auto_increment_ratings.NEXTVAL;
 END;
 
--- Adicionar uma chave estrangeira INTERESSES
+-- Adicionar duas chaves estrangeira AVALIAÇÔES
 ALTER TABLE ratings
 ADD CONSTRAINT fk_id_usersi 
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user); 
@@ -252,5 +252,4 @@ BEGIN
        returns := 'Não é possível remover a categoria, pois há cursos vinculados a ela.'; 
    END IF;   
 END;
-
 
