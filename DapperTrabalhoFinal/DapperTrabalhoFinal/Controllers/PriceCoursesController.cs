@@ -2,7 +2,6 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
-using Oracle.ManagedDataAccess.Client;
 
 namespace DapperTrabalhoFinal.Controllers
 {
@@ -12,30 +11,6 @@ namespace DapperTrabalhoFinal.Controllers
 
     public class PriceCoursesController
     {
-
-            [HttpGet("Conexao")]
-
-            public string TestarConexao()
-            {
-                Conexao c = new Conexao();
-
-                OracleConnection obj = c.RealizarConexao();
-
-                obj.Open();
-
-                string Mensagem;
-
-                if (obj.State.ToString() == "Open")
-                {
-                    Mensagem = "Conexão efetuada";
-                }
-                else
-                {
-                    Mensagem = "Falha ao cadastrar";
-                }
-
-                return Mensagem;
-            }
 
             [HttpGet]
 
@@ -74,19 +49,36 @@ namespace DapperTrabalhoFinal.Controllers
                 return "Preço curso alterado com sucesso!";
             }
 
-            [HttpDelete("{id_price_course}")]
+        [HttpDelete("{id_price_course}")]
 
-            public string DeletePriceCourses(int id_price_course)
+        public string DeletePriceCourses(int id_price_course)
+        {
+            Conexao c = new();
+
+            using var connection = c.RealizarConexao();
+
+            int count = contabilizar(id_price_course);
+
+            if (count > 0)
             {
-                Conexao c = new();
-
-                using var connection = c.RealizarConexao();
-
                 connection.Execute(@"DELETE FROM price_courses WHERE id_price_course = " + id_price_course);
-
-                return "Preço curso removido com sucesso!";
+                return "Removido com sucesso!";
             }
-
+            else
+            {
+                return $"Falha na remoção {count}";
+            }
         }
+
+        private int contabilizar(int id)
+        {
+            Conexao c = new Conexao();
+
+            using var connection = c.RealizarConexao();
+
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM price_courses WHERE id_price_course = " + id);
+        }
+
     }
+}
 

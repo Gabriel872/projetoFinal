@@ -18,11 +18,11 @@
         private string course_learnings;
         private string course_knowledge_level;
         private string course_message;
-        private int id_user;
+        private int id_author;
         private int id_categorie;
         private int id_price_course;
 
-       // public int Id_course { get => id_course; set => id_course = value; }
+        public int Id_course { get => id_course; set => id_course = value; }
         public string Course_name { get => course_name; set => course_name = value; }
         public string Course_subtitle { get => course_subtitle; set => course_subtitle = value; }
         public int Course_people_amt { get => course_people_amt; set => course_people_amt = value; }
@@ -37,7 +37,7 @@
         public string Course_learnings { get => course_learnings; set => course_learnings = value; }
         public string Course_knowledge_level { get => course_knowledge_level; set => course_knowledge_level = value; }
         public string Course_message { get => course_message; set => course_message = value; }
-        public int Id_user { get => id_user; set => id_user = value; }
+        public int Id_author { get => id_author; set => id_author = value; }
         public int Id_categorie { get => id_categorie; set => id_categorie = value; }
         public int Id_price_course { get => id_price_course; set => id_price_course = value; }
     }

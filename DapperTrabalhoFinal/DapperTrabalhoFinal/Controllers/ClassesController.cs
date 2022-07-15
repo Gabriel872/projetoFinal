@@ -22,7 +22,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPost]
 
-        public string RegisterUsers([FromBody] Classes cl)
+        public string RegisterClasses([FromBody] Classes cl)
         {
             Conexao c = new();
 
@@ -54,9 +54,26 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"DELETE FROM classes WHERE id_class = " + id_class);
+            int count = contabilizar(id_class);
 
-            return "Classe removida com sucesso!";
+            if (count > 0)
+            {
+                connection.Execute(@"DELETE FROM classes WHERE id_class = " + id_class);
+                return "Classe removida com sucesso!";
+            }
+            else
+            {
+                return $"Falha na remoção da classe {count}";
+            }
+        }
+
+        private int contabilizar(int id)
+        {
+            Conexao c = new Conexao();
+
+            using var connection = c.RealizarConexao();
+
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM classes WHERE id_class = " + id);
         }
 
     }
