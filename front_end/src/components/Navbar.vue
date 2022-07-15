@@ -30,6 +30,13 @@
                 aria-label="Search">
 
             </form>
+            <button class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+              </svg>
+            </button>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="">Meus cursos</a>
@@ -68,13 +75,12 @@ export default {
 </script>
 
 <style scoped>
-
 .btn:focus {
   outline: none;
   box-shadow: none;
 }
 
-.btn-user{
+.btn-user {
   color: white;
   margin-left: 8px;
 }
@@ -117,7 +123,7 @@ export default {
 }
 
 .btn-login:hover {
-  background-color: #3ab6a3;
+  background-color: #008a75;
   border: none;
 }
 </style>

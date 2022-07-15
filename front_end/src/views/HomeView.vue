@@ -9,29 +9,15 @@
     </section>
     <section class="second carrousel">
       <div class="container">
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="" class="d-block w-100" alt="...">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
+        <Carousel :items-to-show="2.5" :wrap-around="true">
+          <Slide v-for="slide in 10" :key="slide">
+            <div class="carousel__item">{{ slide }}</div>
+          </Slide>
+
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
       </div>
     </section>
     <section class="third ">
@@ -39,17 +25,17 @@
         <div class="row">
           <div class="col-4">
             <div class="text-card">
-              <h3>Teste de texto</h3>
+              Teste de texto
             </div>
           </div>
           <div class="col-4">
             <div class="text-card">
-
+              Teste de texto
             </div>
           </div>
           <div class="col-4">
             <div class="text-card">
-
+              Teste de texto
             </div>
           </div>
         </div>
@@ -67,8 +53,18 @@
 
 <script>
 
+import { defineComponent } from 'vue';
+import { Carousel, Navigation, Slide } from 'vue3-carousel';
+
+import 'vue3-carousel/dist/carousel.css';
+
 export default {
   name: 'HomeView',
+  components: {
+    Carousel,
+    Slide,
+    Navigation,
+  },
 }
 </script>
 
@@ -76,6 +72,10 @@ export default {
 section {
   padding: 10px;
   margin: 0px auto 10px auto;
+}
+
+.carousel-inner {
+  padding: 10px;
 }
 
 .first {
@@ -101,8 +101,12 @@ section {
 }
 
 .text-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   vertical-align: middle;
+  padding: 10px;
   width: 300px;
   height: 150px;
   margin: auto;
@@ -111,6 +115,7 @@ section {
 /* Test */
 
 .banner-teamplate {
+  border-radius: 0px 0px 10px 10px;
   width: 1340px;
   height: 400px;
   background-color: lightskyblue;
