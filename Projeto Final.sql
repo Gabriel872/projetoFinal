@@ -14,13 +14,13 @@ CREATE TABLE usuarios (
        user_experience VARCHAR2(30)
 );
 
--- Criando sequência USUARIOS   == SEQUENCIA
+-- Criando sequencia USUARIOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_users
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código USUARIOS   == TRIGGER
+-- Criando trigger para incremento do codigo USUARIOS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_user
 BEFORE INSERT ON usuarios
 FOR EACH ROW
@@ -51,13 +51,13 @@ CREATE TABLE courses (
        id_course_price NUMBER -- tabela price courses
 );
 
--- Criando sequência CURSOS   == SEQUENCIA
+-- Criando sequencia CURSOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código CURSOS   == TRIGGER
+-- Criando trigger para incremento do codigo CURSOS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_course
 BEFORE INSERT ON courses
 FOR EACH ROW
@@ -78,13 +78,13 @@ CREATE TABLE user_courses (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência USUARIOS e CURSOS   == SEQUENCIA
+-- Criando sequencia USUARIOS e CURSOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_user_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código USUARIOS e CURSOS   == TRIGGER
+-- Criando trigger para incremento do codigo USUARIOS e CURSOS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_user_course
 BEFORE INSERT ON user_courses
 FOR EACH ROW
@@ -102,7 +102,7 @@ ADD CONSTRAINT fk_id_course_usercourses
 FOREIGN KEY (id_course) REFERENCES courses(id_course);
 
 -----------------------------------
--- Criando tabela PREÇO CURSOS (CRUD)   == TABELA
+-- Criando tabela PRECO CURSOS (CRUD)   == TABELA
 CREATE TABLE price_courses (
        id_course_price NUMBER CONSTRAINT pk_id_course_price PRIMARY KEY,
        price_course_value NUMBER NOT NULL,
@@ -110,13 +110,13 @@ CREATE TABLE price_courses (
        price_discount NUMBER
 );
 
--- Criando sequência PREÇO CURSOS   == SEQUENCIA
+-- Criando sequencia PRECO CURSOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_price_courses
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código PREÇO CURSOS   == TRIGGER
+-- Criando trigger para incremento do codigo PRECO CURSOS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_price_course
 BEFORE INSERT ON price_courses
 FOR EACH ROW
@@ -136,13 +136,13 @@ CREATE TABLE categories (
        categorie_name VARCHAR(30) NOT NULL
 );
 
--- Criando sequência CATEGORIAS   == SEQUENCIA
+-- Criando sequencia CATEGORIAS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_categories
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código CATEGORIAS   == TRIGGER
+-- Criando trigger para incremento do codigo CATEGORIAS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_categorie
 BEFORE INSERT ON categories
 FOR EACH ROW
@@ -216,7 +216,7 @@ ADD CONSTRAINT fk_id_course_classes
 FOREIGN KEY (id_course) REFERENCES courses(id_course); 
 
 -----------------------------------
--- Criando tabela AVALIAÇÔES (CRUD)   == TABELA
+-- Criando tabela AVALIACOES (CRUD)   == TABELA
 CREATE TABLE ratings (
        id_rating NUMBER CONSTRAINT pk_id_rating PRIMARY KEY,
        rating_text VARCHAR2(150),
@@ -224,13 +224,13 @@ CREATE TABLE ratings (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência AVALIAÇÔES   == SEQUENCIA
+-- Criando sequência AVALIACOES   == SEQUENCIA
 CREATE SEQUENCE auto_increment_ratings
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código AVALIAÇÔES   == TRIGGER
+-- Criando trigger para incremento do código AVALIACOES   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_rating
 BEFORE INSERT ON ratings
 FOR EACH ROW
@@ -238,7 +238,7 @@ BEGIN
   :new.id_rating := auto_increment_ratings.NEXTVAL;
 END;
 
--- Adicionar duas chaves estrangeira AVALIAÇÔES
+-- Adicionar duas chaves estrangeira AVALIACOES
 ALTER TABLE ratings
 ADD CONSTRAINT fk_id_user_ratings
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user); 
@@ -260,7 +260,7 @@ MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código DESEJOS   == TRIGGER
+-- Criando trigger para incremento do codigo DESEJOS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_wishe
 BEFORE INSERT ON wishes
 FOR EACH ROW
@@ -278,7 +278,7 @@ ADD CONSTRAINT fk_id_course_wishes
 FOREIGN KEY (id_course) REFERENCES courses(id_course); 
 
 -- PROCEDURES
--- Procedure para validar e não remover categoria caso tenha algum curso
+-- Procedure para validar e nao remover categoria caso tenha algum curso
 CREATE OR REPLACE PROCEDURE validate_removal (id_categ NUMBER, returns VARCHAR2)
 AS
     qtd_courses NUMBER;
@@ -290,32 +290,23 @@ BEGIN
    DELETE FROM categories WHERE id_categorie = id_categ;
    returns := 'A categoria foi removida com sucesso!';
       ELSE
-       returns := 'Não é possível remover a categoria, pois há cursos vinculados a ela.'; 
+       returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
 END;
 
 -- Procedure para selecionar os cursos da categoria
-CREATE OR REPLACE PROCEDURE connect_categorie (course_name VARCHAR2)
+CREATE OR REPLACE PROCEDURE connect_categorie (categorie_name VARCHAR2, course_name VARCHAR2)
 AS
 BEGIN
-   SELECT
-       categories.categorie_name,
-       courses.course_name
    FROM courses
    INNER JOIN categories
    ON courses.id_categorie = categories.id_categorie;
 END;
 
--- Procedure para criar ligação com as aulas, valor e usuario por curso 
-CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2)
+-- Procedure para criar ligacao com as aulas, valor e usuario por curso 
+CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2, class_title VARCHAR2, price_course_value NUMBER,price_course_coin VARCHAR2, price_course_discount NUMBER)
 AS
 BEGIN
-   SELECT
-       courses.course_name,
-       classes.class_title,
-       price_courses.price_course_value,
-       price_courses.price_course_coin,
-       price_courses.price_course_discount
    FROM courses
    INNER JOIN classes
    ON courses.id_course = classes.id_course
@@ -325,12 +316,10 @@ BEGIN
    ON courses.id_author = usuarios.id_user;
 END;
 
--- Procedure para criar ligação dos desejos com cursos e usuários
+-- Procedure para criar ligacao dos desejos com cursos e usuarios
 CREATE OR REPLACE PROCEDURE connect_wishes (course_name VARCHAR2)
 AS
 BEGIN
-   SELECT
-       courses.course_name
    FROM wishe
    INNER JOIN courses
    ON courses.id_course = wishes.id_course
@@ -342,21 +331,17 @@ END;
 CREATE OR REPLACE PROCEDURE connect_interests (categorie_name VARCHAR2)
 AS
 BEGIN
-   SELECT
-       categories.categorie_name
    FROM interests
    INNER JOIN categories
    ON interests.id_categorie = categories.id_categorie
    INNER JOIN usuarios
-   ON interests.user = usuarios.iduser;
+   ON interests.id_user = usuarios.id_user;
 END;
 
--- Procedure para criar ligação com os comentarios, curso e usuário
+-- Procedure para criar ligacao com os comentarios, curso e usuario
 CREATE OR REPLACE PROCEDURE connect_ratings (rating_text VARCHAR2)
 AS
 BEGIN
-   SELECT
-       ratings.rating_text
    FROM ratings
    INNER JOIN courses
    ON courses.id_course = ratings.id_course
@@ -365,14 +350,12 @@ BEGIN
 END;
 
 -- Procedure para conectar o curso com a aula
-CREATE PROCEDURE connect_classes
+CREATE PROCEDURE connect_classes (course_name VARCHAR2, class_title VARCHAR2)
 AS
 BEGIN
-  SELECT
-       courses.course_name,
-       classes.class_title
    FROM classes
    INNER JOIN courses
    ON courses.id_course = classes.id_course;
 END;
 
+--
