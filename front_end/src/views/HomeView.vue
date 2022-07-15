@@ -6,7 +6,7 @@
     <section class="second carrousel">
       <div class="container">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner" style="background-color: blue;">
+          <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="" class="d-block w-100" alt="...">
             </div>
@@ -31,8 +31,26 @@
       </div>
 
     </section>
-    <section class="third">
+    <section class="third ">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="text-card">
+              <h3>Teste de texto</h3>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-card">
 
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-card">
+
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <section class="first">
 
@@ -47,33 +65,42 @@ export default {
 }
 </script>
 
-<style>
-
-section{
+<style scoped>
+section {
   padding: 10px;
+  margin: 0px auto 10px auto;
 }
 
 .first {
+  padding: 0px;
   width: 1340px;
   height: 400px;
   background-color: rgb(223, 191, 191);
-  margin: auto;
 }
 
 .second {
   width: 1340px;
-  background-color: rgb(139, 139, 139);
-  margin: auto;
 }
 
 .third {
-  height: 100px;
   background-color: lightgrey;
-  margin: auto;
+  padding: 0px;
 }
 
 .container {
-  
   height: 100%;
+}
+
+.carousel {
+  background-color: rgb(139, 139, 139);
+  border-radius: 10px;
+}
+
+.text-card {
+  text-align: center;
+  vertical-align: middle;
+  width: 300px;
+  height: 150px;
+  margin: auto;
 }
 </style>
