@@ -48,19 +48,19 @@ namespace DapperTrabalhoFinal.Controllers
             return "Categoria alterada com sucesso!";
         }
 
-        [HttpDelete("{id_categories}")]
+        [HttpDelete("{id_categorie}")]
 
-        public string DeleteCategories(int id_categories)
+        public string DeleteCategories(int id_categorie)
         {
             Conexao c = new();
 
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_categories);
+            int count = contabilizar(id_categorie);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM categories WHERE id_categories = " + id_categories);
+                connection.Execute(@"DELETE FROM categories WHERE id_categorie = " + id_categorie);
                 return "Categoria removida com sucesso!";
             }
             else

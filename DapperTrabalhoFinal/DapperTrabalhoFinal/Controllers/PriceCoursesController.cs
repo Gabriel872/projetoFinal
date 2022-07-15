@@ -31,7 +31,7 @@ namespace DapperTrabalhoFinal.Controllers
 
                 using var connection = c.RealizarConexao();
 
-                connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_course_discount) VALUES (:Price_course_value, :Price_course_coin, :Price_course_discount)", pc);
+                connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_discount) VALUES (:Price_course_value, :Price_course_coin, :Price_discount)", pc);
 
                 return "Cadastro efetuado com sucesso!";
             }
@@ -44,7 +44,7 @@ namespace DapperTrabalhoFinal.Controllers
 
                 using var conncetion = c.RealizarConexao();
 
-                conncetion.Execute(@"UPDATE price_courses SET price_course_value = :Price_course_value, price_course_coin = :Price_course_coin, price_course_discount = :Price_course_discount WHERE id_price_course = :Id_price_course", pc);
+                conncetion.Execute(@"UPDATE price_courses SET price_course_value = :Price_course_value, price_course_coin = :Price_course_coin, price_discount = :Price_discount WHERE id_price_course = :Id_price_course", pc);
 
                 return "Preço curso alterado com sucesso!";
             }

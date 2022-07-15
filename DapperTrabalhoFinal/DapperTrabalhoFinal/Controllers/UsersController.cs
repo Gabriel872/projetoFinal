@@ -20,7 +20,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Users>("SELECT * FROM users");
+            return connection.Query<Users>("SELECT * FROM usuarios");
         }
 
         [HttpPost]
@@ -31,7 +31,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO users (user_name, user_email, user_password, user_description, user_link, user_socialmedia, user_profession, user_hours_week, user_experience) VALUES (:User_name, :User_email, :User_password, :User_description, :User_link, :User_socialmedia, :User_profession, :User_hours_week, :User_experience)", u);
+            connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_description, user_link, user_socialmedia, user_profession, user_hours_week, user_experience) VALUES (:User_name, :User_email, :User_password, :User_description, :User_link, :User_socialmedia, :User_profession, :User_hours_week, :User_experience)", u);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -44,7 +44,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE users SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description, user_link = :User_link, user_socialmedia = :User_socialmedia, user_profession = :User_profession, user_hours_week = :User_hours_week, user_experience = :User_experience WHERE id_user = :Id_user", u);
+            conncetion.Execute(@"UPDATE usuarios SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description, user_link = :User_link, user_socialmedia = :User_socialmedia, user_profession = :User_profession, user_hours_week = :User_hours_week, user_experience = :User_experience WHERE id_user = :Id_user", u);
 
             return "Pessoa alterada com sucesso!";
         }
@@ -61,7 +61,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM users WHERE id_user = " + id_user);
+                connection.Execute(@"DELETE FROM usuarios WHERE id_user = " + id_user);
                 return "Removido com sucesso!";
             }
             else
@@ -76,7 +76,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM users WHERE id_user = " + id);
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM usuarios WHERE id_user = " + id);
         }
 
     }
