@@ -185,7 +185,7 @@ ul {
   bottom: -15px;
   height: 2px;
   width: 100%;
-  background: #2e6bdb;
+  background: #35d3bc;
 }
 .footer-widget ul li {
   display: inline-block;

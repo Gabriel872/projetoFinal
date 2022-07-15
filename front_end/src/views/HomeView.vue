@@ -1,7 +1,11 @@
 <template>
-  <div class="home">
+  <div class="home" style="margin-top: 70px;">
     <section class="first">
+      <div class="container">
+        <div class="banner-teamplate">
 
+        </div>
+      </div>
     </section>
     <section class="second carrousel">
       <div class="container">
@@ -29,7 +33,6 @@
           </button>
         </div>
       </div>
-
     </section>
     <section class="third ">
       <div class="container">
@@ -53,7 +56,11 @@
       </div>
     </section>
     <section class="first">
+      <div class="container">
+        <div class="banner-teamplate">
 
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -73,9 +80,6 @@ section {
 
 .first {
   padding: 0px;
-  width: 1340px;
-  height: 400px;
-  background-color: rgb(223, 191, 191);
 }
 
 .second {
@@ -102,5 +106,13 @@ section {
   width: 300px;
   height: 150px;
   margin: auto;
+}
+
+/* Test */
+
+.banner-teamplate {
+  width: 1340px;
+  height: 400px;
+  background-color: lightskyblue;
 }
 </style>
