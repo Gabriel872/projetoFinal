@@ -98,11 +98,11 @@ export default {
     searchCourse() {
       this.$router.replace({ path: '/searchCourse' })
     },
-    userView(){
-      this.$router.replace({ path: '/user'})
+    userView() {
+      this.$router.replace({ path: '/user' })
     },
-    instructorView(){
-      this.$router.replace({ path: '/instructor'})
+    instructorView() {
+      this.$router.replace({ path: '/instructor' })
     }
   },
   props: {
