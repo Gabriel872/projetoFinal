@@ -194,10 +194,10 @@ ul {
   margin-bottom: 12px;
 }
 .footer-widget ul li a:hover{
-  color: #2e6bdb;
+  text-decoration: underline;
 }
 .footer-widget ul li a {
-  color: #878787;
+  color: #e9e9e9;
   text-transform: capitalize;
 }
 .subscribe-form {
@@ -234,18 +234,18 @@ ul {
   color: #878787;
 }
 .copyright-text p a{
-  color: #2e6bdb;
+  color: #35d3bc;
 }
 .footer-menu li {
   display: inline-block;
   margin-left: 20px;
 }
 .footer-menu li:hover a{
-  color: #2e6bdb;
+  text-decoration: underline;
 }
 .footer-menu li a {
   font-size: 14px;
-  color: #878787;
+  color: #e9e9e9;
 }
 
 /* Custom */

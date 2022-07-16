@@ -1,5 +1,5 @@
 <template>
-  <div class="home" style="margin-top: 70px;">
+  <div class="view">
     <section class="first">
       <div class="container">
         <div class="banner-teamplate">
@@ -7,20 +7,23 @@
         </div>
       </div>
     </section>
-    <section class="second carrousel">
+    <section class="second">
       <div class="container">
-        <Carousel :items-to-show="2.5" :wrap-around="true">
-          <Slide v-for="slide in 10" :key="slide">
-            <div class="carousel__item">{{ slide }}</div>
-          </Slide>
+        <div class="row">
+          <Carousel :items-to-show="2.5" :wrap-around="true">
+            <Slide v-for="slide in 10" :key="slide">
+              <div class="carousel__item">{{ slide }}</div>
+            </Slide>
 
-          <template #addons>
-            <Navigation />
-          </template>
-        </Carousel>
+            <template #addons>
+              <Navigation />
+            </template>
+          </Carousel>
+        </div>
       </div>
+
     </section>
-    <section class="third ">
+    <section class="third">
       <div class="container">
         <div class="row">
           <div class="col-4">
@@ -73,26 +76,16 @@ section {
   padding: 10px;
   margin: 0px auto 10px auto;
 }
-
-.carousel-inner {
-  padding: 10px;
+.carousel__prev{
+  background-color: black!important;
 }
-
 .first {
   padding: 0px;
-}
-
-.second {
-  width: 1340px;
 }
 
 .third {
   background-color: lightgrey;
   padding: 0px;
-}
-
-.container {
-  height: 100%;
 }
 
 .carousel {
@@ -107,7 +100,6 @@ section {
   text-align: center;
   vertical-align: middle;
   padding: 10px;
-  width: 300px;
   height: 150px;
   margin: auto;
 }
@@ -116,7 +108,7 @@ section {
 
 .banner-teamplate {
   border-radius: 0px 0px 10px 10px;
-  width: 1340px;
+  width: 100%;
   height: 400px;
   background-color: lightskyblue;
 }

@@ -1,3 +1,12 @@
+<style>
+.router-link-exact-active{
+  color: black;
+}
+
+.router-link-exact-active:hover{
+  color: black;
+}
+</style>
 <template>
   <Navbar/>
   <router-view/>
@@ -12,13 +21,13 @@ export default{
   components: {
     Navbar,
     Footer
-  }
+  },
 };
 
 </script>
 
-
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,10 +43,6 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 
 @media (min-width: 576px) {
@@ -68,6 +73,14 @@ nav a.router-link-exact-active {
     body{
         background-color: white;
     }
+}
+
+.carousel__prev, .carousel__next{
+  background-color: black!important;
+}
+
+.view{
+  margin-top: 70px;
 }
 
 </style>
