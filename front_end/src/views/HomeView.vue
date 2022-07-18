@@ -6,7 +6,7 @@
           <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="" class="d-block w-100" style="background-color: blue;" alt="...">
+                <img src="" class="d-block w-100" style=" height: 100%;" alt="...">
               </div>
               <div class="carousel-item">
                 <img src="" class="d-block w-100" alt="...">
@@ -58,17 +58,17 @@
         <div class="row">
           <div class="col-4">
             <div class="promotion-card">
-              Teste de texto
+              Aprenda as habilidades mais procuradas com mais de 185.000 cursos em vídeo
             </div>
           </div>
           <div class="col-4">
             <div class="promotion-card">
-              Teste de texto
+              Escolha cursos lecionados por especialistas reais
             </div>
           </div>
           <div class="col-4">
             <div class="promotion-card">
-              Teste de texto
+              Estude no seu ritmo, com acesso vitalício no dispositivo móvel e no computador
             </div>
           </div>
         </div>
@@ -124,6 +124,9 @@ export default {
     Slide,
     Navigation,
   },
+  beforeMount(){
+
+  },
   data() {
     return {
       cards: [
@@ -137,6 +140,11 @@ export default {
         { id: 7, title: 'Curso 2' },
         { id: 8, title: 'Curso 3' }
       ]
+    }
+  },
+  methods:{
+    async list(){
+
     }
   }
 }
@@ -178,8 +186,9 @@ section {
   text-align: center;
   vertical-align: middle;
   padding: 10px;
-  height: 150px;
+  height: 100px;
   margin: auto;
+  text-align: start;
 }
 
 /* Test */

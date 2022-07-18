@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="custom">
     <footer class="footer-section">
       <div class="container">
         <div class="footer-cta pt-5 pb-5">
@@ -87,6 +87,13 @@ export default {
 </script>
 
 <style scoped>
+
+.custom{
+  text-align: center;
+  color: #2c3e50;
+}
+
+
 ul {
     margin: 0px;
     padding: 0px;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="navbar-custom">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">Navbar</router-link>
@@ -63,7 +63,7 @@
             <!-- TESTE V-IF-->
             <button v-on:click="signUp()" class="btn btn-primary signin" style="margin-right: 8px;"
               type="submit"><b>Sign
-                up</b></button>
+                in</b></button>
             <!-- TESTE V-IF-->
             <button v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log in</b></button>
             <!-- TESTE V-IF-->
@@ -113,6 +113,12 @@ export default {
 </script>
 
 <style scoped>
+
+.navbar-custom{
+  text-align: center;
+  color: #2c3e50;
+}
+
 .navbar-brand {
   color: white;
 }
