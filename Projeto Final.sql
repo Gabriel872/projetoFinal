@@ -363,7 +363,7 @@ FOREIGN KEY (id_course) REFERENCES courses(id_course);
 CREATE TABLE pagseguro (
        pagseguro_name VARCHAR2(50) NOT NULL,
        pagseguro_email VARCHAR2(50) NOT NULL,
-       pagseguro_cpf VARCHAR2(11) NOT NULL
+       pagseguro_cpf NUMBER NOT NULL
 );
 
 -- PROCEDURES
