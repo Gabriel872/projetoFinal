@@ -7,19 +7,22 @@
             <form class="form-login">
               <div class="mb-3">
                 <label for="nameUser" class="form-label">Name</label>
-                <input v-model="obj_register.name" type="text" class="form-control" id="nameUser" aria-describedby="emailHelp" required>
+                <input v-model="obj_register.user_name" type="text" class="form-control" id="nameUser"
+                  aria-describedby="emailHelp" required>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input v-model="obj_register.email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
-                <div id="emailHelp" class="form-text" style="color:white;">We'll never share your email with anyone else.</div>
+                <input v-model="obj_register.user_email" type="email" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp" required>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input v-model="obj_register.password" type="password" class="form-control" id="exampleInputPassword1">
+                <input v-model="obj_register.user_password" type="password" class="form-control"
+                  id="exampleInputPassword1">
               </div>
               <div style="display:flex; justify-content: center;">
-                <input v-on:click="" type="button" value="Sign in" class="btn btn-primary btn-login">
+                <input v-on:click="validCredentials()" type="button" value="Sign in" class="btn btn-primary btn-login">
               </div>
               <div class="options">
                 <router-link class="nav-link login-link" to="/instructor" role="button" aria-expanded="false">
@@ -86,7 +89,6 @@
                   transform="translate(-183.89698 -199.82188)" fill="#cbcbcb" />
               </svg>
             </div>
-
           </div>
         </div>
       </div>
@@ -97,27 +99,61 @@
 <script>
 export default {
   data() {
-    return{
+    return {
       obj_register: {}
     }
   },
   methods: {
-    
-    async register(obj_register) {
-      await fetch("https://localhost:/api/Users", {
+    async validCredentials() {
+      if (this.obj_register.user_email == null || this.obj_register.user_password == null) {
+
+        alert("Email or password invalid");
+
+      } else {
+        var valid = this.validEmail(this.obj_register.user_email);
+        if (valid) {
+          await this.register();
+          this.goHomeView();
+        }
+      }
+    },
+    async register() {
+      this.obj_register.user_role = "user"
+      await fetch("https://localhost:7114/api/Users", {
         method: "post",
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(obj_register)
+        body: JSON.stringify(this.obj_register)
       });
 
-      localStorage.setItem("");
+      localStorage.removeItem("login");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
+
+      localStorage.setItem("login", true);
+      localStorage.setItem("userRole", this.obj_register.user_role);
+      localStorage.setItem("userId", this.obj_register.id_user);
+    },
+    validEmail(input) {
+      var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;
+
+      if (input.match(validRegex)) {
+        alert("Valid email address!");
+        return true;
+
+      } else {
+        alert("Invalid email address!");
+        return false;
+      }
     }
   }
 }
 </script>
 
 <style scouped>
+.form-text {
+  color: rgb(228, 168, 4);
+}
 </style>

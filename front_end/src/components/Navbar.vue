@@ -47,13 +47,13 @@
           </div>
           <ul class="navbar-nav mb-2 mb-lg-0">
             <!-- TESTE V-IF-->
-            <li v-if="1 == 0" class="nav-item">
+            <li v-if="login" class="nav-item">
               <a class="nav-link" href="" role="button" aria-expanded="false">
                 My courses
               </a>
             </li>
             <!-- TESTE V-IF-->
-            <li v-if="1 == 0" class="nav-item">
+            <li v-if="role == 'instructor' || role == 'adm'" class="nav-item">
               <router-link class="nav-link" to="/instructor" role="button" aria-expanded="false">
                 Instructor
               </router-link>
@@ -61,13 +61,13 @@
           </ul>
           <div class="d-flex jf_center">
             <!-- TESTE V-IF-->
-            <button v-on:click="signUp()" class="btn btn-primary signin" style="margin-right: 8px;"
+            <button v-if="!login" v-on:click="signUp()" class="btn btn-primary signin" style="margin-right: 8px;"
               type="submit"><b>Sign
                 in</b></button>
             <!-- TESTE V-IF-->
-            <button v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log in</b></button>
+            <button v-if="!login" v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log in</b></button>
             <!-- TESTE V-IF-->
-            <button v-if="1 == 0" v-on:click="userView()" class="btn btn-user">
+            <button v-if="login" v-on:click="userView()" class="btn btn-user">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
@@ -85,7 +85,8 @@ export default {
   name: 'NavBar',
   data() {
     return {
-
+      login: localStorage.getItem("login"),
+      role: localStorage.getItem("userRole")
     }
   },
   methods: {

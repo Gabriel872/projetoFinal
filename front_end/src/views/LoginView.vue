@@ -7,18 +7,20 @@
             <form class="form-login">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <input v-model="obj_login.user_email" type="email" class="form-control" id="exampleInputEmail1"
+                  aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input v-model="obj_login.user_password" type="password" class="form-control" id="exampleInputPassword1"
+                  required>
               </div>
               <div class="mb-3 form-check">
-                <input v-model="obj_login" type="checkbox" class="form-check-input" id="exampleCheck1">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
               </div>
               <div style="display:flex; justify-content: center;">
-                <input v-on:click="goHomeView()" type="button" value="Log in" class="btn btn-primary btn-login">
+                <input v-on:click="validCredentials()" type="submit" value="Log in" class="btn btn-primary btn-login">
               </div>
               <div class="options">
                 <router-link class="nav-link login-link" to="/instructor" role="button" aria-expanded="false">
@@ -109,6 +111,7 @@
 
 <script>
 export default {
+  name: 'LoginView',
   data() {
     return {
       users: {},
@@ -119,7 +122,51 @@ export default {
     goHomeView() {
       this.$router.push({ path: '/' });
     },
-    
+    async validCredentials() {
+      if (this.obj_login.user_email == null || this.obj_login.user_password == null) {
+
+        alert("Email or password invalid");
+
+      } else {
+
+        var valid = this.validEmail(this.obj_login.user_email);
+        if (valid) {
+          await this.login();
+          this.goHomeView();
+        }
+      }
+
+    },
+    async login() {
+      const request = await fetch("");
+      const retorno = await request.json();
+      this.users = request;
+
+      for (var i = 0; i < this.users.length; i++) {
+        if ((this.users.user_email == this.obj_login.user_email) && (this.users.user_password == this.obj_login.user_password)) {
+
+          localStorage.removeItem("userRole");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("login")
+
+          localStorage.setItem("userRole", this.users[i].user_role);
+          localStorage.setItem("userId", this.users[i].id_user)
+          localStorage.setItem("login", true);
+        }
+      }
+    },
+    validEmail(input) {
+      var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;
+
+      if (input.match(validRegex)) {
+        alert("Valid email address!");
+        return true;
+
+      } else {
+        alert("Invalid email address!");
+        return false;
+      }
+    }
   }
 }
 </script>
