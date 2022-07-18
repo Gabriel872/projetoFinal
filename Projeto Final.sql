@@ -250,7 +250,7 @@ FOREIGN KEY (id_course) REFERENCES courses(id_course);
 -----------------------------------
 -- Criando tabela DESEJOS (CRUD)   == TABELA
 CREATE TABLE wishes (
-       id_wishe NUMBER CONSTRAINT pk_id_wishe PRIMARY KEY,
+       id_wish NUMBER CONSTRAINT pk_id_wish PRIMARY KEY,
        id_user NUMBER, -- tabela usuarios
        id_course NUMBER -- tabela courses
 );
@@ -262,11 +262,11 @@ START WITH 1
 INCREMENT BY 1;
 
 -- Criando trigger para incremento do codigo DESEJOS   == TRIGGER
-CREATE OR REPLACE TRIGGER increment_id_wishe
+CREATE OR REPLACE TRIGGER increment_id_wish
 BEFORE INSERT ON wishes
 FOR EACH ROW
 BEGIN
-  :new.id_wishe := auto_increment_wishes.NEXTVAL;
+  :new.id_wish := auto_increment_wishes.NEXTVAL;
 END;
 
 -- Adicionar duas chaves estrangeira DESEJOS
@@ -359,6 +359,13 @@ ALTER TABLE course_sections
 ADD CONSTRAINT fk_id_course_course_sections
 FOREIGN KEY (id_course) REFERENCES courses(id_course);
 
+-- Criando tabela PAGSEGURO   == TABELA
+CREATE TABLE pagseguro (
+       pagseguro_name VARCHAR2(50) NOT NULL,
+       pagseguro_email VARCHAR2(50) NOT NULL,
+       pagseguro_cpf VARCHAR2(11) NOT NULL
+);
+
 -- PROCEDURES
 -- Procedure para validar e nao remover categoria caso tenha algum curso
 CREATE OR REPLACE PROCEDURE validate_removal (id_categ NUMBER, returns VARCHAR2)
@@ -370,8 +377,72 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns := 'A categoria foi removida com sucesso!';
+   returns : = 'A categoria foi removida com sucesso!';
       ELSE
        returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
+END;
+
+-- Procedure para selecionar os cursos da categoria
+CREATE OR REPLACE PROCEDURE connect_categorie (categorie_name VARCHAR2, course_name VARCHAR2)
+AS
+BEGIN
+   FROM courses
+   INNER JOIN categories
+   ON courses.id_categorie = categories.id_categorie;
+END;
+
+-- Procedure para criar ligacao com as aulas, valor e usuario por curso 
+CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2, class_title VARCHAR2, price_course_value NUMBER, price_course_coin VARCHAR2, price_course_discount NUMBER)
+AS
+BEGIN
+   FROM courses
+   INNER JOIN classes
+   ON courses.id_course = classes.id_course
+   INNER JOIN price_courses
+   ON courses.id_price_course = price_courses.id_price_course
+   INNER JOIN usuarios
+   ON courses.id_author = usuarios.id_user;
+END;
+
+-- Procedure para criar ligacao dos desejos com cursos e usuarios
+CREATE OR REPLACE PROCEDURE connect_wishes (course_name VARCHAR2)
+AS
+BEGIN
+   FROM wishes
+   INNER JOIN courses
+   ON courses.id_course = wishes.id_course
+   INNER JOIN usuarios
+   ON wishes.id_user = usuarios.id_user;
+END;
+
+-- Procedure para listar categorias nos interessses
+CREATE OR REPLACE PROCEDURE connect_interests (categorie_name VARCHAR2)
+AS
+BEGIN
+   FROM interests
+   INNER JOIN categories
+   ON interests.id_categorie = categories.id_categorie
+   INNER JOIN usuarios
+   ON interests.id_user = usuarios.id_user;
+END;
+
+-- Procedure para criar ligacao com os comentarios, curso e usuario
+CREATE OR REPLACE PROCEDURE connect_ratings (rating_text VARCHAR2)
+AS
+BEGIN
+   FROM ratings
+   INNER JOIN courses
+   ON courses.id_course = ratings.id_course
+   INNER JOIN usuarios
+   ON ratings.id_user = usuarios.id_user;
+END;
+
+-- Procedure para conectar o curso com a aula
+CREATE PROCEDURE connect_classes (course_name VARCHAR2, class_title VARCHAR2)
+AS
+BEGIN
+   FROM classes
+   INNER JOIN courses
+   ON courses.id_course = classes.id_course;
 END;
