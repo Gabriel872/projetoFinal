@@ -138,9 +138,9 @@ export default {
 
     },
     async login() {
-      const request = await fetch("");
+      const request = await fetch("https://localhost:7114/api/Users");
       const retorno = await request.json();
-      this.users = request;
+      this.users = retorno;
 
       for (var i = 0; i < this.users.length; i++) {
         if ((this.users.user_email == this.obj_login.user_email) && (this.users.user_password == this.obj_login.user_password)) {

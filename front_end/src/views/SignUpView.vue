@@ -104,7 +104,7 @@ export default {
     }
   },
   methods: {
-    async validCredentials() {
+    validCredentials() {
       if (this.obj_register.user_email == null || this.obj_register.user_password == null) {
 
         alert("Email or password invalid");
@@ -112,14 +112,14 @@ export default {
       } else {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
-          await this.register();
-          this.goHomeView();
+          this.register();
+          // this.goHomeView();
         }
       }
     },
     async register() {
       this.obj_register.user_role = "user"
-      await fetch("https://localhost:7114/api/Users", {
+      await fetch("https://localhost:7114/api/Cadastro", {
         method: "post",
         headers: {
           "Accept": "application/json",
@@ -147,6 +147,9 @@ export default {
         alert("Invalid email address!");
         return false;
       }
+    },
+    goHomeView() {
+      this.$router.push({ path: '/' });
     }
   }
 }
