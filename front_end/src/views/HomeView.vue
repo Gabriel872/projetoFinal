@@ -32,9 +32,17 @@
     <section class="second">
       <div class="container">
         <div class="row">
-          <Carousel :items-to-show="2.5" :wrap-around="true">
-            <Slide v-for="slide in 10" :key="slide">
-              <div class="carousel__item">{{ slide }}</div>
+          <Carousel :items-to-show="4.5" :wrap-around="true">
+            <!-- Teste -->
+            <Slide v-for="card in cards" :key="card.id" >
+              <div class="card ml_mr carousel__item bg-dark text-bg-dark">
+                <div class="card-body">
+                  <h5 class="card-title">{{ card.title }}</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the card'scontent.
+                  </p>
+                </div>
+              </div>
             </Slide>
 
             <template #addons>
@@ -49,22 +57,46 @@
       <div class="container">
         <div class="row">
           <div class="col-4">
-            <div class="text-card">
+            <div class="promotion-card">
               Teste de texto
             </div>
           </div>
           <div class="col-4">
-            <div class="text-card">
+            <div class="promotion-card">
               Teste de texto
             </div>
           </div>
           <div class="col-4">
-            <div class="text-card">
+            <div class="promotion-card">
               Teste de texto
             </div>
           </div>
         </div>
       </div>
+    </section>
+     <section class="second">
+      <div class="container">
+        <div class="row">
+          <Carousel :items-to-show="4.5" :wrap-around="true">
+            <!-- Teste -->
+            <Slide v-for="card in cards" :key="card.id" >
+              <div class="card ml_mr carousel__item bg-dark text-bg-dark">
+                <div class="card-body">
+                  <h5 class="card-title">{{ card.title }}</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the card'scontent.
+                  </p>
+                </div>
+              </div>
+            </Slide>
+
+            <template #addons>
+              <Navigation />
+            </template>
+          </Carousel>
+        </div>
+      </div>
+
     </section>
     <section class="first">
       <div class="container">
@@ -80,16 +112,33 @@
 
 import { defineComponent } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
+import CardCarouselVue from '@/components/CardCarousel.vue';
 
 import 'vue3-carousel/dist/carousel.css';
 
 export default {
   name: 'HomeView',
   components: {
+    CardCarouselVue,
     Carousel,
     Slide,
     Navigation,
   },
+  data() {
+    return {
+      cards: [
+        // teste
+        { id: 1, title: 'Teste de titulo' },
+        { id: 2, title: 'Ola tudo bem?' },
+        { id: 3, title: 'Salve' },
+        { id: 4, title: 'Isso é teste cara' },
+        { id: 5, title: 'Salve mais uma vez' },
+        { id: 6, title: 'Curso 1' },
+        { id: 7, title: 'Curso 2' },
+        { id: 8, title: 'Curso 3' }
+      ]
+    }
+  }
 }
 </script>
 
@@ -103,6 +152,10 @@ section {
   background-color: black !important;
 }
 
+.ml_mr {
+    margin: 0px 8px 0px 8px;
+}
+
 .first {
   padding: 0px;
 }
@@ -113,15 +166,12 @@ section {
 }
 
 .carousel {
-  background-color: rgb(139, 139, 139);
+  /* background-color: rgb(139, 139, 139); */
   border-radius: 10px;
   height: 100%;
 }
 
-.carousel-item{
-}
-
-.text-card {
+.promotion-card {
   display: flex;
   align-items: center;
   justify-content: center;

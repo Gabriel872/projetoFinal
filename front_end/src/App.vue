@@ -77,6 +77,8 @@ nav a {
 
 .carousel__prev, .carousel__next{
   background-color: black!important;
+  border: 5px solid white!important;
+  box-sizing: content-box!important;
 }
 
 .view{
