@@ -13,6 +13,7 @@
         private string user_profession;
         private double user_hours_week;
         private string user_experience;
+        private string user_role;
 
         public int Id_user { get => id_user; set => id_user = value; }
         public string User_name { get => user_name; set => user_name = value; }
@@ -24,5 +25,6 @@
         public string User_experience { get => user_experience; set => user_experience = value; }
         public string User_profession { get => user_profession; set => user_profession = value; }
         public double User_hours_week { get => user_hours_week; set => user_hours_week = value; }
+        public string User_role { get => user_role; set => user_role = value; }
     }
 }

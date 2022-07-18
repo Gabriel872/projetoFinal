@@ -17,7 +17,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<UsersCourses>("SELECT * FROM users_courses");
+            return connection.Query<UsersCourses>("SELECT * FROM user_courses");
         }
 
         [HttpPost]
@@ -28,7 +28,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO users_courses (id_user, id_course) VALUES (:Id_user, :Id_course)", uc);
+            connection.Execute(@"INSERT INTO user_courses (id_user, id_course) VALUES (:Id_user, :Id_course)", uc);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -46,7 +46,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM users_courses WHERE id_user_course = " + id_user_course);
+                connection.Execute(@"DELETE FROM user_courses WHERE id_user_course = " + id_user_course);
                 return "Removido com sucesso!";
             }
             else
@@ -61,7 +61,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM users_courses WHERE id_user_course = " + id);
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM user_courses WHERE id_user_course = " + id);
         }
     }
 }
