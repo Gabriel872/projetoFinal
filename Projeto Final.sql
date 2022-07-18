@@ -11,8 +11,7 @@ CREATE TABLE usuarios (
        user_socialmedia VARCHAR2(150),
        user_profession VARCHAR(30),
        user_hours_week NUMBER,
-       user_experience VARCHAR2(30),
-       user_role VARCHAR2(30) NOT NULL
+       user_experience VARCHAR2(30)
 );
 
 -- Criando sequencia USUARIOS   == SEQUENCIA
@@ -164,13 +163,13 @@ CREATE TABLE interests (
        id_categorie NUMBER -- tabela categories
 );
 
--- Criando sequência INTERESSES   == SEQUENCIA
+-- Criando sequencia INTERESSES   == SEQUENCIA
 CREATE SEQUENCE auto_increment_interests
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código INTERESSES   == TRIGGER
+-- Criando trigger para incremento do codigo INTERESSES   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_interests
 BEFORE INSERT ON interests
 FOR EACH ROW
@@ -197,13 +196,13 @@ CREATE TABLE classes (
        id_course NUMBER
 );
 
--- Criando sequência AULAS   == SEQUENCIA
+-- Criando sequencia AULAS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_classes
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código AULAS   == TRIGGER
+-- Criando trigger para incremento do codigo AULAS   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_class
 BEFORE INSERT ON classes
 FOR EACH ROW
@@ -225,13 +224,13 @@ CREATE TABLE ratings (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência AVALIACOES   == SEQUENCIA
+-- Criando sequencia AVALIACOES   == SEQUENCIA
 CREATE SEQUENCE auto_increment_ratings
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
--- Criando trigger para incremento do código AVALIACOES   == TRIGGER
+-- Criando trigger para incremento do codigo AVALIACOES   == TRIGGER
 CREATE OR REPLACE TRIGGER increment_id_rating
 BEFORE INSERT ON ratings
 FOR EACH ROW
@@ -248,6 +247,7 @@ ALTER TABLE ratings
 ADD CONSTRAINT fk_id_course_ratings
 FOREIGN KEY (id_course) REFERENCES courses(id_course); 
 
+-----------------------------------
 -- Criando tabela DESEJOS (CRUD)   == TABELA
 CREATE TABLE wishes (
        id_wish NUMBER CONSTRAINT pk_id_wish PRIMARY KEY,
@@ -255,7 +255,7 @@ CREATE TABLE wishes (
        id_course NUMBER -- tabela courses
 );
 
--- Criando sequência DESEJOS   == SEQUENCIA
+-- Criando sequencia DESEJOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_wishes
 MINVALUE 1
 START WITH 1
@@ -278,6 +278,94 @@ ALTER TABLE wishes
 ADD CONSTRAINT fk_id_course_wishes
 FOREIGN KEY (id_course) REFERENCES courses(id_course); 
 
+-----------------------------------
+-- Criando tabela SUBCATEGORIAS (CRUD)   == TABELA
+CREATE TABLE subcategories (
+       id_subcategorie NUMBER CONSTRAINT pk_id_subcategorie PRIMARY KEY,
+       subcategorie_name VARCHAR2(30),
+       id_categorie NUMBER -- tabela categories
+);
+
+-- Criando sequencia SUBCATEGORIAS   == SEQUENCIA
+CREATE SEQUENCE auto_increment_subcategories
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1;
+
+-- Criando trigger para incremento do codigo SUBCATEGORIAS   == TRIGGER
+CREATE OR REPLACE TRIGGER increment_id_subcategorie
+BEFORE INSERT ON subcategories
+FOR EACH ROW
+BEGIN
+  :new.id_subcategorie := auto_increment_subcategories.NEXTVAL;
+END;
+
+-- Adicionar uma chave estrangeira SUBCATEGORIAS
+ALTER TABLE subcategories
+ADD CONSTRAINT fk_id_categorie_subcategories
+FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie);
+
+-----------------------------------
+-- Criando tabela SUBTEMAS (CRUD)   == TABELA
+CREATE TABLE sub_themes (
+       id_sub_theme NUMBER CONSTRAINT pk_id_sub_theme PRIMARY KEY,
+       sub_theme_name VARCHAR2(30),
+       id_subcategorie NUMBER -- tabela subcategories
+);
+
+-- Criando sequencia SUBCATEGORIAS   == SEQUENCIA
+CREATE SEQUENCE auto_increment_sub_themes
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1;
+
+-- Criando trigger para incremento do codigo SUBCATEGORIAS   == TRIGGER
+CREATE OR REPLACE TRIGGER increment_id_sub_theme
+BEFORE INSERT ON sub_themes
+FOR EACH ROW
+BEGIN
+  :new.id_sub_theme := auto_increment_sub_themes.NEXTVAL;
+END;
+
+-- Adicionar uma chave estrangeira SUBCATEGORIAS
+ALTER TABLE sub_themes
+ADD CONSTRAINT fk_id_subcategorie_sub_themes
+FOREIGN KEY (id_subcategorie) REFERENCES subcategories(id_subcategorie);
+
+-----------------------------------
+-- Criando tabela SECAO CURSO (CRUD)   == TABELA
+CREATE TABLE course_sections (
+       id_course_sect NUMBER CONSTRAINT pk_id_course_sect PRIMARY KEY,
+       course_sect_name VARCHAR2(50) NOT NULL,
+       id_course NUMBER -- tabela courses
+);
+
+-- Criando sequencia SECAO CURSO   == SEQUENCIA
+CREATE SEQUENCE auto_increment_course_sections
+MINVALUE 1
+START WITH 1
+INCREMENT BY 1;
+
+-- Criando trigger para incremento do codigo SECAO CURSO   == TRIGGER
+CREATE OR REPLACE TRIGGER increment_id_auto_course_sect
+BEFORE INSERT ON course_sections
+FOR EACH ROW
+BEGIN
+  :new.id_course_sect := auto_increment_course_sections.NEXTVAL;
+END;
+
+-- Adicionar uma chave estrangeira SECAO CURSO
+ALTER TABLE course_sections
+ADD CONSTRAINT fk_id_course_course_sections
+FOREIGN KEY (id_course) REFERENCES courses(id_course);
+
+-- Criando tabela PAGSEGURO   == TABELA
+CREATE TABLE pagseguro (
+       pagseguro_name VARCHAR2(50) NOT NULL,
+       pagseguro_email VARCHAR2(50) NOT NULL,
+       pagseguro_cpf VARCHAR2(11) NOT NULL
+);
+
 -- PROCEDURES
 -- Procedure para validar e nao remover categoria caso tenha algum curso
 CREATE OR REPLACE PROCEDURE validate_removal (id_categ NUMBER, returns VARCHAR2)
@@ -289,7 +377,7 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns := 'A categoria foi removida com sucesso!';
+   returns : = 'A categoria foi removida com sucesso!';
       ELSE
        returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
@@ -328,7 +416,7 @@ BEGIN
    ON wishes.id_user = usuarios.id_user;
 END;
 
--- Procedure para listar categorias nos interessses
+-- Procedure para listar categorias nos interesses
 CREATE OR REPLACE PROCEDURE connect_interests (categorie_name VARCHAR2)
 AS
 BEGIN
@@ -358,5 +446,3 @@ BEGIN
    INNER JOIN courses
    ON courses.id_course = classes.id_course;
 END;
-
---
