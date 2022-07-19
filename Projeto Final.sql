@@ -11,7 +11,8 @@ CREATE TABLE usuarios (
        user_socialmedia VARCHAR2(150),
        user_profession VARCHAR(30),
        user_hours_week NUMBER,
-       user_experience VARCHAR2(30)
+       user_experience VARCHAR2(30),
+       user_role VARCHAR2(30) NOT NULL
 );
 
 -- Criando sequencia USUARIOS   == SEQUENCIA
@@ -48,7 +49,7 @@ CREATE TABLE courses (
        course_message VARCHAR2(60),
        id_author NUMBER, -- tabela usuarios
        id_categorie NUMBER, -- tabela categorie
-       id_course_price NUMBER -- tabela price courses
+       id_price_course NUMBER -- tabela price courses
 );
 
 -- Criando sequencia CURSOS   == SEQUENCIA
@@ -104,7 +105,7 @@ FOREIGN KEY (id_course) REFERENCES courses(id_course);
 -----------------------------------
 -- Criando tabela PRECO CURSOS (CRUD)   == TABELA
 CREATE TABLE price_courses (
-       id_course_price NUMBER CONSTRAINT pk_id_course_price PRIMARY KEY,
+       id_price_course NUMBER CONSTRAINT pk_id_price_course PRIMARY KEY,
        price_course_value NUMBER NOT NULL,
        price_course_coin VARCHAR2(3) NOT NULL,
        price_discount NUMBER
@@ -121,13 +122,13 @@ CREATE OR REPLACE TRIGGER increment_id_price_course
 BEFORE INSERT ON price_courses
 FOR EACH ROW
 BEGIN
-  :new.id_course_price := auto_increment_price_courses.NEXTVAL;
+  :new.id_price_course := auto_increment_price_courses.NEXTVAL;
 END;
 
 -- Adicionar uma chave estrangeira CURSOS
 ALTER TABLE courses
-ADD CONSTRAINT fk_id_course_price
-FOREIGN KEY (id_course_price) REFERENCES price_courses(id_course_price);
+ADD CONSTRAINT fk_id_price_course
+FOREIGN KEY (id_price_course) REFERENCES price_courses(id_price_course);
 
 -----------------------------------
 -- Criando tabela CATEGORIAS (CRUD)   == TABELA
@@ -170,7 +171,7 @@ START WITH 1
 INCREMENT BY 1;
 
 -- Criando trigger para incremento do codigo INTERESSES   == TRIGGER
-CREATE OR REPLACE TRIGGER increment_id_interests
+CREATE OR REPLACE TRIGGER increment_id_interest
 BEFORE INSERT ON interests
 FOR EACH ROW
 BEGIN
@@ -347,7 +348,7 @@ START WITH 1
 INCREMENT BY 1;
 
 -- Criando trigger para incremento do codigo SECAO CURSO   == TRIGGER
-CREATE OR REPLACE TRIGGER increment_id_auto_course_sect
+CREATE OR REPLACE TRIGGER increment_id_course_sect
 BEFORE INSERT ON course_sections
 FOR EACH ROW
 BEGIN
@@ -377,127 +378,93 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns := 'A categoria foi removida com sucesso!';
+   returns : = 'A categoria foi removida com sucesso!';
       ELSE
        returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
 END;
 
--- Procedure para selecionar os cursos da categoria
-CREATE OR REPLACE PROCEDURE connect_categorie (categorie_name VARCHAR2, course_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-       categories.categorie_name,
-       courses.course_name
-  FROM courses
-  INNER JOIN categories
-  ON courses.id_categorie = categories.id_categorie;
-END;
+-- Comando para selecionar os cursos da categoria
+SELECT id_categorie FROM courses WHERE categories.id_categorie = courses.id_categorie;
 
--- Procedure para criar ligacao com as aulas, valor e usuario por curso 
-CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2, class_title VARCHAR2, price_course_value NUMBER, price_course_coin VARCHAR2, price_discount NUMBER)
-AS
-BEGIN
-  SELECT
-      courses.course_name,
-      classes.class_title,
-      price_courses.price_course_value,
-      price_courses.price_course_coin,
-      price_courses.price_discount
-  FROM courses
-  INNER JOIN classes
-  ON courses.id_course = classes.id_course
-  INNER JOIN price_courses
-  ON price_courses.id_price_course = courses.id_price_course
-  INNER JOIN usuarios
-  ON courses.id_author = usuarios.id_user;
-END;
+-- Comando para criar ligacao com as aulas, valor e usuario por curso 
+SELECT * FROM courses WHERE courses.id_course = classes.id_course AND courses.id_price_course = price_courses.id_price_course AND courses.id_author = usuarios.id_user;
 
--- Procedure para criar ligacao dos desejos com cursos e usuarios
-CREATE OR REPLACE PROCEDURE connect_wishes (course_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-      courses.course_name
-  FROM wishes
-  INNER JOIN courses
-  ON courses.id_course = wishes.id_course
-  INNER JOIN usuarios
-  ON wishes.id_user = usuarios.id_user;
-END;
+-- Comando para criar ligacao dos desejos com cursos
+SELECT id_course FROM wishes WHERE courses.id_course = wishes.id_course;
 
--- Procedure para listar categorias nos interesses
-CREATE OR REPLACE PROCEDURE connect_interests (categorie_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-      categories.categorie_name
-  FROM interests
-  INNER JOIN categories
-  ON interests.id_categorie = categories.id_categorie
-  INNER JOIN usuarios
-  ON interests.id_user = usuarios.id_user;
-END;
+-- Comando para listar categorias nos interesses
+SELECT id_categorie FROM interests WHERE interests.id_categorie = categories.id_categorie;
 
--- Procedure para criar ligacao com os comentarios, curso e usuario
-CREATE OR REPLACE PROCEDURE connect_ratings (rating_text VARCHAR2)
-AS
-BEGIN
-  SELECT
-      ratings.rating_text
-  FROM ratings
-  INNER JOIN courses
-  ON courses.id_course = ratings.id_course
-  INNER JOIN usuarios
-  ON ratings.id_user = usuarios.id_user;
-END;
+-- Comando para criar ligacao com os comentarios, curso e usuario
+SELECT id_rating FROM ratings WHERE courses.id_course = ratings.id_course
 
--- Procedure para conectar o curso com a aula
-CREATE OR REPLACE PROCEDURE connect_classes (course_name VARCHAR2, class_title VARCHAR2)
-AS
-BEGIN
-  SELECT
-      courses.course_name,
-      classes.class_title
-  FROM classes
-  INNER JOIN courses
-  ON courses.id_course = classes.id_course;
-END;
+-- Comando para conectar o curso com a aula
+SELECT classes.id_course FROM classes WHERE courses.id_course = classes.id_course;
 
--- Procedure para conectar a subcategoria com a categoria
-CREATE OR REPLACE PROCEDURE connect_subcategorie (categorie_name VARCHAR2, subcategorie_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-       categories.categorie_name,
-       subcategories.subcategorie_name
-  FROM subcategories
-  INNER JOIN categories
-  ON categories.id_categorie = subcategories.id_categorie;
-END;
+-- Comando para conectar a subcategoria com a categoria
+SELECT id_categorie FROM subcategories WHERE categories.id_categorie = subcategories.id_categorie;
 
--- Procedure para conectar o sub tema com a subcategoria
-CREATE OR REPLACE PROCEDURE connect_sub_theme (subcategorie_name VARCHAR2, sub_theme_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-       subcategories.subcategorie_name,
-       sub_themes.sub_theme_name
-  FROM sub_themes
-  INNER JOIN subcategories
-  ON subcategories.id_subcategorie = sub_themes.id_subcategorie;
-END;
+-- Comando para conectar o sub tema com a subcategoria
+SELECT id_subcategorie FROM sub_themes WHERE subcategories.id_subcategorie = sub_themes.id_subcategorie;
 
--- Procedure para conectar o curso com as seções de curso
-CREATE OR REPLACE PROCEDURE connect_course_sect (course_name VARCHAR2, course_sect_name VARCHAR2)
-AS
-BEGIN
-  SELECT
-       courses.course_name,
-       course_sections.course_sect_name
-  FROM course_sections
-  INNER JOIN courses
-  ON courses.id_course = course_sections.id_course;
-END;      
+-- Comando para conectar o curso com as seções de curso
+SELECT id_course FROM course_sections WHERE courses.id_course = course_sections.id_course;
 
+-- Exclusão
+-- Procedures
+DROP PROCEDURE validate_removal;    
+
+-- Triggers
+DROP TRIGGER increment_id_course_sect;   
+DROP TRIGGER increment_id_categorie;   
+DROP TRIGGER increment_id_class;   
+DROP TRIGGER increment_id_course;   
+DROP TRIGGER increment_id_interests;   
+DROP TRIGGER increment_id_price_course;   
+DROP TRIGGER increment_id_rating;   
+DROP TRIGGER increment_id_subcategorie;
+DROP TRIGGER increment_id_sub_theme;  
+DROP TRIGGER increment_id_user;   
+DROP TRIGGER increment_id_user_course;
+DROP TRIGGER increment_id_wishe;
+
+-- Sequences
+DROP SEQUENCE auto_increment_course_sections;   
+DROP SEQUENCE auto_increment_categories;   
+DROP SEQUENCE auto_increment_classes;   
+DROP SEQUENCE auto_increment_courses;   
+DROP SEQUENCE auto_increment_interests;   
+DROP SEQUENCE auto_increment_price_courses;   
+DROP SEQUENCE auto_increment_ratings;   
+DROP SEQUENCE auto_increment_subcategories;
+DROP SEQUENCE auto_increment_sub_themes;  
+DROP SEQUENCE auto_increment_users;   
+DROP SEQUENCE auto_increment_user_courses;
+DROP SEQUENCE auto_increment_wishes;
+
+-- VIEWS
+DROP VIEW connect_course;   
+DROP VIEW connect_wishes;   
+DROP VIEW connect_interests;   
+DROP VIEW connect_ratings;   
+DROP VIEW connect_subcategorie;   
+DROP VIEW connect_sub_theme;   
+DROP VIEW connect_course_sect;
+DROP VIEW connect_classes;
+DROP VIEW connect_categorie;
+
+-- Tables
+DROP TABLE categories;   
+DROP TABLE classes;   
+DROP TABLE courses;   
+DROP TABLE course_sections;   
+DROP TABLE interests;   
+DROP TABLE price_courses;   
+DROP TABLE ratings;   
+DROP TABLE subcategories;
+DROP TABLE sub_themes;  
+DROP TABLE user_courses;   
+DROP TABLE usuarios;
+DROP TABLE pagseguro;
+DROP TABLE wishes;
