@@ -387,70 +387,91 @@ END;
 CREATE OR REPLACE PROCEDURE connect_categorie (categorie_name VARCHAR2, course_name VARCHAR2)
 AS
 BEGIN
-   FROM courses
-   INNER JOIN categories
-   ON courses.id_categorie = categories.id_categorie;
+  SELECT
+       categories.categorie_name,
+       courses.course_name
+  FROM courses
+  INNER JOIN categories
+  ON courses.id_categorie = categories.id_categorie;
 END;
 
 -- Procedure para criar ligacao com as aulas, valor e usuario por curso 
-CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2, class_title VARCHAR2, price_course_value NUMBER, price_course_coin VARCHAR2, price_course_discount NUMBER)
+CREATE OR REPLACE PROCEDURE connect_course (course_name VARCHAR2, class_title VARCHAR2, price_course_value NUMBER, price_course_coin VARCHAR2, price_discount NUMBER)
 AS
 BEGIN
-   FROM courses
-   INNER JOIN classes
-   ON courses.id_course = classes.id_course
-   INNER JOIN price_courses
-   ON courses.id_price_course = price_courses.id_price_course
-   INNER JOIN usuarios
-   ON courses.id_author = usuarios.id_user;
+  SELECT
+      courses.course_name,
+      classes.class_title,
+      price_courses.price_course_value,
+      price_courses.price_course_coin,
+      price_courses.price_discount
+  FROM courses
+  INNER JOIN classes
+  ON courses.id_course = classes.id_course
+  INNER JOIN price_courses
+  ON price_courses.id_price_course = courses.id_price_course
+  INNER JOIN usuarios
+  ON courses.id_author = usuarios.id_user;
 END;
 
 -- Procedure para criar ligacao dos desejos com cursos e usuarios
 CREATE OR REPLACE PROCEDURE connect_wishes (course_name VARCHAR2)
 AS
 BEGIN
-   FROM wishes
-   INNER JOIN courses
-   ON courses.id_course = wishes.id_course
-   INNER JOIN usuarios
-   ON wishes.id_user = usuarios.id_user;
+  SELECT
+      courses.course_name
+  FROM wishes
+  INNER JOIN courses
+  ON courses.id_course = wishes.id_course
+  INNER JOIN usuarios
+  ON wishes.id_user = usuarios.id_user;
 END;
 
 -- Procedure para listar categorias nos interesses
 CREATE OR REPLACE PROCEDURE connect_interests (categorie_name VARCHAR2)
 AS
 BEGIN
-   FROM interests
-   INNER JOIN categories
-   ON interests.id_categorie = categories.id_categorie
-   INNER JOIN usuarios
-   ON interests.id_user = usuarios.id_user;
+  SELECT
+      categories.categorie_name
+  FROM interests
+  INNER JOIN categories
+  ON interests.id_categorie = categories.id_categorie
+  INNER JOIN usuarios
+  ON interests.id_user = usuarios.id_user;
 END;
 
 -- Procedure para criar ligacao com os comentarios, curso e usuario
 CREATE OR REPLACE PROCEDURE connect_ratings (rating_text VARCHAR2)
 AS
 BEGIN
-   FROM ratings
-   INNER JOIN courses
-   ON courses.id_course = ratings.id_course
-   INNER JOIN usuarios
-   ON ratings.id_user = usuarios.id_user;
+  SELECT
+      ratings.rating_text
+  FROM ratings
+  INNER JOIN courses
+  ON courses.id_course = ratings.id_course
+  INNER JOIN usuarios
+  ON ratings.id_user = usuarios.id_user;
 END;
 
 -- Procedure para conectar o curso com a aula
-CREATE PROCEDURE connect_classes (course_name VARCHAR2, class_title VARCHAR2)
+CREATE OR REPLACE PROCEDURE connect_classes (course_name VARCHAR2, class_title VARCHAR2)
 AS
 BEGIN
-   FROM classes
-   INNER JOIN courses
-   ON courses.id_course = classes.id_course;
+  SELECT
+      courses.course_name,
+      classes.class_title
+  FROM classes
+  INNER JOIN courses
+  ON courses.id_course = classes.id_course;
 END;
 
 -- Procedure para conectar a subcategoria com a categoria
 CREATE OR REPLACE PROCEDURE connect_subcategorie (categorie_name VARCHAR2, subcategorie_name VARCHAR2)
 AS
 BEGIN
+  SELECT
+       categories.categorie_name,
+       subcategories.subcategorie_name
   FROM subcategories
   INNER JOIN categories
   ON categories.id_categorie = subcategories.id_categorie;
@@ -460,6 +481,9 @@ END;
 CREATE OR REPLACE PROCEDURE connect_sub_theme (subcategorie_name VARCHAR2, sub_theme_name VARCHAR2)
 AS
 BEGIN
+  SELECT
+       subcategories.subcategorie_name,
+       sub_themes.sub_theme_name
   FROM sub_themes
   INNER JOIN subcategories
   ON subcategories.id_subcategorie = sub_themes.id_subcategorie;
@@ -469,6 +493,9 @@ END;
 CREATE OR REPLACE PROCEDURE connect_course_sect (course_name VARCHAR2, course_sect_name VARCHAR2)
 AS
 BEGIN
+  SELECT
+       courses.course_name,
+       course_sections.course_sect_name
   FROM course_sections
   INNER JOIN courses
   ON courses.id_course = course_sections.id_course;
