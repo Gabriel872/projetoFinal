@@ -23,11 +23,11 @@
                 <input v-on:click="validCredentials()" type="submit" value="Log in" class="btn btn-primary btn-login">
               </div>
               <div class="options">
-                <router-link class="nav-link login-link" to="/instructor" role="button" aria-expanded="false">
+                <router-link class="nav-link login-link" to="/signup" role="button" aria-expanded="false">
                   Register
                 </router-link>
                 <router-link class="nav-link login-link" to="/instructor" role="button" aria-expanded="false">
-                  Forget password
+                  Forgot password
                 </router-link>
               </div>
             </form>

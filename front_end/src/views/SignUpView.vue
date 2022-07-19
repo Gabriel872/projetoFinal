@@ -113,13 +113,17 @@ export default {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
           this.register();
-          // this.goHomeView();
+          if (localStorage.getItem("login")) {
+            this.goHomeView();
+          }
         }
       }
     },
     async register() {
       this.obj_register.user_role = "user"
-      await fetch("https://localhost:7114/api/Cadastro", {
+      this.obj_register.user_description = "Description..."
+
+      await fetch(`https://localhost:7114/api/Cadastro`, {
         method: "post",
         headers: {
           "Accept": "application/json",
@@ -131,10 +135,16 @@ export default {
       localStorage.removeItem("login");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userEmail")
+      localStorage.removeItem("userDescription");
 
       localStorage.setItem("login", true);
       localStorage.setItem("userRole", this.obj_register.user_role);
       localStorage.setItem("userId", this.obj_register.id_user);
+      localStorage.setItem("userName", this.obj_register.user_name);
+      localStorage.setItem("userEmail", this.obj_register.user_email);
+      localStorage.setItem("userDescription", this.obj_register.user_description);
     },
     validEmail(input) {
       var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;

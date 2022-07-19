@@ -89,6 +89,9 @@ export default {
       role: localStorage.getItem("userRole")
     }
   },
+  beforeMount(){
+    // this.login = true;
+  },
   methods: {
     logIn() {
       this.$router.replace({ path: '/login' })
