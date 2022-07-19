@@ -377,7 +377,7 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns : = 'A categoria foi removida com sucesso!';
+   returns := 'A categoria foi removida com sucesso!';
       ELSE
        returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
