@@ -77,6 +77,5 @@ namespace DapperTrabalhoFinal.Controllers
 
             return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_categorie = " + id);
         }
-
     }
 }

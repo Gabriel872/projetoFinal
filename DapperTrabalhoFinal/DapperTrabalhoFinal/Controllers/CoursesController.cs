@@ -10,7 +10,6 @@ namespace DapperTrabalhoFinal.Controllers
     [ApiController]
     public class CoursesController
     {
-
         [HttpGet]
 
         public IEnumerable<Courses> ListCourses()
@@ -34,8 +33,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             return "Cadastro efetuado com sucesso!";
         }
-        
-        
+         
         [HttpPut]
 
         public string UpdateCourses([FromBody] Courses cs)
@@ -78,6 +76,5 @@ namespace DapperTrabalhoFinal.Controllers
 
             return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM courses WHERE id_course = " + id);
         }
-
     }
 }

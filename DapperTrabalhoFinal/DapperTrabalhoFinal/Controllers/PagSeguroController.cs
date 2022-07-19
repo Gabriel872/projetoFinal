@@ -54,7 +54,7 @@ namespace DapperTrabalhoFinal.Controllers
             if (trimmedEmail.EndsWith("."))
             {
                 return false;
-            }          
+            }      
             try
             {
                 var addr = new System.Net.Mail.MailAddress(email);
