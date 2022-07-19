@@ -446,3 +446,31 @@ BEGIN
    INNER JOIN courses
    ON courses.id_course = classes.id_course;
 END;
+
+-- Procedure para conectar a subcategoria com a categoria
+CREATE OR REPLACE PROCEDURE connect_subcategorie (categorie_name VARCHAR2, subcategorie_name VARCHAR2)
+AS
+BEGIN
+  FROM subcategories
+  INNER JOIN categories
+  ON categories.id_categorie = subcategories.id_categorie;
+END;
+
+-- Procedure para conectar o sub tema com a subcategoria
+CREATE OR REPLACE PROCEDURE connect_sub_theme (subcategorie_name VARCHAR2, sub_theme_name VARCHAR2)
+AS
+BEGIN
+  FROM sub_themes
+  INNER JOIN subcategories
+  ON subcategories.id_subcategorie = sub_themes.id_subcategorie;
+END;
+
+-- Procedure para conectar o curso com as seções de curso
+CREATE OR REPLACE PROCEDURE connect_course_sect (course_name VARCHAR2, course_sect_name VARCHAR2)
+AS
+BEGIN
+  FROM course_sections
+  INNER JOIN courses
+  ON courses.id_course = course_sections.id_course;
+END;      
+
