@@ -360,6 +360,7 @@ ALTER TABLE course_sections
 ADD CONSTRAINT fk_id_course_course_sections
 FOREIGN KEY (id_course) REFERENCES courses(id_course);
 
+-----------------------------------
 -- Criando tabela PAGSEGURO   == TABELA
 CREATE TABLE pagseguro (
        pagseguro_name VARCHAR2(50) NOT NULL,
@@ -410,7 +411,6 @@ SELECT id_subcategorie FROM sub_themes WHERE id_subcategorie = id_subcategorie;
 
 -- Comando para conectar o curso com as seções de curso
 SELECT id_course FROM course_sections WHERE id_course = id_course;
-
 
 -- Exclusão
 -- Procedures
