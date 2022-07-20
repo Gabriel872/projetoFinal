@@ -101,7 +101,6 @@
                 <rect x="427.49994" y="107.5" width="2" height="304" fill="#ccc" />
               </svg>
             </div>
-
           </div>
         </div>
       </div>
