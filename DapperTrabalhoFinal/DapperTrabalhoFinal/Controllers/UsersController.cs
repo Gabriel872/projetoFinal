@@ -31,9 +31,32 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", u);
+            bool existeEmail = emailExiste(u.User_email);
 
-            return "Cadastro efetuado com sucesso!";
+            if (existeEmail == true)
+            {
+                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", u);
+
+                return "Cadastro efetuado com sucesso!";
+            }
+            else
+            {
+                return "Falha no cadastro";
+            }
+
+        }
+        private bool emailExiste(string email)
+        {
+            Cadastro cd = new Cadastro();
+
+            if (email == cd.User_email)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         [HttpPut]
@@ -45,6 +68,19 @@ namespace DapperTrabalhoFinal.Controllers
             using var conncetion = c.RealizarConexao();
 
             conncetion.Execute(@"UPDATE usuarios SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description, user_link = :User_link, user_socialmedia = :User_socialmedia, user_profession = :User_profession, user_hours_week = :User_hours_week, user_experience = :User_experience, user_role = :User_Role WHERE id_user = :Id_user", u);
+
+            return "Pessoa alterada com sucesso!";
+        }
+
+        [HttpPut("perfil")]
+
+        public string UpdateUsersPerfil([FromBody] Users u)
+        {
+            Conexao c = new();
+
+            using var conncetion = c.RealizarConexao();
+
+            conncetion.Execute(@"UPDATE usuarios SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description WHERE id_user = :Id_user", u);
 
             return "Pessoa alterada com sucesso!";
         }
