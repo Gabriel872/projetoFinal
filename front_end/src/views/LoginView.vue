@@ -137,7 +137,6 @@ export default {
           }
         }
       }
-
     },
     async login() {
       const request = await fetch("https://localhost:7114/api/Users");

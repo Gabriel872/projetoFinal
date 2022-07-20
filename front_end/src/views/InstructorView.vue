@@ -1,7 +1,16 @@
 <template>
   <div class="view">
-    <section>
-      <h1>Instructor Page</h1>
+    <section class="container">
+      <div class="row">
+          <div class="col-3">
+            <div class="container-fluid">
+
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="container-fluid"></div>
+          </div>
+      </div>
     </section>
   </div>
 </template>
