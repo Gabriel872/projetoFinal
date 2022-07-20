@@ -6,6 +6,7 @@ import LoginView from '@/views/LoginView.vue'
 import SearchCourseView from '@/views/SearchCourseView.vue'
 import InstructorView from '@/views/InstructorView.vue'
 import UserView from '@/views/UserView.vue'
+import CoursePage from '@/views/CoursePage.vue'
 
 
 const routes = [
@@ -53,6 +54,11 @@ const routes = [
     path: '/instructor',
     name: "InstructorView",
     component: InstructorView
+  },
+  {
+    path: '/course',
+    name: 'CoursePage',
+    component: CoursePage
   }
 ]
 
