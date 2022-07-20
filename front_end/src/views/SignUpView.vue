@@ -104,7 +104,7 @@ export default {
     }
   },
   methods: {
-    validCredentials() {
+    async validCredentials() {
       if (this.obj_register.user_email == null || this.obj_register.user_password == null) {
 
         alert("Email or password invalid");
@@ -112,7 +112,7 @@ export default {
       } else {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
-          this.register();
+          await this.register();
           if (localStorage.getItem("login")) {
             this.goHomeView();
           }

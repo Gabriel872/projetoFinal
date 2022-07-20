@@ -132,7 +132,9 @@ export default {
         var valid = this.validEmail(this.obj_login.user_email);
         if (valid) {
           await this.login();
-          this.goHomeView();
+          if(localStorage.getItem("login")){
+            this.goHomeView();
+          }
         }
       }
 
