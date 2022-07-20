@@ -34,14 +34,16 @@
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id" >
+            <Slide v-for="card in cards" :key="card.id">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
-                <div class="card-body">
-                  <h5 class="card-title">{{ card.title }}</h5>
-                  <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card'scontent.
-                  </p>
-                </div>
+                <router-link to="/course">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ card.title }}</h5>
+                    <p class="card-text">
+                      Some quick example text to build on the card title and make up the bulk of the card'scontent.
+                    </p>
+                  </div>
+                </router-link>
               </div>
             </Slide>
 
@@ -74,12 +76,12 @@
         </div>
       </div>
     </section>
-     <section class="second">
+    <section class="second">
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id" >
+            <Slide v-for="card in cards" :key="card.id">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
                 <div class="card-body">
                   <h5 class="card-title">{{ card.title }}</h5>
@@ -124,7 +126,7 @@ export default {
     Slide,
     Navigation,
   },
-  beforeMount(){
+  beforeMount() {
 
   },
   data() {
@@ -142,8 +144,8 @@ export default {
       ]
     }
   },
-  methods:{
-    async list(){
+  methods: {
+    async list() {
 
     }
   }
@@ -161,7 +163,7 @@ section {
 }
 
 .ml_mr {
-    margin: 0px 8px 0px 8px;
+  margin: 0px 8px 0px 8px;
 }
 
 .first {

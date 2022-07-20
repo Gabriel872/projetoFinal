@@ -28,31 +28,34 @@
                 <section class="container-fluid flex mt-3" style="justify-content:start;">
                   <div class="mb-3 container-fluid" style="width: 35rem;">
                     <label for="titleFormControlInput1" class="form-label">Title</label>
-                    <input v-model="obj_course.course_name" type="text" class="form-control" id="titleFormControlInput1" placeholder="">
+                    <input v-model="obj_course.course_name" type="text" class="form-control" id="titleFormControlInput1"
+                      placeholder="">
                   </div>
                   <div class="mb-3 container-fluid" style="width: 35rem;">
                     <label for="subtitleFormControlInput1" class="form-label">Subtitle</label>
-                    <input v-model="obj_course.course_subtitle" type="text" class="form-control" id="subtitleFormControlInput1" placeholder="">
+                    <input v-model="obj_course.course_subtitle" type="text" class="form-control"
+                      id="subtitleFormControlInput1" placeholder="">
                   </div>
                 </section>
 
                 <section class="container-fluid mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                    <textarea v-model="obj_course.course_description" class="form-control" id="exampleFormControlTextarea1" rows="4"
-                      placeholder="Description here..."></textarea>
+                    <textarea v-model="obj_course.course_description" class="form-control"
+                      id="exampleFormControlTextarea1" rows="4" placeholder="Description here..."></textarea>
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="requirementsFormControlTextarea1" class="form-label">Requirements</label>
-                    <textarea v-model="obj_course.course_requirements" class="form-control" id="requirementsFormControlTextarea1" rows="4"
-                      placeholder="Requiriment"></textarea>
+                    <textarea v-model="obj_course.course_requirements" class="form-control"
+                      id="requirementsFormControlTextarea1" rows="4" placeholder="Requiriment"></textarea>
                   </div>
                 </section>
 
                 <section class="container-fluid flex mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="selectlanguage" class="form-label">Language</label>
-                    <select v-model="obj_course.course_language" class="form-select" aria-label="Default select example" id="selectlanguage">
+                    <select v-model="obj_course.course_language" class="form-select" aria-label="Default select example"
+                      id="selectlanguage">
                       <option selected>Choose language</option>
                       <option value="1">Portuguese</option>
                       <option value="2">English</option>
@@ -61,14 +64,16 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="timeFormControlInput1" class="form-label">Time</label>
-                    <input min=0 v-model="obj_course.course_time" type="number" class="form-control" id="timeFormControlInput1" placeholder="60h">
+                    <input min=0 v-model="obj_course.course_time" type="number" class="form-control"
+                      id="timeFormControlInput1" placeholder="60h">
                   </div>
                 </section>
 
                 <section class="container-fluid flex mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="selectlanguage" class="form-label">Knowledge level</label>
-                    <select v-model="obj_course.course_knowledge_level" class="form-select" aria-label="Default select example" id="selectlanguage">
+                    <select v-model="obj_course.course_knowledge_level" class="form-select"
+                      aria-label="Default select example" id="selectlanguage">
                       <option selected>Choose level</option>
                       <option value="Beginner">Beginner</option>
                       <option value="Intermediary">Intermediary</option>
@@ -77,9 +82,11 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="categoryOptions" class="form-label">Category</label>
-                    <select v-model="obj_course.course_category" class="form-select" aria-label="Default select example" id="categoryOptions">
+                    <select v-model="obj_course.course_category" class="form-select" aria-label="Default select example"
+                      id="categoryOptions">
                       <option value="0" selected>Choose category</option>
-                      <option v-for="category in categoryList" value="{{category.id_category}}">{{category.category_name}}</option>
+                      <option v-for="category in categoryList" value="{{category.id_category}}">
+                        {{ category.category_name }}</option>
                       <!-- <option value="1">Beginner</option>
                       <option value="2">Intermediary</option>
                       <option value="3">Advanced</option> -->
@@ -87,9 +94,11 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="priceOptions" class="form-label">Price</label>
-                    <select v-model="obj_course.course_price" class="form-select" aria-label="Default select example" id="priceOptions">
+                    <select v-model="obj_course.course_price" class="form-select" aria-label="Default select example"
+                      id="priceOptions">
                       <option selected>Choose price</option>
-                      <option v-for="price in priceList" value="{{price.id_price_course}}">{{price.price_course_value}}</option>
+                      <option v-for="price in priceList" value="{{price.id_price_course}}">{{ price.price_course_value }}
+                      </option>
                       <!-- <option value="1">Beginner</option>
                       <option value="2">Intermediary</option>
                       <option value="3">Advanced</option> -->
@@ -100,11 +109,13 @@
                 <section class="container-fluid mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="linkFormControlInput1" class="form-label">Link</label>
-                    <input v-model="obj_course.course_link" type="url" class="form-control" id="linkFormControlInput1" placeholder="">
+                    <input v-model="obj_course.course_link" type="url" class="form-control" id="linkFormControlInput1"
+                      placeholder="">
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="audienceFormControlInput1" class="form-label">Audience</label>
-                    <input v-model="obj_course.course_audience" type="text" class="form-control" id="audienceFormControlInput1" placeholder="">
+                    <input v-model="obj_course.course_audience" type="text" class="form-control"
+                      id="audienceFormControlInput1" placeholder="">
                   </div>
                 </section>
 
@@ -139,6 +150,9 @@ export default {
   },
   methods: {
     async createCourse() {
+      const timeElapsed = Date.now();
+      const today = new Date(timeElapsed);
+      this.obj_course.course_creatin_date = today;
       alert(this.obj_course.course_category);
       await fetch("", {
         method: "post",
