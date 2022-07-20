@@ -20,7 +20,7 @@
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
               </div>
               <div style="display:flex; justify-content: center;">
-                <input v-on:click="validCredentials()" type="submit" value="Log in" class="btn btn-primary btn-login">
+                <input v-on:click="validCredentials()" type="button" value="Log in" class="btn btn-primary btn-login">
               </div>
               <div class="options">
                 <router-link class="nav-link login-link" to="/signup" role="button" aria-expanded="false">
@@ -114,7 +114,7 @@ export default {
   name: 'LoginView',
   data() {
     return {
-      users: {},
+      users: [],
       obj_login: {}
     }
   },
@@ -130,6 +130,7 @@ export default {
       } else {
 
         var valid = this.validEmail(this.obj_login.user_email);
+        
         if (valid) {
           await this.login();
           if(localStorage.getItem("login")){
@@ -143,16 +144,24 @@ export default {
       const retorno = await request.json();
       this.users = retorno;
 
+      console.table(this.users);
       for (var i = 0; i < this.users.length; i++) {
-        if ((this.users.user_email == this.obj_login.user_email) && (this.users.user_password == this.obj_login.user_password)) {
+        if ((this.users[i].user_email == this.obj_login.user_email) && (this.users[i].user_password == this.obj_login.user_password)) {
 
           localStorage.removeItem("userRole");
           localStorage.removeItem("userId");
-          localStorage.removeItem("login")
+          localStorage.removeItem("login");
+          localStorage.removeItem("userName");
+          localStorage.removeItem("userPassword");
+          localStorage.removeItem("userDescription");
 
           localStorage.setItem("userRole", this.users[i].user_role);
-          localStorage.setItem("userId", this.users[i].id_user)
+          localStorage.setItem("userId", this.users[i].id_user);
           localStorage.setItem("login", true);
+          localStorage.setItem("userName", this.users[i].user_name);
+          localStorage.setItem("userPassword", this.users[i].user_password);
+          localStorage.setItem("userEmail", this.users[i].user_email);
+          localStorage.setItem("userDescription", this.users[i].user_description);
         }
       }
     },

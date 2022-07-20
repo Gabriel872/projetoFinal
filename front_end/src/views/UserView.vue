@@ -92,7 +92,8 @@ export default {
       user_name: localStorage.getItem("userName"),
       user_email: localStorage.getItem("userEmail"),
       user_role: localStorage.getItem("userRole"),
-      user_description: localStorage.getItem("userDescription")
+      user_description: localStorage.getItem("userDescription"),
+      user_password: localStorage.getItem("userPassword")
     }
   },
   methods: {
@@ -105,7 +106,7 @@ export default {
 
     },
     async deleteAccount() {
-      await fetch(``, {
+      await fetch(`https://localhost:7114/api/Users/${this.id_user}`, {
         method: "DELETE",
         headers: {
           "Accept": "application/json",
@@ -114,7 +115,15 @@ export default {
       });
     },
     async updateUser() {
-      await fetch(``, {
+      
+      if(this.obj_user.user_password == undefined && this.obj_user.user_email == undefined){
+        this.obj_user.user_password = this.user_password;
+        this.obj_user.user_email = this.user_email;
+      } 
+
+      this.obj_user.id_user = this.id_user;
+      
+      await fetch("https://localhost:7114/api/UpdateUser", {
         method: "PUT",
         headers: {
           "Accept": "application/json",
