@@ -370,7 +370,7 @@ CREATE TABLE pagseguro (
 
 -- PROCEDURES
 -- Procedure para validar e nao remover categoria caso tenha algum curso
-CREATE OR REPLACE PROCEDURE validate_removal (id_categ NUMBER, returns VARCHAR2)
+CREATE OR REPLACE PROCEDURE validate_removal (id_categ IN NUMBER, returns OUT VARCHAR2)
 AS
     qtd_courses NUMBER;
 BEGIN
@@ -379,7 +379,7 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns : = 'A categoria foi removida com sucesso!';
+   returns := 'A categoria foi removida com sucesso!';
       ELSE
        returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
    END IF;   
