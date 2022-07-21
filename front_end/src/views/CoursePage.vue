@@ -13,8 +13,8 @@
                                     d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                             </svg>
                             <div class="container-fluid">
-                                <h1>Titulo{{ obj_course.course_name }}</h1>
-                                <h1>Subtitulo{{ obj_course.course_subtitle }}</h1>
+                                <h1 style="color:red;">{{ obj_course.course_name }}</h1>
+                                <h1>{{ obj_course.course_subtitle }}</h1>
                                 <div class="rating mb-2 flex">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gold"
                                         class="bi bi-star-fill" viewBox="0 0 16 16">
@@ -29,7 +29,7 @@
                                         }}</span>
                                     </h3>
                                     <p style="margin-left: 0.5rem; font-size: 16px; margin-bottom: 0px;">Creation date:
-                                        00/00/0000{{ obj_course.course_time }} </p>
+                                        {{ obj_course.course_creation_date }} </p>
                                 </div>
                                 <div>
                                     <p style="font-size: 16px; margin-bottom: 0px;">Language:
@@ -129,29 +129,48 @@ export default {
             obj_id: 0,
             obj_course: {},
             array_prices: [],
+            array_users: [],
             course_price: 0,
+            course_author: ""
         }
     },
     beforeMount() {
-        // this.obj_id = this.$router.params.id_course;
+        this.getId();
         this.getCourse();
+        this.getPrice();
+        this.getAuthor();
     },
     methods: {
+        getId(){
+            this.obj_id = this.$route.params.id;
+        },  
         async getCourse() {
-            const object = await fetch(""); // get por id
+            const object = await fetch(`https://localhost:7114/api/Courses/${this.obj_id}`); // get por id
             const course_json = await object.json();
-            this.obj_course = course_json;
+            this.obj_course = await course_json[0];
+
         },
         async getPrice() {
-            var id = this.obj_course.id_price_course;
-
-            const prices = await fetch("");
+            console.log(this.obj_course.id_price_course);
+            console.log(this.obj_course);
+            const prices = await fetch("https://localhost:7114/api/PriceCourses");
             const prices_json = await prices.json();
             this.array_prices = prices_json;
 
             for(var i = 0; i < this.array_prices.length; i++){
-                if(id == this.array_prices[i].id_price_course){
+                if(this.obj_course.id_price_course == this.array_prices[i].id_price_course){
                     this.course_price = this.array_prices[i].price_course_value;
+                }
+            }
+        },
+        async getAuthor(){
+            const request = await fetch("https://localhost:7114/api/Users")
+            const user_json = await request.json();
+            this.array_users = await user_json;
+
+            for(var i = 0; i < this.array_users.length; i++){
+                if(this.obj_course.id_author == this.array_users[i].id_user){
+                    this.course_author = this.array_users[i].user_name;
                 }
             }
         }

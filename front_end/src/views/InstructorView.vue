@@ -57,9 +57,9 @@
                     <select v-model="obj_course.course_language" class="form-select" aria-label="Default select example"
                       id="selectlanguage">
                       <option selected>Choose language</option>
-                      <option value="1">Portuguese</option>
-                      <option value="2">English</option>
-                      <option value="3">Spanish</option>
+                      <option value="Portuguese">Portuguese</option>
+                      <option value="English">English</option>
+                      <option value="Spanish">Spanish</option>
                     </select>
                   </div>
                   <div class="mb-3 container-fluid">
@@ -175,7 +175,6 @@ export default {
       const request = await fetch("https://localhost:7114/api/Categories");
       const retorno = await request.json();
       this.categoryList = retorno;
-      console.log(this.categoryList)
     }
   }
 }

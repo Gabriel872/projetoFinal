@@ -34,14 +34,14 @@
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id">
+            <Slide v-for="card in cards" :key="card.id_course">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
-                <router-link :to="{name: 'CoursePage', params: { id:card.id_course}}">
+                <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }">
                   <div class="card-body">
                     <img src="../img/perfil.png" class="img-fluid" alt="...">
                     <h5 class="card-title">{{ card.course_title }}</h5>
                     <p class="card-text">
-                      {{card.course_subtitle}}
+                      {{ card.course_subtitle }}
                     </p>
                     <!-- Colocar rating aqui -->
                   </div>
@@ -83,7 +83,7 @@
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id">
+            <Slide v-for="card in cards" :key="card.id_course">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
                 <div class="card-body">
                   <h5 class="card-title">{{ card.title }}</h5>
@@ -133,23 +133,13 @@ export default {
   },
   data() {
     return {
-      cards: [
-        // teste
-        // { id: 1, title: 'Teste de titulo' },
-        // { id: 2, title: 'Ola tudo bem?' },
-        // { id: 3, title: 'Salve' },
-        // { id: 4, title: 'Isso é teste cara' },
-        // { id: 5, title: 'Salve mais uma vez' },
-        // { id: 6, title: 'Curso 1' },
-        // { id: 7, title: 'Curso 2' },
-        // { id: 8, title: 'Curso 3' }
-      ]
+      cards: []
     }
   },
   methods: {
     async list() {
-      const request = await fetch("");
-      const retorno = request.json();
+      const request = await fetch("https://localhost:7114/api/Courses");
+      const retorno = await request.json();
       this.cards = retorno;
     }
   }
