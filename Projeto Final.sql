@@ -38,7 +38,7 @@ CREATE TABLE courses (
        course_people_amt NUMBER,
        course_rating NUMBER,
        course_language VARCHAR2(30) NOT NULL,
-       course_creatin_date DATE NOT NULL,
+       course_creation_date DATE NOT NULL,
        course_description VARCHAR2(150) NOT NULL,
        course_requirements VARCHAR2(100) NOT NULL,
        course_time NUMBER NOT NULL,
