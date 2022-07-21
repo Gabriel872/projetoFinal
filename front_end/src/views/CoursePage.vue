@@ -72,7 +72,7 @@
                                             Knowledge level
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{{ course_knowledge_level }}</p>
+                                            <p class="card-text">{{ obj_course.course_knowledge_level }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -130,16 +130,15 @@ export default {
             obj_course: {},
             array_prices: [],
             course_price: 0,
-            course_knowledge_level: 0,
         }
     },
     beforeMount() {
-        this.obj_id = this.$router.params.id_course;
+        // this.obj_id = this.$router.params.id_course;
         this.getCourse();
     },
     methods: {
         async getCourse() {
-            const object = await fetch("");
+            const object = await fetch(""); // get por id
             const course_json = await object.json();
             this.obj_course = course_json;
         },
@@ -147,12 +146,12 @@ export default {
             var id = this.obj_course.id_price_course;
 
             const prices = await fetch("");
-            const prices_json = prices.json();
+            const prices_json = await prices.json();
             this.array_prices = prices_json;
 
             for(var i = 0; i < this.array_prices.length; i++){
-                if(this.obj_id == this.array_prices[i].id){
-                    
+                if(id == this.array_prices[i].id_price_course){
+                    this.course_price = this.array_prices[i].price_course_value;
                 }
             }
         }
