@@ -45,8 +45,7 @@ namespace DapperTrabalhoFinal.Controllers
             return "Cadastro efetuado com sucesso!";
         }
 
-        
-         
+       
         [HttpPut]
 
         public string UpdateCourses([FromBody] Courses cs)

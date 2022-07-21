@@ -35,10 +35,10 @@ namespace DapperTrabalhoFinal.Controllers
 
             bool verificacaoEmail = IsValidEmail(pg.Pagseguro_email);
             bool verificaCpf = VerifyCpf(pg.Pagseguro_cpf);
-            bool existeEmail = emailExiste(pg.Pagseguro_email);
+            //bool existeEmail = emailExiste(pg.Pagseguro_email);
 
 
-            if (verificacaoEmail && verificaCpf && existeEmail)
+            if (verificacaoEmail && verificaCpf)
             {
                 connection.Execute(@"INSERT INTO pagseguro (pagseguro_name, pagseguro_email, pagseguro_cpf) VALUES (:Pagseguro_name, :Pagseguro_email, :Pagseguro_cpf)", pg);
                 return "Email e cpf cadastrado com sucesso!";
@@ -86,7 +86,7 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private bool emailExiste(string email)
+        /*private bool emailExiste(string email)
         {
             PagSeguro pg = new PagSeguro();
 
@@ -98,7 +98,7 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 return true;
             }
-        }
+        }*/
 
         private bool VerifyCpf(string cpf)
         {
