@@ -22,6 +22,18 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<Categories>("SELECT * FROM categories");
         }
 
+
+        [HttpGet("{id_categorie}")]
+
+        public IEnumerable<Categories> ListIdCategories(int id_categorie)
+        {
+            Conexao c = new Conexao();
+
+            using var connection = c.RealizarConexao();
+
+            return connection.Query<Categories>("SELECT * FROM categories WHERE id_categorie = " + id_categorie);
+        }
+
         [HttpPost]
 
         public string RegisterCategories([FromBody] Categories cg)

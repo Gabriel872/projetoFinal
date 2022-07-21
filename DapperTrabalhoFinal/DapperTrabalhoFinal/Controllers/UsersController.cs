@@ -23,6 +23,17 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<Users>("SELECT * FROM usuarios");
         }
 
+        [HttpGet("{id_user}")]
+
+        public IEnumerable<Users> ListIdUsers(int id_user)
+        {
+            Conexao c = new Conexao();
+
+            using var connection = c.RealizarConexao();
+
+            return connection.Query<Users>("SELECT * FROM usuarios WHERE id_user = " + id_user);
+        }
+
         [HttpPost]
 
         public string RegisterUsersTeste([FromBody] Users u)

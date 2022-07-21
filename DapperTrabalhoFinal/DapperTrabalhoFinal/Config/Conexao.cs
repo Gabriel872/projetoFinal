@@ -10,7 +10,7 @@ namespace DapperTrabalhoFinal.Config
                 + "(ADDRESS = (PROTOCOL = TCP)(HOST=192.168.15.18)(PORT=1521))"
                 + "(CONNECT_DATA =(SERVER = DEDICATED)"
                 + "(SERVICE_NAME = TREINAMENTO))));"
-                + "User Id=aluno05;Password=aluno05;";
+                + "User Id=aluno04;Password=aluno04;";
 
             // retorno contendo o acesso ao banco de dados
             return new OracleConnection(StringConexao);

@@ -21,6 +21,17 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<Courses>("SELECT * FROM courses");
         }
 
+        [HttpGet("{id_course}")]
+
+        public IEnumerable<Courses> ListIdCourses(int id_course)
+        {
+            Conexao c = new Conexao();
+
+            using var connection = c.RealizarConexao();
+
+            return connection.Query<Courses>("SELECT * FROM courses WHERE id_course = " + id_course);
+        }
+
         [HttpPost]
 
         public string RegisterCourses([FromBody] Courses cs)
