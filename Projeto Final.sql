@@ -38,7 +38,7 @@ CREATE TABLE courses (
        course_people_amt NUMBER,
        course_rating NUMBER,
        course_language VARCHAR2(30) NOT NULL,
-       course_creation_date DATE NOT NULL,
+       course_creation_date DATE NOT NULL, -- Alterar de DATE para VARCHAR2(10) segundo backend
        course_description VARCHAR2(150) NOT NULL,
        course_requirements VARCHAR2(100) NOT NULL,
        course_time NUMBER NOT NULL,
@@ -360,7 +360,6 @@ ALTER TABLE course_sections
 ADD CONSTRAINT fk_id_course_course_sections
 FOREIGN KEY (id_course) REFERENCES courses(id_course);
 
------------------------------------
 -- Criando tabela PAGSEGURO   == TABELA
 CREATE TABLE pagseguro (
        pagseguro_name VARCHAR2(50) NOT NULL,
@@ -379,9 +378,9 @@ BEGIN
    -- Condicional
    IF qtd_courses = 0 THEN
    DELETE FROM categories WHERE id_categorie = id_categ;
-   returns := 'A categoria foi removida com sucesso!';
+   dbms_output.put_line('A categoria foi removida com sucesso!');
       ELSE
-       returns := 'Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'; 
+       dbms_output.put_line('Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'); 
    END IF;   
 END;
 
@@ -411,6 +410,7 @@ SELECT id_subcategorie FROM sub_themes WHERE id_subcategorie = id_subcategorie;
 
 -- Comando para conectar o curso com as seções de curso
 SELECT id_course FROM course_sections WHERE id_course = id_course;
+
 
 -- Exclusão
 -- Procedures
@@ -445,6 +445,7 @@ DROP SEQUENCE auto_increment_user_courses;
 DROP SEQUENCE auto_increment_wishes;
 
 -- VIEWS
+/*
 DROP VIEW connect_course;   
 DROP VIEW connect_wishes;   
 DROP VIEW connect_interests;   
@@ -454,6 +455,7 @@ DROP VIEW connect_sub_theme;
 DROP VIEW connect_course_sect;
 DROP VIEW connect_classes;
 DROP VIEW connect_categorie;
+*/
 
 -- Tables
 DROP TABLE categories;   
