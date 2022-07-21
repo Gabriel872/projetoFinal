@@ -56,9 +56,14 @@ const routes = [
     component: InstructorView
   },
   {
-    path: '/course',
+    path: '/course/:id',
     name: 'CoursePage',
-    component: CoursePage
+    component: CoursePage,
+  },
+  {
+    path: '/course',
+    name: 'CoursePage1',
+    component: CoursePage,
   }
 ]
 

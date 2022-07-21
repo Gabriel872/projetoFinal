@@ -114,6 +114,7 @@ export default {
         if (valid) {
           await this.register();
           if (localStorage.getItem("login")) {
+            location.reload();
             this.goHomeView();
           }
         }

@@ -36,12 +36,14 @@
             <!-- Teste -->
             <Slide v-for="card in cards" :key="card.id">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
-                <router-link to="/course">
+                <router-link :to="{name: 'CoursePage', params: { id:card.id_course}}">
                   <div class="card-body">
-                    <h5 class="card-title">{{ card.title }}</h5>
+                    <img src="../img/perfil.png" class="img-fluid" alt="...">
+                    <h5 class="card-title">{{ card.course_title }}</h5>
                     <p class="card-text">
-                      Some quick example text to build on the card title and make up the bulk of the card'scontent.
+                      {{card.course_subtitle}}
                     </p>
+                    <!-- Colocar rating aqui -->
                   </div>
                 </router-link>
               </div>
@@ -115,8 +117,8 @@
 import { defineComponent } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import CardCarouselVue from '@/components/CardCarousel.vue';
-
 import 'vue3-carousel/dist/carousel.css';
+
 
 export default {
   name: 'HomeView',
@@ -127,26 +129,28 @@ export default {
     Navigation,
   },
   beforeMount() {
-
+    this.list();
   },
   data() {
     return {
       cards: [
         // teste
-        { id: 1, title: 'Teste de titulo' },
-        { id: 2, title: 'Ola tudo bem?' },
-        { id: 3, title: 'Salve' },
-        { id: 4, title: 'Isso é teste cara' },
-        { id: 5, title: 'Salve mais uma vez' },
-        { id: 6, title: 'Curso 1' },
-        { id: 7, title: 'Curso 2' },
-        { id: 8, title: 'Curso 3' }
+        // { id: 1, title: 'Teste de titulo' },
+        // { id: 2, title: 'Ola tudo bem?' },
+        // { id: 3, title: 'Salve' },
+        // { id: 4, title: 'Isso é teste cara' },
+        // { id: 5, title: 'Salve mais uma vez' },
+        // { id: 6, title: 'Curso 1' },
+        // { id: 7, title: 'Curso 2' },
+        // { id: 8, title: 'Curso 3' }
       ]
     }
   },
   methods: {
     async list() {
-
+      const request = await fetch("");
+      const retorno = request.json();
+      this.cards = retorno;
     }
   }
 }

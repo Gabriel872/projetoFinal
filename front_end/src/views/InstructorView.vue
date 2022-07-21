@@ -82,17 +82,9 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="categoryOptions" class="form-label">Category</label>
-<<<<<<< HEAD
                     <select v-model="obj_course.id_categorie" class="form-select" aria-label="Default select example" id="categoryOptions">
                       <option value="0" selected>Choose category</option>
                       <option v-for="category in categoryList" v-bind:key="category.id_categorie" :value=category.id_categorie>{{category.categorie_name}}</option>
-=======
-                    <select v-model="obj_course.course_category" class="form-select" aria-label="Default select example"
-                      id="categoryOptions">
-                      <option value="0" selected>Choose category</option>
-                      <option v-for="category in categoryList" value="{{category.id_category}}">
-                        {{ category.category_name }}</option>
->>>>>>> c4a1cc460d59d846486c2b4380714656b103bd19
                       <!-- <option value="1">Beginner</option>
                       <option value="2">Intermediary</option>
                       <option value="3">Advanced</option> -->
@@ -100,17 +92,9 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="priceOptions" class="form-label">Price</label>
-<<<<<<< HEAD
                     <select v-model="obj_course.id_price_course" class="form-select" aria-label="Default select example" id="priceOptions">
                       <option selected>Choose price</option>
                       <option v-for="price in priceList" v-bind:key="price.id_price_course" :value=price.id_price_course>{{price.price_course_value}}</option>
-=======
-                    <select v-model="obj_course.course_price" class="form-select" aria-label="Default select example"
-                      id="priceOptions">
-                      <option selected>Choose price</option>
-                      <option v-for="price in priceList" value="{{price.id_price_course}}">{{ price.price_course_value }}
-                      </option>
->>>>>>> c4a1cc460d59d846486c2b4380714656b103bd19
                       <!-- <option value="1">Beginner</option>
                       <option value="2">Intermediary</option>
                       <option value="3">Advanced</option> -->
@@ -162,7 +146,6 @@ export default {
   },
   methods: {
     async createCourse() {
-<<<<<<< HEAD
       var today = new Date();
       var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
       
@@ -174,13 +157,6 @@ export default {
       alert(this.obj_course.course_creation_date);
 
       await fetch("https://localhost:7114/api/RegisterCourse", {
-=======
-      const timeElapsed = Date.now();
-      const today = new Date(timeElapsed);
-      this.obj_course.course_creatin_date = today;
-      alert(this.obj_course.course_category);
-      await fetch("", {
->>>>>>> c4a1cc460d59d846486c2b4380714656b103bd19
         method: "post",
         headers: {
           "Accept": "application/json",
