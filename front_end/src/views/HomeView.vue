@@ -35,12 +35,12 @@
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
             <Slide v-for="card in cards" :key="card.id_course">
-              <div class="card ml_mr carousel__item bg-dark text-bg-dark">
+              <div class="card ml_mr carousel__item bg-dark text-bg-dark" style="width: 240px; border: none; border-radius: 10px;">
                 <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }">
-                  <div class="card-body" style="width: 50px; height: 200px; background-color: ;">
+                  <div class="card-body pt-2 pb-2">
                     <img src="../img/perfil.png" class="img-fluid" alt="...">
-                    <h5 class="card-title">{{ card.course_title }}</h5>
-                    <p class="card-text">
+                    <h5 class="card-title mb-2">{{ card.course_title }}</h5>
+                    <p class="card-text mb-2">
                       {{ card.course_subtitle }}
                     </p>
                     <!-- Colocar rating aqui -->
