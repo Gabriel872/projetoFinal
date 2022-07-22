@@ -6,7 +6,7 @@
           <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="" class="d-block w-100" style=" height: 100%;" alt="...">
+                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
               </div>
               <div class="carousel-item">
                 <img src="" class="d-block w-100" alt="...">
@@ -37,7 +37,7 @@
             <Slide v-for="card in cards" :key="card.id_course">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark">
                 <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }">
-                  <div class="card-body">
+                  <div class="card-body" style="width: 50px; height: 200px; background-color: ;">
                     <img src="../img/perfil.png" class="img-fluid" alt="...">
                     <h5 class="card-title">{{ card.course_title }}</h5>
                     <p class="card-text">
@@ -55,7 +55,34 @@
           </Carousel>
         </div>
       </div>
+      <div class="card ml_mr carousel__item bg-dark text-bg-dark" style="width: 240px; border: none; border-radius: 10px;">
+        <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
+          <div style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: lightcoral;">
+            <h1>"<b>Olá</b>"</h1>
+          </div>
+          <!-- <img src="../img/banner.jpg" class="img-fluid" alt="..."> -->
+        </div>
+        <!-- <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }"> -->
+        <div class="card-body pt-2 pb-2">
+          <h1 class="card-title mb-2" style="font-size: 20px;"><b>Curso HTML</b></h1>
+          <h2 class="card-text mb-2" style="font-size: 14px;">Gabriel</h2>
+          <div class="flex" style="justify-content: space-between;">
+          <div class="flex" style="color: #ffbc00;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill"
+              viewBox="0 0 16 16">
+              <path
+                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+            </svg>
+            <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
+          </div>
+            
+            <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
+          </div>
 
+          <!-- Colocar rating aqui -->
+        </div>
+        <!-- </router-link> -->
+      </div>
     </section>
     <section class="third">
       <div class="container">
