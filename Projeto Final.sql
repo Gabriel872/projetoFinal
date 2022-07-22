@@ -388,31 +388,31 @@ END;
 SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;
 
 -- Comando para selecionar os cursos da categoria
-SELECT id_categorie FROM courses WHERE id_categorie = id_categorie;
+SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = categories.id_categorie;
 
--- Comando para criar ligacao com as aulas, valor e usuario por curso 
-SELECT * FROM courses WHERE id_course = id_course;
+-- Comando para criar ligacao com o valor e o curso
+SELECT * FROM courses INNER JOIN price_courses ON price_courses.id_price_course = courses.id_price_course WHERE price_courses.id_course = courses.id_course;
 
 -- Comando para criar ligacao dos desejos com cursos
-SELECT id_course FROM wishes WHERE id_course = id_course;
+SELECT wishes.id_course FROM wishes INNER JOIN courses ON courses.id_course = wishes.id_course INNER JOIN usuarios ON usuarios.id_user = wishes.id_user WHERE wishes.id_course = courses.id_course;
 
 -- Comando para listar categorias nos interesses
-SELECT id_categorie FROM interests WHERE id_categorie = id_categorie;
+SELECT interests.id_categorie FROM interests INNER JOIN categories ON categories.id_categorie = interests.id_categorie INNER JOIN usuarios ON usuarios.id_user = interests.id_user WHERE interests.id_categorie = categories.id_categorie;
 
 -- Comando para criar ligacao com os comentarios, curso e usuario
-SELECT id_rating FROM ratings WHERE id_course = id_course;
+SELECT ratings.id_rating FROM ratings INNER JOIN courses ON courses.id_course = ratings.id_course INNER JOIN usuarios ON usuarios.id_user = ratings.id_user WHERE ratings.id_course = course.id_course;
 
 -- Comando para conectar o curso com a aula
-SELECT classes.id_course FROM classes WHERE id_course = id_course;
+SELECT classes.id_course FROM classes INNER JOIN courses ON courses.id_course = classes.id_course WHERE classes.id_course = courses.id_course;
 
 -- Comando para conectar a subcategoria com a categoria
-SELECT id_categorie FROM subcategories WHERE id_categorie = id_categorie;
+SELECT subcategories.id_categorie FROM subcategories INNER JOIN categories ON categories.id_categorie = subcategories.id_categorie WHERE subcategories.id_categorie = categories.id_categorie;
 
 -- Comando para conectar o sub tema com a subcategoria
-SELECT id_subcategorie FROM sub_themes WHERE id_subcategorie = id_subcategorie;
+SELECT sub_themes.id_subcategorie FROM sub_themes INNER JOIN subcategories ON subcategories.id_subcategorie = sub_themes.id_subcategorie WHERE sub_themes.id_subcategorie = subcategories.id_subcategorie;
 
 -- Comando para conectar o curso com as seções de curso
-SELECT id_course FROM course_sections WHERE id_course = id_course;
+SELECT course_sections.id_course FROM course_sections INNER JOIN courses ON courses.id_course = course_sections.id_course WHERE course_sections.id_course = courses.id_course;
 
 
 -- Exclusão
