@@ -1,8 +1,9 @@
 <template>
     <div class="view" style="background-color:lightgray;">
-        <section class="container" style="background-color:#212529; color: white;">
-            <div class="row">
-                <div class="col-10">
+        <section class="container">
+            <div class="row pt-5 pb-5">
+                <div class="col-9 pt-4 pb-4"
+                    style="background-color:#212529; color: white; border-radius: 20px 0px 0px 20px;">
                     <section class="mb-5">
                         <div class="container-fluid flex">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12rem" height="12rem" fill="currentColor"
@@ -13,7 +14,7 @@
                                     d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                             </svg>
                             <div class="container-fluid">
-                                <h1 style="color:red;">{{ obj_course.course_name }}</h1>
+                                <h1>{{ obj_course.course_name }}</h1>
                                 <h1>{{ obj_course.course_subtitle }}</h1>
                                 <div class="rating mb-2 flex">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gold"
@@ -81,6 +82,18 @@
                                 <div class="container mb-4">
                                     <div class="card" style="background-color: #363c42; border: none;">
                                         <div class="card-header" style="border-color: #808080;">
+                                            Learning
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">{{ obj_course.course_learnings }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="container mb-4">
+                                    <div class="card" style="background-color: #363c42; border: none;">
+                                        <div class="card-header" style="border-color: #808080;">
                                             Comments
                                         </div>
                                         <div class="card-body">
@@ -93,26 +106,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2" style="background-color: white;">
+                <div class="col-3 pt-3" style="background-color: #363c42; border-radius: 0px 20px 20px 0px;">
                     <div class="container-fluid flex-grid" style="color:  #212529;">
-                        <div style="display:flex; justify-content:center;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-cash img-fluid"
-                                viewBox="0 0 16 16">
-                                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
-                                <path
-                                    d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z" />
-                            </svg>
-                        </div>
-
-                        <div class="container-fluid">
-                            <h1 style="margin-bottom: 0px;">{{ obj_course.course_name }}</h1>
-                            <div class="container-fluid flex">
-                                <h2 style="white-space: nowrap;">R$ {{ course_price }}</h2>
+                        <div class="container-fluid" style="color: lightgray;">
+                            <div class="flex">
+                                <h1 style=" word-break: break-all;">R$ {{ course_price }}</h1>
                             </div>
-                            <div class="row">
-                                <button class="btn btn-primary btn-default">Buy</button>
+                            <div class="flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trophy-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z" />
+                                </svg>
+                                <p style="margin-bottom: 0px;">Certificado</p>
                             </div>
-
+                            <div class="row mt-5">
+                                <button class="btn btn-primary btn-default" style="font-size: 30px;"><b>Buy</b></button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,9 +151,9 @@ export default {
         this.getAuthor();
     },
     methods: {
-        getId(){
+        getId() {
             this.obj_id = this.$route.params.id;
-        },  
+        },
         async getCourse() {
             const object = await fetch(`https://localhost:7114/api/Courses/${this.obj_id}`); // get por id
             const course_json = await object.json();
@@ -157,19 +167,19 @@ export default {
             const prices_json = await prices.json();
             this.array_prices = prices_json;
 
-            for(var i = 0; i < this.array_prices.length; i++){
-                if(this.obj_course.id_price_course == this.array_prices[i].id_price_course){
+            for (var i = 0; i < this.array_prices.length; i++) {
+                if (this.obj_course.id_price_course == this.array_prices[i].id_price_course) {
                     this.course_price = this.array_prices[i].price_course_value;
                 }
             }
         },
-        async getAuthor(){
+        async getAuthor() {
             const request = await fetch("https://localhost:7114/api/Users")
             const user_json = await request.json();
             this.array_users = await user_json;
 
-            for(var i = 0; i < this.array_users.length; i++){
-                if(this.obj_course.id_author == this.array_users[i].id_user){
+            for (var i = 0; i < this.array_users.length; i++) {
+                if (this.obj_course.id_author == this.array_users[i].id_user) {
                     this.course_author = this.array_users[i].user_name;
                 }
             }
@@ -226,6 +236,10 @@ export default {
     .bi-cash {
         width: 10rem;
     }
+}
+
+.background-img {
+    background-image: url("../img/perfil.png");
 }
 
 .btn-default {
