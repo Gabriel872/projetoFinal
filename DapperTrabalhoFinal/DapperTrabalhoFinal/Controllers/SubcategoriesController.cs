@@ -20,7 +20,7 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             return connection.Query<Subcategories>("SELECT * FROM subcategories");
-        }
+        }                                                                                                                                                                                                                                                                                   
 
         [HttpPost]
 
@@ -38,7 +38,7 @@ namespace DapperTrabalhoFinal.Controllers
         [HttpPut]
 
         public string UpdateSubcategories([FromBody] Subcategories sb)
-        {
+        {       
             Conexao c = new();
 
             using var conncetion = c.RealizarConexao();
@@ -79,3 +79,4 @@ namespace DapperTrabalhoFinal.Controllers
         }
     }
 }
+

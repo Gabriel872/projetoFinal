@@ -44,7 +44,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Cadastro>("SELECT * FROM usuarios");
+            return connection.Query<Cadastro>("SELECT * FROM usuario");
         }
 
         [HttpPost]
@@ -59,9 +59,8 @@ namespace DapperTrabalhoFinal.Controllers
             bool verificacaoEmail = IsValidEmail(cd.User_email);
             bool verificacaoSenha = isValidPassword(cd.User_password);
             bool verificacaoNome = isValidUserName(cd.User_name);
-            bool verificacaoEmailExiste = emailExiste(cd.User_email);
 
-            if (verificacaoEmail && verificacaoSenha && verificacaoNome && verificacaoEmailExiste)
+            if (verificacaoEmail && verificacaoSenha && verificacaoNome)
             {
                 connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", cd);
                 return "Cadastro efetuado com sucesso!";
@@ -71,7 +70,7 @@ namespace DapperTrabalhoFinal.Controllers
                 return "Falha ao cadastrar";
             }
         }
-
+        
         private bool isValidPassword(string password)
         {
             var input = password;
@@ -126,20 +125,6 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 return true;
             }  
-        }
-
-        private bool emailExiste(string email)
-        {
-            Cadastro cd = new Cadastro();
-
-            if (email == cd.User_email)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         private bool IsValidEmail(string email)
