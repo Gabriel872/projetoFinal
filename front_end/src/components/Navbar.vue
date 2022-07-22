@@ -108,6 +108,10 @@ export default {
     },
     instructorView() {
       this.$router.replace({ path: '/instructor' })
+    },
+    methodThatForcesUpdate() {
+      this.login = localStorage.getItem("login");
+      this.$forceUpdate();  // Notice we have to use a $ here
     }
   },
   props: {

@@ -135,7 +135,7 @@ export default {
         if (valid) {
           await this.login();
           if(localStorage.getItem("login")){
-            NavbarVue.forceUodate();
+            NavbarVue.forceUpdate();
             this.goHomeView();
           }
         }
