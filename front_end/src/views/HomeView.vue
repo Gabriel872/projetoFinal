@@ -1,32 +1,32 @@
 <template>
   <div class="view">
-    <section class="first">
+    <section class="first" style="margin-top: 5rem;">
       <div class="container">
-        <div class="banner-teamplate">
-          <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
-              </div>
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" style="border-radius: 10px; overflow:hidden;">
+            <div class="carousel-item active">
+              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+            <div class="carousel-item">
+              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
+            </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
+
       </div>
     </section>
     <section class="second">
@@ -35,19 +35,20 @@
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
             <Slide v-for="card in cards" :key="card.id_course">
-              <div class="card ml_mr carousel__item bg-dark text-bg-dark"
-                style="width: 240px; border: none; border-radius: 10px;">
-                <router-link style="text-decoration: none; color:white;"
-                  :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+              <router-link style="text-decoration: none; color:white;"
+                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                <div class="card ml_mr carousel__item bg-dark text-bg-dark"
+                  style="width: 240px; border: none; border-radius: 10px;">
+
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
-                      style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: lightcoral;">
+                      style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: rgb(54, 60, 66);">
                       <h1>"<b>Olá</b>"</h1>
                     </div>
                   </div>
-                  <div class="card-body pt-2 pb-2">
-                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_title }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">autor</h2>
+                  <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.course_author }}</h2>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -61,8 +62,9 @@
                       <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
                     </div>
                   </div>
-                </router-link>
-              </div>
+
+                </div>
+              </router-link>
             </Slide>
 
             <template #addons>
@@ -70,36 +72,6 @@
             </template>
           </Carousel>
         </div>
-      </div>
-      <div class="card ml_mr carousel__item bg-dark text-bg-dark"
-        style="width: 240px; border: none; border-radius: 10px;">
-        <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
-          <div
-            style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: lightcoral;">
-            <h1>"<b>Olá</b>"</h1>
-          </div>
-          <!-- <img src="../img/banner.jpg" class="img-fluid" alt="..."> -->
-        </div>
-        <!-- <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }"> -->
-        <div class="card-body pt-2 pb-2">
-          <h1 class="card-title mb-2" style="font-size: 20px;"><b>Curso HTML</b></h1>
-          <h2 class="card-text mb-2" style="font-size: 14px;">Gabriel</h2>
-          <div class="flex" style="justify-content: space-between;">
-            <div class="flex" style="color: #ffbc00;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill"
-                viewBox="0 0 16 16">
-                <path
-                  d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-              </svg>
-              <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
-            </div>
-
-            <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
-          </div>
-
-          <!-- Colocar rating aqui -->
-        </div>
-        <!-- </router-link> -->
       </div>
     </section>
     <section class="third">
@@ -121,12 +93,30 @@
           </div>
           <div class="col-4">
             <div class="promotion-card painels">
-              Escolha cursos lecionados por especialistas reais
+              <div class="ps-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                  class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                </svg>
+              </div>
+              <div class="ms-4" style="font-size: 16px;">
+                Escolha cursos lecionados por especialistas reais
+              </div>
             </div>
           </div>
           <div class="col-4">
             <div class="promotion-card painels">
-              Estude no seu ritmo, com acesso vitalício no dispositivo móvel e no computador
+              <div class="ps-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                  class="bi bi-clock-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                </svg>
+              </div>
+              <div class="ms-4">
+                Estude no seu ritmo, com acesso vitalício no dispositivo móvel e no computador
+              </div>
             </div>
           </div>
         </div>
@@ -138,16 +128,37 @@
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
             <Slide v-for="card in cards" :key="card.id_course">
-              <div class="card ml_mr carousel__item bg-dark text-bg-dark">
-                <div class="card-body">
-                  <h5 class="card-title">{{ card.title }}</h5>
-                  <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card'scontent.
-                  </p>
-                </div>
-              </div>
-            </Slide>
+              <router-link style="text-decoration: none; color:white;"
+                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                <div class="card ml_mr carousel__item bg-dark text-bg-dark"
+                  style="width: 240px; border: none; border-radius: 10px;">
 
+                  <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
+                    <div
+                      style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: rgb(54, 60, 66);">
+                      <h1>"<b>Olá</b>"</h1>
+                    </div>
+                  </div>
+                  <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.course_author }}</h2>
+                    <div class="flex" style="justify-content: space-between;">
+                      <div class="flex" style="color: #ffbc00;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-star-fill" viewBox="0 0 16 16">
+                          <path
+                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                        </svg>
+                        <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
+                      </div>
+
+                      <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
+                    </div>
+                  </div>
+
+                </div>
+              </router-link>
+            </Slide>
             <template #addons>
               <Navigation />
             </template>
@@ -187,7 +198,7 @@ export default {
   },
   data() {
     return {
-      cards: []
+      cards: [],
     }
   },
   methods: {
@@ -206,8 +217,13 @@ section {
   margin: 0px auto 10px auto;
 }
 
+.banner {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
 .painels {
-  background-color: lightgray;
+  background-color: #c1fff6;
   border-radius: 20px;
 }
 
@@ -242,14 +258,5 @@ section {
   height: 100px;
   margin: auto;
   text-align: start;
-}
-
-/* Test */
-
-.banner-teamplate {
-  border-radius: 0px 0px 10px 10px;
-  width: 100%;
-  height: 400px;
-  background-color: lightskyblue;
 }
 </style>
