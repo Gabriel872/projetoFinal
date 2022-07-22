@@ -121,8 +121,8 @@ export default {
       }
     },
     async register() {
+
       this.obj_register.user_role = "user"
-      this.obj_register.user_description = "Description..."
 
       await fetch(`https://localhost:7114/api/Cadastro`, {
         method: "post",
@@ -132,6 +132,8 @@ export default {
         },
         body: JSON.stringify(this.obj_register)
       });
+      
+      this.obj_register.user_description = "Description..."
 
       localStorage.removeItem("login");
       localStorage.removeItem("userRole");
@@ -153,7 +155,6 @@ export default {
       var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;
 
       if (input.match(validRegex)) {
-        alert("Valid email address!");
         return true;
 
       } else {

@@ -144,7 +144,6 @@ export default {
       const retorno = await request.json();
       this.users = retorno;
 
-      console.table(this.users);
       for (var i = 0; i < this.users.length; i++) {
         if ((this.users[i].user_email == this.obj_login.user_email) && (this.users[i].user_password == this.obj_login.user_password)) {
 
@@ -169,7 +168,6 @@ export default {
       var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;
 
       if (input.match(validRegex)) {
-        alert("Valid email address!");
         return true;
 
       } else {
