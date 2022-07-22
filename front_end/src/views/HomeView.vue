@@ -9,10 +9,10 @@
                 <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="" class="d-block w-100" alt="...">
+                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
               </div>
               <div class="carousel-item">
-                <img src="" class="d-block w-100" alt="...">
+                <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -37,13 +37,13 @@
             <Slide v-for="card in cards" :key="card.id_course">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                 style="width: 240px; border: none; border-radius: 10px;">
-                <router-link style="text-decoration: none; color:white;" :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                <router-link style="text-decoration: none; color:white;"
+                  :to="{ name: 'CoursePage', params: { id: card.id_course } }">
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
                       style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: lightcoral;">
                       <h1>"<b>Olá</b>"</h1>
                     </div>
-                    <!-- <img src="../img/banner.jpg" class="img-fluid" alt="..."> -->
                   </div>
                   <div class="card-body pt-2 pb-2">
                     <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_title }}</b></h1>
