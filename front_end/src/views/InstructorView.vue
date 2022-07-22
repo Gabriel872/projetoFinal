@@ -152,10 +152,6 @@ export default {
       this.obj_course.course_creation_date = date;
       this.obj_course.id_author = this.id_user;
 
-      alert(this.obj_course.id_categorie);
-      alert(this.obj_course.id_price_course);
-      alert(this.obj_course.course_creation_date);
-
       await fetch("https://localhost:7114/api/RegisterCourse", {
         method: "post",
         headers: {

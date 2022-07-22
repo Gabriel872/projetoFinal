@@ -110,7 +110,7 @@
                     <div class="container-fluid flex-grid" style="color:  #212529;">
                         <div class="container-fluid" style="color: lightgray;">
                             <div class="flex">
-                                <h1 style=" word-break: break-all;">R$ {{ course_price }}</h1>
+                                <h1 style="">R$ {{ course_price }}</h1>
                             </div>
                             <div class="flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
