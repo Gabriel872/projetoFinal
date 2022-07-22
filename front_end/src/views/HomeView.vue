@@ -37,7 +37,7 @@
             <Slide v-for="card in cards" :key="card.id_course">
               <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                 style="width: 240px; border: none; border-radius: 10px;">
-                <router-link :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                <router-link style="text-decoration: none; color:white;" :to="{ name: 'CoursePage', params: { id: card.id_course } }">
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
                       style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: lightcoral;">
