@@ -384,8 +384,8 @@ BEGIN
    END IF;   
 END;
 
--- Comandoo para formatar data em DD/MM/YYYY
-SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;;
+-- Comando para formatar data em DD/MM/YYYY
+SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;
 
 -- Comando para selecionar os cursos da categoria
 SELECT id_categorie FROM courses WHERE id_categorie = id_categorie;
