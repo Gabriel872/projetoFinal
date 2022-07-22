@@ -38,7 +38,7 @@ CREATE TABLE courses (
        course_people_amt NUMBER,
        course_rating NUMBER,
        course_language VARCHAR2(30) NOT NULL,
-       course_creation_date DATE NOT NULL, -- Alterar de DATE para VARCHAR2(10) segundo backend
+       course_creation_date DATE NOT NULL,
        course_description VARCHAR2(150) NOT NULL,
        course_requirements VARCHAR2(100) NOT NULL,
        course_time NUMBER NOT NULL,
@@ -384,11 +384,14 @@ BEGIN
    END IF;   
 END;
 
+-- Comandoo para formatar data em DD/MM/YYYY
+SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;;
+
 -- Comando para selecionar os cursos da categoria
 SELECT id_categorie FROM courses WHERE id_categorie = id_categorie;
 
 -- Comando para criar ligacao com as aulas, valor e usuario por curso 
-SELECT * FROM courses WHERE id_course = id_course
+SELECT * FROM courses WHERE id_course = id_course;
 
 -- Comando para criar ligacao dos desejos com cursos
 SELECT id_course FROM wishes WHERE id_course = id_course;
@@ -397,7 +400,7 @@ SELECT id_course FROM wishes WHERE id_course = id_course;
 SELECT id_categorie FROM interests WHERE id_categorie = id_categorie;
 
 -- Comando para criar ligacao com os comentarios, curso e usuario
-SELECT id_rating FROM ratings WHERE id_course = id_course
+SELECT id_rating FROM ratings WHERE id_course = id_course;
 
 -- Comando para conectar o curso com a aula
 SELECT classes.id_course FROM classes WHERE id_course = id_course;
