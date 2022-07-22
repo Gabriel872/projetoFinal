@@ -113,8 +113,8 @@ export default {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
           await this.register();
+          location.reload();
           if (localStorage.getItem("login")) {
-            location.reload();
             this.goHomeView();
           }
         }
@@ -132,7 +132,7 @@ export default {
         },
         body: JSON.stringify(this.obj_register)
       });
-      
+
       this.obj_register.user_description = "Description..."
 
       localStorage.removeItem("login");

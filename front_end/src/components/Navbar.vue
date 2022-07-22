@@ -1,6 +1,6 @@
 <template>
   <div class="navbar-custom">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top" :key="componentKey">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">Navbar</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -86,11 +86,12 @@ export default {
   data() {
     return {
       login: localStorage.getItem("login"),
-      role: localStorage.getItem("userRole")
+      role: localStorage.getItem("userRole"),
+      componentKey: 0,
     }
   },
   beforeMount(){
-    // this.login = true;
+    
   },
   methods: {
     logIn() {

@@ -43,36 +43,6 @@ nav a {
   color: #2c3e50;
 }
 
-@media (min-width: 576px) {
-    body{
-        background-color: white;
-    }
- }
-
-@media (min-width: 768px) {
-    body{
-        background-color: white;
-    }
- }
-
-@media (min-width: 992px) {
-    body{
-        background-color: white;
-    }
- }
-
-@media (min-width: 1200px) {
-    body{
-        background-color: white;
-    }
- }
-
-@media (min-width: 1400px) { 
-    body{
-        background-color: white;
-    }
-}
-
 .carousel__prev, .carousel__next{
   background-color: black!important;
   border: 5px solid white!important;
