@@ -109,7 +109,6 @@
 </template>
 
 <script>
-import NavbarVue from '@/components/Navbar.vue';
 
 export default {
   name: 'LoginView',
@@ -135,7 +134,7 @@ export default {
         if (valid) {
           await this.login();
           if(localStorage.getItem("login")){
-            NavbarVue.forceUpdate();
+            location.reload();
             this.goHomeView();
           }
         }
