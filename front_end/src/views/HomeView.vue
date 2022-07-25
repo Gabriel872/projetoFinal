@@ -141,7 +141,7 @@
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
                     <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.course_author }}</h2>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ getCourseAuthor(card.id_author)}}</h2>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -149,7 +149,7 @@
                           <path
                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                         </svg>
-                        <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
+                        <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5{{getCoursePrice(card.id_price_course)}}</b></h2>
                       </div>
 
                       <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
@@ -206,6 +206,16 @@ export default {
       const request = await fetch("https://localhost:7114/api/Courses");
       const retorno = await request.json();
       this.cards = retorno;
+    },
+    getCourseAuthor(id_user){
+      const request = await fetch(`https://localhost:7114/api/Users/${id_user}`);
+      const retorno = await request.json();
+      return retorno.user_name; // se for proxy pegar pela posição
+    },
+    getCoursePrice(id_price){
+      const request = await fetch(`https://localhost:7114/api/PriceCourses/${id_price}`);
+      const retorno = await request.json();
+      return retorno.price_course_value
     }
   }
 }
