@@ -25,7 +25,7 @@
                 <input v-on:click="validCredentials()" type="button" value="Sign in" class="btn btn-primary btn-login">
               </div>
               <div class="options">
-                <router-link class="nav-link login-link" to="/instructor" role="button" aria-expanded="false">
+                <router-link class="nav-link login-link" to="/login" role="button" aria-expanded="false">
                   Log in
                 </router-link>
               </div>

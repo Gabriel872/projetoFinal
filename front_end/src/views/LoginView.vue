@@ -151,6 +151,7 @@ export default {
           localStorage.removeItem("userRole");
           localStorage.removeItem("userId");
           localStorage.removeItem("login");
+          localStorage.removeItem("userEmail")
           localStorage.removeItem("userName");
           localStorage.removeItem("userPassword");
           localStorage.removeItem("userDescription");

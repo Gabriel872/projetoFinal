@@ -65,12 +65,22 @@
               type="submit"><b>Sign
                 in</b></button>
             <!-- TESTE V-IF-->
-            <button v-if="!login" v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log in</b></button>
+            <button v-if="!login" v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log
+                in</b></button>
             <!-- TESTE V-IF-->
             <button v-if="login" v-on:click="userView()" class="btn btn-user">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-person-fill" viewBox="0 0 16 16">
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+            </button>
+            <button v-if="login" v-on:click="exit()" class="btn btn-user btn-exit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                <path fill-rule="evenodd"
+                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
               </svg>
             </button>
           </div>
@@ -90,8 +100,7 @@ export default {
       componentKey: 0,
     }
   },
-  beforeMount(){
-    
+  beforeMount() {
   },
   methods: {
     logIn() {
@@ -108,6 +117,17 @@ export default {
     },
     instructorView() {
       this.$router.replace({ path: '/instructor' })
+    },
+    exit() {
+      localStorage.removeItem("login");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userEmail")
+      localStorage.removeItem("userDescription");
+      localStorage.removeItem("userPassword");
+      
+      location.reload();
     }
   },
   props: {
@@ -118,8 +138,7 @@ export default {
 </script>
 
 <style scoped>
-
-.navbar-custom{
+.navbar-custom {
   text-align: center;
   color: #2c3e50;
 }
@@ -174,6 +193,11 @@ button {
 
 .btn-user {
   color: white;
+}
+
+.btn-exit:hover {
+  background-color: rgb(241, 69, 69);
+  border-color: rgb(241, 69, 69);
 }
 
 .nav-item {
