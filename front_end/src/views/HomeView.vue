@@ -207,12 +207,12 @@ export default {
       const retorno = await request.json();
       this.cards = retorno;
     },
-    getCourseAuthor(id_user){
+    async getCourseAuthor(id_user){
       const request = await fetch(`https://localhost:7114/api/Users/${id_user}`);
       const retorno = await request.json();
       return retorno.user_name; // se for proxy pegar pela posição
     },
-    getCoursePrice(id_price){
+    async getCoursePrice(id_price){
       const request = await fetch(`https://localhost:7114/api/PriceCourses/${id_price}`);
       const retorno = await request.json();
       return retorno.price_course_value
