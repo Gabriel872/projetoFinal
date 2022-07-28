@@ -373,7 +373,7 @@ CREATE OR REPLACE PROCEDURE validate_removal (id_categ IN NUMBER, returns OUT VA
 AS
     qtd_courses NUMBER;
 BEGIN
-  SELECT COUNT(*) INTO qtd_courses FROM courses WHERE id_categorie = id_categ;
+   SELECT COUNT(*) INTO qtd_courses FROM courses WHERE id_categorie = id_categ;
     
    -- Condicional
    IF qtd_courses = 0 THEN
@@ -381,6 +381,40 @@ BEGIN
    dbms_output.put_line('A categoria foi removida com sucesso!');
       ELSE
        dbms_output.put_line('Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'); 
+   END IF;   
+END;
+
+-- Procedure para validar e nao remover cursos caso tenha em algum aluno
+CREATE OR REPLACE PROCEDURE validate_course (id_cours IN NUMBER, returns OUT VARCHAR2)
+AS
+    qtd_student NUMBER;
+BEGIN
+   SELECT COUNT(*) INTO qtd_student FROM user_courses WHERE id_course = id_cours;
+    
+   -- Condicional
+   IF qtd_student = 0 THEN
+   DELETE FROM courses WHERE id_course = id_cours;
+   dbms_output.put_line('O curso foi removido com sucesso!');
+      ELSE
+       dbms_output.put_line('Nao foi possivel remover o curso, pois existem alunos vinculados a ele.'); 
+   END IF;   
+END;
+
+-- Procedure para validar e nao remover instrutores caso tenha em algum aluno em um de seus cursos
+CREATE OR REPLACE PROCEDURE validate_instructor (id_instructor IN NUMBER, id_cours IN NUMBER, returns OUT VARCHAR2)
+AS
+    qtd_instructor NUMBER;
+    qtd_student NUMBER;
+BEGIN
+   SELECT COUNT(*) INTO qtd_student FROM user_courses WHERE id_course = id_cours;
+   SELECT COUNT(*) INTO qtd_instructor FROM courses WHERE id_author = id_instructor;
+    
+   -- Condicional
+   IF qtd_instructor = 0 AND qtd_student = 0 THEN
+   DELETE FROM usuarios WHERE id_user = id_instructor;
+   dbms_output.put_line('O instrutor foi removido com sucesso!');
+      ELSE
+       dbms_output.put_line('Nao foi possivel remover o instrutor, pois existem cursos com alunos vinculados a ele.'); 
    END IF;   
 END;
 
