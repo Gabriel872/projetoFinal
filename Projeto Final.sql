@@ -448,6 +448,23 @@ SELECT sub_themes.id_subcategorie FROM sub_themes INNER JOIN subcategories ON su
 -- Comando para conectar o curso com as seções de curso
 SELECT course_sections.id_course FROM course_sections INNER JOIN courses ON courses.id_course = course_sections.id_course WHERE course_sections.id_course = courses.id_course;
 
+-- Comando para retornar dados curso, nome categoria, nome autor e preço curso
+SELECT
+   courses.*,
+   categories.categorie_name,
+   usuarios.user_name,
+   price_courses.price_course_value,
+   price_courses.price_course_coin,
+   price_courses.price_discount
+FROM courses
+INNER JOIN usuarios
+ON courses.id_author = usuarios.id_user
+
+INNER JOIN categories
+ON courses.id_categorie = categories.id_categorie
+
+INNER JOIN price_courses
+ON courses.id_price_course = price_courses.id_price_course;
 
 -- Exclusão
 -- Procedures
@@ -483,12 +500,12 @@ DROP SEQUENCE auto_increment_wishes;
 
 -- VIEWS
 /*
-DROP VIEW connect_course;   
-DROP VIEW connect_wishes;   
-DROP VIEW connect_interests;   
-DROP VIEW connect_ratings;   
-DROP VIEW connect_subcategorie;   
-DROP VIEW connect_sub_theme;   
+DROP VIEW connect_course;
+DROP VIEW connect_wishes;
+DROP VIEW connect_interests;
+DROP VIEW connect_ratings;
+DROP VIEW connect_subcategorie;
+DROP VIEW connect_sub_theme;
 DROP VIEW connect_course_sect;
 DROP VIEW connect_classes;
 DROP VIEW connect_categorie;
