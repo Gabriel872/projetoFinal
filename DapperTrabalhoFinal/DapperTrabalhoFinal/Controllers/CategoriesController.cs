@@ -19,21 +19,28 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Categories>("SELECT * FROM categories");
+            return connection.Query<Categories>("SELECT * FROM categories").ToList();
         }
-
 
         [HttpGet("{id_categorie}")]
 
-        public IEnumerable<Categories> ListIdCategories(int id_categorie)
+        public IEnumerable<Categories> ListIdCategories()
         {
-            Conexao c = new Conexao();
-
+            Conexao c = new();
             using var connection = c.RealizarConexao();
+            
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_categorie", "id_categorie");
 
-            return connection.Query<Categories>("SELECT * FROM categories WHERE id_categorie = " + id_categorie);
+            var builder = new SqlBuilder();
+            builder.Where("id_categorie = :id_categorie", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM categories /**where**/");
+
+            var categories = connection.Query<Categories>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return categories;
         }
-
         [HttpPost]
 
         public string RegisterCategories([FromBody] Categories cg)
@@ -89,5 +96,22 @@ namespace DapperTrabalhoFinal.Controllers
 
             return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_categorie = " + id);
         }
+        //private int contabilizar()
+        //{
+        //    Conexao c = new Conexao();
+        //    using var connection = c.RealizarConexao();
+
+        //    DynamicParameters Parametro = new DynamicParameters();
+        //    Parametro.Add(":id_categorie", "id_categorie");
+
+        //    var builder = new SqlBuilder();
+        //    builder.Select("id_categorie = :id_categorie", Parametro);
+
+        //    var builderTemplate = builder.AddTemplate("SELECT COUNT(*) FROM categories /**select**/");
+
+        //    var categories = connection.Query<Categories>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+        //    return categories;
+        //}
     }
 }

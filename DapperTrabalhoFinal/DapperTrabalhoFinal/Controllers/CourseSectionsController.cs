@@ -18,7 +18,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<CourseSections>("SELECT * FROM course_sections");
+            return connection.Query<CourseSections>("SELECT * FROM course_sections").ToList();
         }
 
         [HttpPost]

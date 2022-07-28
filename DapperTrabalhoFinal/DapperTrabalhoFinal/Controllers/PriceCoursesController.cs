@@ -12,42 +12,53 @@ namespace DapperTrabalhoFinal.Controllers
     public class PriceCoursesController
     {
 
-            [HttpGet]
+        [HttpGet]
 
-            public IEnumerable<PriceCourses> ListPriceCourses()
-            {
-                Conexao c = new Conexao();
+        public IEnumerable<PriceCourses> ListPriceCourses()
+        {
+            Conexao c = new Conexao();
 
-                using var connection = c.RealizarConexao();
+            using var connection = c.RealizarConexao();
 
-                return connection.Query<PriceCourses>("SELECT * FROM price_courses");
-            }
+            return connection.Query<PriceCourses>("SELECT * FROM price_courses");
+        }
 
-            [HttpPost]
+        [HttpGet("{id_price_course}")]
 
-            public string RegisterPriceCourses([FromBody] PriceCourses pc)
-            {
-                Conexao c = new();
+        public IEnumerable<PriceCourses> ListPriceCoursesById(int id_price_course)
+        {
+            Conexao c = new Conexao();
 
-                using var connection = c.RealizarConexao();
+            using var connection = c.RealizarConexao();
 
-                connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_discount) VALUES (:Price_course_value, :Price_course_coin, :Price_discount)", pc);
+            return connection.Query<PriceCourses>("SELECT * FROM price_courses WHERE id_price_course =" + id_price_course);
+        }
 
-                return "Cadastro efetuado com sucesso!";
-            }
+        [HttpPost]
 
-            [HttpPut]
+        public string RegisterPriceCourses([FromBody] PriceCourses pc)
+        {
+            Conexao c = new();
 
-            public string UpdatePriceCourses([FromBody] PriceCourses pc)
-            {
-                Conexao c = new();
+            using var connection = c.RealizarConexao();
 
-                using var conncetion = c.RealizarConexao();
+            connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_discount) VALUES (:Price_course_value, :Price_course_coin, :Price_discount)", pc);
 
-                conncetion.Execute(@"UPDATE price_courses SET price_course_value = :Price_course_value, price_course_coin = :Price_course_coin, price_discount = :Price_discount WHERE id_price_course = :Id_price_course", pc);
+            return "Cadastro efetuado com sucesso!";
+        }
 
-                return "Preço curso alterado com sucesso!";
-            }
+        [HttpPut]
+
+        public string UpdatePriceCourses([FromBody] PriceCourses pc)
+        {
+            Conexao c = new();
+
+            using var conncetion = c.RealizarConexao();
+
+            conncetion.Execute(@"UPDATE price_courses SET price_course_value = :Price_course_value, price_course_coin = :Price_course_coin, price_discount = :Price_discount WHERE id_price_course = :Id_price_course", pc);
+
+            return "Preço curso alterado com sucesso!";
+        }
 
         [HttpDelete("{id_price_course}")]
 

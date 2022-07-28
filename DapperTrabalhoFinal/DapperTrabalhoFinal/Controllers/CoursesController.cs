@@ -21,27 +21,44 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<Courses>("SELECT * FROM courses");
         }
 
-        [HttpGet("{id_course}")]
+        [HttpGet("{id_course")]
 
-        public IEnumerable<Courses> ListCourses(int id_course)
+        public IEnumerable<Courses> ListCourses()
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Courses>("SELECT * FROM courses WHERE id_course = " + id_course);
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_course", "id_course");
+
+            var builder = new SqlBuilder();
+            builder.Where("id_course = :id_course", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
+
+            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return courses;
         }
 
+        [HttpGet("{id_categorie")]
 
-        [HttpGet("{id_categorie}")]
-        
-        public IEnumerable<Courses> ListIdCategories(int id_categorie)
+        public IEnumerable<Courses> ListIdCategories()
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Courses>("SELECT * FROM courses WHERE id_categorie = " + id_categorie);
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_categorie", "id_categorie");
+
+            var builder = new SqlBuilder();
+            builder.Where("id_categorie = :id_categorie", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
+
+            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return courses;
         }
 
 
