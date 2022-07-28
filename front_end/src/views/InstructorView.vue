@@ -152,6 +152,8 @@ export default {
       this.obj_course.course_creation_date = date;
       this.obj_course.id_author = this.id_user;
 
+      console.table(this.obj_course);
+
       await fetch("https://localhost:7114/api/RegisterCourse", {
         method: "post",
         headers: {

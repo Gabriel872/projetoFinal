@@ -1,7 +1,7 @@
 <template>
   <div class="view">
     <section class="container"
-      style="padding: 30px; background-color: #212529; margin-top: 8rem; height:600px; border-radius: 20px 20px 0px 0px; color: white;">
+      style="padding: 30px; background-color: #212529; margin-top: 10rem; margin-bottom: 2rem; height:600px; border-radius: 20px 20px 20px 20px; color: white;">
       <div class="row mb-2 mb-custom">
         <div class="flex flex-header">
           <div class="flex perfil">
@@ -14,7 +14,7 @@
               <p style="margin-bottom:0px;">{{user_role}}</p>
             </div>
           </div>
-          <router-link class="btn btn-primary" style="" to="/">
+          <router-link class="btn btn-primary btn-style" style="margin-top: 1rem;" to="/">
             Go home page
           </router-link>
         </div>
@@ -156,6 +156,31 @@ export default {
   line-height: 1;
   vertical-align: middle;
   border-radius: 50%;
+}
+
+.btn-style{
+  background-color: #35d3bc;
+  border: none;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.btn-style:hover {
+  background-color: #008a75;
+}
+
+.btn-style:focus{
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: #35d3bc;
+}
+
+.btn-style:active{
+  outline: none;
+  box-shadow: none;
+  border: none;
+  background-color: #35d3bc;
 }
 
 .btn-custom {

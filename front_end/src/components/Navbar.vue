@@ -15,17 +15,8 @@
                 Categories
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <router-link class="dropdown-item" to="/">Action</router-link>
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/">Another action</router-link>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li>
-                  <router-link class="dropdown-item" to="/">Something else here</router-link>
+                <li v-for="c in categories" v-bind:key="c.id_categorie">
+                  <router-link class="dropdown-item" to="/">{{c.categorie_name}}</router-link>
                 </li>
               </ul>
             </li>
@@ -98,9 +89,11 @@ export default {
       login: localStorage.getItem("login"),
       role: localStorage.getItem("userRole"),
       componentKey: 0,
+      categories: []
     }
   },
   beforeMount() {
+    this.getCategories();
   },
   methods: {
     logIn() {
@@ -128,6 +121,11 @@ export default {
       localStorage.removeItem("userPassword");
       
       location.reload();
+    },
+    async getCategories(){
+        const request = await fetch("https://localhost:7114/api/Categories");
+        const retorno = await request.json();
+        this.categories = retorno;
     }
   },
   props: {
