@@ -2,7 +2,6 @@
 {
     public class RegisterCourse
     {
-        private int id_course;
         private string course_name;
         private string course_subtitle;
         private string course_language;
@@ -17,7 +16,6 @@
         private int id_categorie;
         private int id_price_course;
 
-        public int Id_course { get => id_course; set => id_course = value; }
         public string Course_name { get => course_name; set => course_name = value; }
         public string Course_subtitle { get => course_subtitle; set => course_subtitle = value; }
         public string Course_language { get => course_language; set => course_language = value; }

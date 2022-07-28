@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "R1S4S1pu+a9j/JX2Y4B9Od1/yzZBwkQiVtLAvkdDw0Ppwm9Kpcb92puPQtpaILL/MS3MNbd5T3m2zJvbiNTpEg==",
+  "dgSpecHash": "vwthNpg6UJgVuVviWdzSD1lrz/2LC9b33UC0RpSUQ/tZSva++vECmjRtgDggduoawM8q5sEwI3Lm5ygQ5Mik3g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\CyberQ\\Desktop\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
+  "projectFilePath": "C:\\Users\\CyberQ\\Desktop\\ProjetoFinal\\backend\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CyberQ\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\CyberQ\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",

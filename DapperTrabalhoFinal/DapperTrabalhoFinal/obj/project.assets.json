@@ -929,11 +929,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CyberQ\\Desktop\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
+      "projectUniqueName": "C:\\Users\\CyberQ\\Desktop\\ProjetoFinal\\backend\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
       "projectName": "DapperTrabalhoFinal",
-      "projectPath": "C:\\Users\\CyberQ\\Desktop\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
+      "projectPath": "C:\\Users\\CyberQ\\Desktop\\ProjetoFinal\\backend\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
       "packagesPath": "C:\\Users\\CyberQ\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CyberQ\\Desktop\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\obj\\",
+      "outputPath": "C:\\Users\\CyberQ\\Desktop\\ProjetoFinal\\backend\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
