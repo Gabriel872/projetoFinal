@@ -65,7 +65,7 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<RequisicoesController>("SELECT id_rating FROM ratings WHERE courses.id_course = ratings.id_course");
         }
 
-        [HttpGet("cursoAula")]
+/*        [HttpGet("cursoAula")]
 
         public IEnumerable<RequisicoesController> ListCursoAula()
         {
@@ -74,7 +74,7 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             return connection.Query<RequisicoesController>("SELECT classes.id_course FROM classes WHERE courses.id_course = classes.id_course");
-        }
+        }*/
        
         [HttpGet("subcategoria")]
 
@@ -108,8 +108,9 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<RequisicoesController>("SELECT id_course FROM course_sections WHERE courses.id_course = course_sections.id_course;");
+            return connection.Query<RequisicoesController>("SELECT id_course FROM course_sections WHERE courses.id_course = course_sections.id_course");
         }
+
 
     }
 }
