@@ -134,7 +134,6 @@ export default {
         if (valid) {
           await this.login();
           if(localStorage.getItem("login")){
-            location.reload();
             this.goHomeView();
           }
         }

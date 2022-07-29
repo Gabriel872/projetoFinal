@@ -14,8 +14,8 @@
                                     d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
                             </svg>
                             <div class="container-fluid">
-                                <h1>{{ obj_course.course_name }}</h1>
-                                <h1>{{ obj_course.course_subtitle }}</h1>
+                                <h1>{{ obj_course.COURSE_NAME }}</h1>
+                                <h2>{{ obj_course.COURSE_SUBTITLE }}</h2>
                                 <div class="rating mb-2 flex">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="gold"
                                         class="bi bi-star-fill" viewBox="0 0 16 16">
@@ -26,15 +26,15 @@
                                 </div>
                                 <div class="flex">
                                     <h3 style="font-size: 16px; color: #35d3bc; margin-bottom: 0px;">
-                                        Author:<span style="margin-left: 0.2rem; color:white; ">{{ course_author
+                                        Author:<span style="margin-left: 0.2rem; color:white; ">{{ obj_course.USER_NAME
                                         }}</span>
                                     </h3>
                                     <p style="margin-left: 0.5rem; font-size: 16px; margin-bottom: 0px;">Creation date:
-                                        {{ obj_course.course_creation_date }} </p>
+                                        {{ obj_course.COURSE_CREATION_DATE }} </p>
                                 </div>
                                 <div>
                                     <p style="font-size: 16px; margin-bottom: 0px;">Language:
-                                        {{ obj_course.course_language }}</p>
+                                        {{ obj_course.COURSE_LANGUAGE }}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                             Description
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{{ obj_course.course_description }}</p>
+                                            <p class="card-text">{{ obj_course.COURSE_DESCRIPTION }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                             Requiriments
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{{ obj_course.course_requirements }}</p>
+                                            <p class="card-text">{{ obj_course.COURSE_REQUIREMENTS }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                             Knowledge level
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{{ obj_course.course_knowledge_level }}</p>
+                                            <p class="card-text">{{ obj_course.COURSE_KNOWLEDGE_LEVEL }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                             Learning
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">{{ obj_course.course_learnings }}</p>
+                                            <p class="card-text">{{ obj_course.COURSE_LEARNINGS }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                     <div class="container-fluid flex-grid" style="color:  #212529;">
                         <div class="container-fluid" style="color: lightgray;">
                             <div class="flex">
-                                <h1 style="">R$ {{ course_price }}</h1>
+                                <h1 style="">R$ {{ obj_course.PRICE_COURSE_VALUE }}</h1>
                             </div>
                             <div class="flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -138,51 +138,21 @@ export default {
         return {
             obj_id: 0,
             obj_course: {},
-            array_prices: [],
-            array_users: [],
-            course_price: 0,
-            course_author: ""
         }
     },
     beforeMount() {
         this.getId();
         this.getCourse();
-        this.getPrice();
-        this.getAuthor();
     },
     methods: {
         getId() {
             this.obj_id = this.$route.params.id;
         },
         async getCourse() {
-            const object = await fetch(`https://localhost:7114/api/Courses/${this.obj_id}`); // get por id
-            const course_json = await object.json();
-            this.obj_course = await course_json[0];
-
-        },
-        async getPrice() {
-            console.log(this.obj_course.id_price_course);
+            const request = await fetch(`https://localhost:7114/api/Requisicoes/cardCourseById/${this.obj_id}`); // get por id
+            const course_request = await request.json();
+            this.obj_course = await course_request[0];
             console.log(this.obj_course);
-            const prices = await fetch("https://localhost:7114/api/PriceCourses");
-            const prices_json = await prices.json();
-            this.array_prices = prices_json;
-
-            for (var i = 0; i < this.array_prices.length; i++) {
-                if (this.obj_course.id_price_course == this.array_prices[i].id_price_course) {
-                    this.course_price = this.array_prices[i].price_course_value;
-                }
-            }
-        },
-        async getAuthor() {
-            const request = await fetch("https://localhost:7114/api/Users")
-            const user_json = await request.json();
-            this.array_users = await user_json;
-
-            for (var i = 0; i < this.array_users.length; i++) {
-                if (this.obj_course.id_author == this.array_users[i].id_user) {
-                    this.course_author = this.array_users[i].user_name;
-                }
-            }
         }
     }
 }

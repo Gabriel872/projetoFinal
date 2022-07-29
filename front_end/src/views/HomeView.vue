@@ -26,7 +26,6 @@
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-
       </div>
     </section>
     <section class="second">
@@ -34,9 +33,9 @@
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id_course">
+            <Slide v-for="card in cards" :key="card.ID_COURSE">
               <router-link style="text-decoration: none; color:white;"
-                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }">
                 <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                   style="width: 240px; border: none; border-radius: 10px;">
 
@@ -47,8 +46,8 @@
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
-                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.course_author }}</h2>
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.COURSE_NAME }}</b></h1>
+                    <h3 class="card-text mb-2" style="font-size: 14px;">autor {{ card.USER_NAME }}</h3>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -59,14 +58,13 @@
                         <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
                       </div>
 
-                      <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ 49,99</b></h2>
+                      <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ {{card.PRICE_COURSE_VALUE}}</b></h2>
                     </div>
                   </div>
 
                 </div>
               </router-link>
             </Slide>
-
             <template #addons>
               <Navigation />
             </template>
@@ -126,13 +124,11 @@
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
-            <!-- Teste -->
-            <Slide v-for="card in cards" :key="card.id_course">
+            <Slide v-for="card in cards" :key="card.ID_COURSE">
               <router-link style="text-decoration: none; color:white;"
-                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
+                :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }">
                 <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                   style="width: 240px; border: none; border-radius: 10px;">
-
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
                       style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: rgb(54, 60, 66);">
@@ -140,8 +136,8 @@
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
-                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ getCourseAuthor(card.id_author) }}</h2>
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.COURSE_NAME }}</b></h1>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.USER_NAME }}</h2>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -151,9 +147,8 @@
                         </svg>
                         <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
                       </div>
-
                       <h2 class="card-text mb-0" style="font-size: 16px;">
-                        <b>R${{ getCoursePrice(card.id_price_course) }}</b>
+                        <b>R$ {{ card.PRICE_COURSE_VALUE }}</b>
                       </h2>
                     </div>
                   </div>
@@ -181,7 +176,6 @@
 
 <script>
 
-import { defineComponent } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import CardCarouselVue from '@/components/CardCarousel.vue';
 import 'vue3-carousel/dist/carousel.css';
@@ -197,6 +191,7 @@ export default {
   },
   beforeMount() {
     this.list();
+    console.log(localStorage.getItem("login"));
   },
   data() {
     return {
@@ -205,20 +200,10 @@ export default {
   },
   methods: {
     async list() {
-      const request = await fetch("https://localhost:7114/api/Courses");
+      const request = await fetch("https://localhost:7114/api/Requisicoes/cardCourse");
       const retorno = await request.json();
       this.cards = retorno;
-    },
-    async getCourseAuthor(id_user) {
-      const request = await fetch(`https://localhost:7114/api/Users/${id_user}`);
-      const retorno = await request.json();
-      return retorno.user_name; // se for proxy pegar pela posição
-    },
-    async getCoursePrice(id_price) {
-      const request = await fetch(`https://localhost:7114/api/PriceCourses/${id_price}`);
-      const retorno = await request.json();
-      console.log(retorno[0].price_course_value);
-      return retorno[0].price_course_value;
+      console.log(this.cards);
     }
   }
 }

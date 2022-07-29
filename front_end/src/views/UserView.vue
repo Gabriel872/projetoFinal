@@ -1,7 +1,7 @@
 <template>
   <div class="view">
     <section class="container"
-      style="padding: 30px; background-color: #212529; margin-top: 10rem; margin-bottom: 2rem; height:600px; border-radius: 20px 20px 20px 20px; color: white;">
+      style="padding: 30px; background-color: #212529; margin-top: 10rem; margin-bottom: 2rem; height:50rem; border-radius: 20px 20px 20px 20px; color: white;">
       <div class="row mb-2 mb-custom">
         <div class="flex flex-header">
           <div class="flex perfil">
