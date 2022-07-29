@@ -15,6 +15,8 @@ CREATE TABLE usuarios (
        user_role VARCHAR2(30) NOT NULL
 );
 
+select * from usuarios;
+
 -- Criando sequencia USUARIOS   == SEQUENCIA
 CREATE SEQUENCE auto_increment_users
 MINVALUE 1
@@ -434,7 +436,7 @@ SELECT wishes.id_course FROM wishes INNER JOIN courses ON courses.id_course = wi
 SELECT interests.id_categorie FROM interests INNER JOIN categories ON categories.id_categorie = interests.id_categorie INNER JOIN usuarios ON usuarios.id_user = interests.id_user WHERE interests.id_categorie = categories.id_categorie;
 
 -- Comando para criar ligacao com os comentarios, curso e usuario
-SELECT ratings.id_rating FROM ratings INNER JOIN courses ON courses.id_course = ratings.id_course INNER JOIN usuarios ON usuarios.id_user = ratings.id_user WHERE ratings.id_course = course.id_course;
+SELECT ratings.id_rating FROM ratings INNER JOIN courses ON courses.id_course = ratings.id_course INNER JOIN usuarios ON usuarios.id_user = ratings.id_user WHERE ratings.id_course = courses.id_course;
 
 -- Comando para conectar o curso com a aula
 SELECT classes.id_course FROM classes INNER JOIN courses ON courses.id_course = classes.id_course WHERE classes.id_course = courses.id_course;
@@ -445,17 +447,16 @@ SELECT subcategories.id_categorie FROM subcategories INNER JOIN categories ON ca
 -- Comando para conectar o sub tema com a subcategoria
 SELECT sub_themes.id_subcategorie FROM sub_themes INNER JOIN subcategories ON subcategories.id_subcategorie = sub_themes.id_subcategorie WHERE sub_themes.id_subcategorie = subcategories.id_subcategorie;
 
--- Comando para conectar o curso com as seÃ§Ãµes de curso
+-- Comando para conectar o curso com as seções de curso
 SELECT course_sections.id_course FROM course_sections INNER JOIN courses ON courses.id_course = course_sections.id_course WHERE course_sections.id_course = courses.id_course;
 
--- Comando para retornar dados curso, nome categoria, nome autor e preÃ§o curso
+-- Comando para retornar dados curso, nome categoria, nome autor e preço curso
 SELECT
    courses.*,
    categories.categorie_name,
    usuarios.user_name,
    price_courses.price_course_value,
-   price_courses.price_course_coin,
-   price_courses.price_discount
+   price_courses.price_course_coin
 FROM courses
 INNER JOIN usuarios
 ON courses.id_author = usuarios.id_user
@@ -466,7 +467,7 @@ ON courses.id_categorie = categories.id_categorie
 INNER JOIN price_courses
 ON courses.id_price_course = price_courses.id_price_course;
 
--- ExclusÃ£o
+-- Exclusão
 -- Procedures
 DROP PROCEDURE validate_removal;    
 
@@ -525,3 +526,5 @@ DROP TABLE user_courses;
 DROP TABLE usuarios;
 DROP TABLE pagseguro;
 DROP TABLE wishes;
+
+select * from usuarios;
