@@ -18,12 +18,12 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Courses>("SELECT * FROM courses");
+            return connection.Query<Courses>("SELECT * FROM courses").ToList();
         }
 
-        [HttpGet("{id_course")]
+        [HttpGet("{id_course}")]
 
-        public IEnumerable<Courses> ListCourses()
+        public IEnumerable<Courses> ListCoursesById()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -41,7 +41,7 @@ namespace DapperTrabalhoFinal.Controllers
             return courses;
         }
 
-        [HttpGet("{id_categorie")]
+        [HttpGet("{id_categorie}")]
 
         public IEnumerable<Courses> ListIdCategories()
         {
@@ -75,6 +75,26 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpGet("cursoCategoria")]
 
+        //public IEnumerable<RequisicoesController> CursoCategoria()
+        //{
+        //    Conexao c = new Conexao();
+        //    using var connection = c.RealizarConexao();
+
+        //    DynamicParameters Parametro = new DynamicParameters();
+        //    Parametro.Add(":id_categorie", "id_categorie");
+
+        //    var builder = new SqlBuilder();
+        //    builder.Select("id_categorie");
+        //    builder.InnerJoin("categories ON categories.id_categorie = courses.id_categorie");
+        //    builder.Where("id_categorie = :id_categorie", Parametro);
+
+        //    var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
+
+        //    var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+
+        //    return dados;
+        //}
+
         public IEnumerable<RequisicoesController> CursoCategoria()
         {
             Categories ct = new Categories();
@@ -85,6 +105,8 @@ namespace DapperTrabalhoFinal.Controllers
 
             return connection.Query<RequisicoesController>("SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = " + ct.Id_categorie);
         }
+
+
 
         [HttpPost]
 

@@ -92,6 +92,7 @@ namespace DapperTrabalhoFinal.Controllers
         {
             Conexao c = new Conexao();
 
+
             using var connection = c.RealizarConexao();
 
             return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_categorie = " + id);
