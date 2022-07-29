@@ -20,18 +20,26 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<PriceCourses>("SELECT * FROM price_courses");
+            return connection.Query<PriceCourses>("SELECT * FROM price_courses").ToList();
         }
 
         [HttpGet("{id_price_course}")]
-
-        public IEnumerable<PriceCourses> ListPriceCoursesById(int id_price_course)
+        public IEnumerable<PriceCourses> ListPriceCourseById(int id_price_course)
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<PriceCourses>("SELECT * FROM price_courses WHERE id_price_course =" + id_price_course);
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_price_course", id_price_course);
+
+            var builder = new SqlBuilder();
+            builder.Where(":id_price_course = id_price_course", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM price_courses /**where**/");
+
+            var price_courses = connection.Query<PriceCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return price_courses;
         }
 
         [HttpPost]

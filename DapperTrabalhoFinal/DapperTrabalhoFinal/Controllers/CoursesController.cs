@@ -23,16 +23,16 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpGet("{id_course}")]
 
-        public IEnumerable<Courses> ListCoursesById()
+        public IEnumerable<Courses> ListCoursesById(int id_course)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_course", "id_course");
+            Parametro.Add(":id_course", id_course);
 
             var builder = new SqlBuilder();
-            builder.Where("id_course = :id_course", Parametro);
+            builder.Where(":id_course = id_course", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
 
@@ -41,73 +41,16 @@ namespace DapperTrabalhoFinal.Controllers
             return courses;
         }
 
-        [HttpGet("{id_categorie}")]
+        //[HttpGet("formatarData")]
 
-        public IEnumerable<Courses> ListIdCategories()
-        {
-            Conexao c = new Conexao();
-            using var connection = c.RealizarConexao();
-
-            DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_categorie", "id_categorie");
-
-            var builder = new SqlBuilder();
-            builder.Where("id_categorie = :id_categorie", Parametro);
-
-            var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
-
-            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
-
-            return courses;
-        }
-
-
-        [HttpGet("formatarData")]
-
-        public IEnumerable<RequisicoesController> FormatarData()
-        {
-            Conexao c = new Conexao();
-
-            using var connection = c.RealizarConexao();
-
-            return connection.Query<RequisicoesController>("SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses");
-        }
-
-        [HttpGet("cursoCategoria")]
-
-        //public IEnumerable<RequisicoesController> CursoCategoria()
+        //public IEnumerable<RequisicoesController> FormatarData()
         //{
         //    Conexao c = new Conexao();
+
         //    using var connection = c.RealizarConexao();
 
-        //    DynamicParameters Parametro = new DynamicParameters();
-        //    Parametro.Add(":id_categorie", "id_categorie");
-
-        //    var builder = new SqlBuilder();
-        //    builder.Select("id_categorie");
-        //    builder.InnerJoin("categories ON categories.id_categorie = courses.id_categorie");
-        //    builder.Where("id_categorie = :id_categorie", Parametro);
-
-        //    var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-
-        //    var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
-
-        //    return dados;
+        //    return connection.Query<RequisicoesController>("SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses");
         //}
-
-        public IEnumerable<RequisicoesController> CursoCategoria()
-        {
-            Categories ct = new Categories();
-
-            Conexao c = new Conexao();
-
-            using var connection = c.RealizarConexao();
-
-            return connection.Query<RequisicoesController>("SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = " + ct.Id_categorie);
-        }
-
-
-
         [HttpPost]
 
         public string RegisterCourses([FromBody] Courses cs)

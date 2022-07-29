@@ -20,7 +20,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Users>("SELECT * FROM usuarios");
+            return connection.Query<Users>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpGet("{id_user}")]
@@ -28,10 +28,19 @@ namespace DapperTrabalhoFinal.Controllers
         public IEnumerable<Users> ListIdUsers(int id_user)
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Users>("SELECT * FROM usuarios WHERE id_user = " + id_user);
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_user", id_user);
+
+            var builder = new SqlBuilder();
+            builder.Where(":id_user = id_user", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM usuarios /**where**/");
+
+            var user = connection.Query<Users>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return user;
         }
 
         [HttpPost]

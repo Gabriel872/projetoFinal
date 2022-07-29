@@ -10,6 +10,29 @@ namespace DapperTrabalhoFinal.Controllers
 
     public class RequisicoesController
     {
+        //[HttpGet("courseValue")]
+        //public IEnumerable<Object> ListCourseValue()
+        //{
+        //    Conexao c = new Conexao();
+        //    using var connection = c.RealizarConexao();
+
+        //    DynamicParameters Parametro = new DynamicParameters();
+        //    Parametro.Add(":id_course", "id_course");
+
+        //    var builder = new SqlBuilder();
+        //    builder.InnerJoin("price_courses ON price_courses.id_price_course = courses.id_price_course");
+        //    builder.Where("price_courses.id_course = :courses.id_course", Parametro);
+
+        //    var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**innerjoin**/ /**where**/");
+
+        //    var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+        //    return dados;
+        //}
+
+        /*SELECT* FROM courses INNER JOIN price_courses ON price_courses.id_price_course = courses.id_price_course WHERE price_courses.id_course = courses.id_course;*/
+
+
         [HttpGet("cursosCategoria")]
 
         public IEnumerable<RequisicoesController> ListCursoCategoria()
@@ -111,6 +134,23 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<RequisicoesController>("SELECT id_course FROM course_sections WHERE courses.id_course = course_sections.id_course");
         }
 
+        [HttpGet("cardCourse")]
 
+        public IEnumerable<Object> cardCourse()
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            var builder = new SqlBuilder();
+            builder.Select("courses.*");
+            builder.Select("categories.categorie_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
+            builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
+            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
+        }
     }
 }

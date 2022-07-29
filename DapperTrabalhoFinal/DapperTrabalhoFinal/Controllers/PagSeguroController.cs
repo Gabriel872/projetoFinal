@@ -21,7 +21,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<PagSeguro>("SELECT * FROM pagseguro");
+            return connection.Query<PagSeguro>("SELECT * FROM pagseguro").ToList();
 
         }
 

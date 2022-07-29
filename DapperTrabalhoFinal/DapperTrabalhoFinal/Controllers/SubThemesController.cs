@@ -19,7 +19,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<SubThemes>("SELECT * FROM sub_themes");
+            return connection.Query<SubThemes>("SELECT * FROM sub_themes").ToList();
         }
 
         [HttpPost]

@@ -17,7 +17,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Cadastro>("SELECT * FROM usuarios");
+            return connection.Query<Cadastro>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPut]

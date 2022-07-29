@@ -19,7 +19,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Interests>("SELECT * FROM interests");
+            return connection.Query<Interests>("SELECT * FROM interests").ToList();
         }
 
         [HttpPost]
