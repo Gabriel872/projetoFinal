@@ -44,7 +44,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Cadastro>("SELECT * FROM usuario").ToList();
+            return connection.Query<Cadastro>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPost]
@@ -162,35 +162,6 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 return false;
             }
-        }
-
-
-        [HttpGet("{codigo}")]
-        public Mensagem Teste(int codigo)
-        {
-
-            // Instanciar objeto da classe Mensagem
-            Mensagem m = new Mensagem();
-
-            // Instanciar objeto da classe Conexão
-            Conexao c = new();
-
-            // Realizar conexão com o banco de dados Oracle - DAPPER
-            using var connection = c.RealizarConexao();
-
-            // Objeto dinâmico para executar a procedure
-            var obj = new DynamicParameters();
-            obj.Add(":id_categ", codigo, direction: ParameterDirection.Input);
-            obj.Add(":returns", "", direction: ParameterDirection.Output);
-
-            // Executar a inserção
-            connection.Query<Mensagem>("validate_removal", obj, commandType: CommandType.StoredProcedure).ToString();
-
-            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.MensagemRetorno = obj.Get<string>(":returns");
-
-            // Retorno da API
-            return m;
         }
     }
 }

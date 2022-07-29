@@ -2,6 +2,7 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace DapperTrabalhoFinal.Controllers
 {
@@ -97,6 +98,35 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_categorie = " + id);
+        }
+
+
+        [HttpGet("{codigo}")]
+        public Mensagem Teste(int codigo)
+        {
+
+            // Instanciar objeto da classe Mensagem
+            Mensagem m = new Mensagem();
+
+            // Instanciar objeto da classe Conexão
+            Conexao c = new();
+
+            // Realizar conexão com o banco de dados Oracle - DAPPER
+            using var connection = c.RealizarConexao();
+
+            // Objeto dinâmico para executar a procedure
+            var obj = new DynamicParameters();
+            obj.Add(":id_categ", codigo, direction: ParameterDirection.Input);
+            obj.Add(":returns", "", direction: ParameterDirection.Output);
+
+            // Executar a inserção
+            connection.Query<Mensagem>("validate_removal", obj, commandType: CommandType.StoredProcedure).ToString();
+
+            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
+            m.MensagemRetorno = obj.Get<string>(":returns");
+
+            // Retorno da API
+            return m;
         }
     }
 }
