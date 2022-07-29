@@ -88,55 +88,80 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<RequisicoesController>("SELECT id_rating FROM ratings WHERE courses.id_course = ratings.id_course");
         }
 
-/*        [HttpGet("cursoAula")]
+        [HttpGet("classCourse")]
 
-        public IEnumerable<RequisicoesController> ListCursoAula()
+        public IEnumerable<Object> ClassCourse()
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<RequisicoesController>("SELECT classes.id_course FROM classes WHERE courses.id_course = classes.id_course");
-        }*/
-       
-        [HttpGet("subcategoria")]
+            var builder = new SqlBuilder();
+            builder.Select("classes.id_course");
+            builder.InnerJoin("courses ON courses.id_course = classes.id_course");
+            builder.Where("classes.id_course = courses.id_course");
 
-        public IEnumerable<RequisicoesController> ListSub()
-        {
-            Conexao c = new Conexao();
-
-            using var connection = c.RealizarConexao();
-
-            return connection.Query<RequisicoesController>("SELECT id_categorie FROM subcategories WHERE categories.id_categorie = subcategories.id_categorie");
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM classes /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
         }
 
+        [HttpGet("subcategorie")]
 
-        [HttpGet("subtema")]
-
-        public IEnumerable<RequisicoesController> ListSubtema()
+        public IEnumerable<Object> Subcategorie()
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<RequisicoesController>("SELECT id_subcategorie FROM sub_themes WHERE subcategories.id_subcategorie = sub_themes.id_subcategorie");
+            var builder = new SqlBuilder();
+            builder.Select("subcategories.id_categorie");
+            builder.InnerJoin("categories ON categories.id_categorie = subcategories.id_categorie");
+            builder.Where("subcategories.id_categorie = categories.id_categorie");
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM subcategories /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
+
         }
 
+        [HttpGet("subtheme")]
 
-        [HttpGet("secoesCurso")]
-
-        public IEnumerable<RequisicoesController> ListSecoesCurso()
+        public IEnumerable<Object> Subtheme()
         {
             Conexao c = new Conexao();
-
             using var connection = c.RealizarConexao();
 
-            return connection.Query<RequisicoesController>("SELECT id_course FROM course_sections WHERE courses.id_course = course_sections.id_course");
+            var builder = new SqlBuilder();
+            builder.Select("sub_themes.id_subcategorie");
+            builder.InnerJoin("subcategories ON subcategories.id_subcategorie = sub_themes.id_subcategorie");
+            builder.Where("sub_themes.id_subcategorie = subcategories.id_subcategorie");
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM sub_themes /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
         }
+
+        [HttpGet("courseSections")]
+
+        public IEnumerable<Object> CourseSections()
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            var builder = new SqlBuilder();
+            builder.Select("course_sections.id_course");
+            builder.InnerJoin("courses ON courses.id_course = course_sections.id_course");
+            builder.Where("course_sections.id_course = courses.id_course");
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM course_sections /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
+        }
+
+        //SELECT course_sections.id_course FROM course_sections INNER JOIN courses ON courses.id_course = course_sections.id_course WHERE course_sections.id_course = courses.id_course;
 
         [HttpGet("cardCourse")]
 
-        public IEnumerable<Object> cardCourse()
+        public IEnumerable<Object> CardCourse()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -150,6 +175,30 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            return dados;
+        }
+
+        [HttpGet("cardCourseById")]
+
+        public IEnumerable<Object> CardCourseById(int id_course)
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_course", id_course);
+
+            var builder = new SqlBuilder();
+            builder.Select("courses.*");
+            builder.Select("categories.categorie_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
+            builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
+            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
+            builder.Where(":id_course = id_course", Parametro);
+
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
     }
