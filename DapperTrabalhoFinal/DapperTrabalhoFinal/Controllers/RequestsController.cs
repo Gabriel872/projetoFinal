@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using DapperTrabalhoFinal.Config;
+using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,8 +9,44 @@ namespace DapperTrabalhoFinal.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class RequisicoesController
+    public class RequestsController
     {
+        // Comando para formatar data em DD/MM/YYYY
+        [HttpGet("formatDate")]
+        public IEnumerable<Object> formatDate()
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            var builder = new SqlBuilder();
+            builder.Select("TO_CHAR(course_creation_date, 'DD/MM/YYYY') AS format_date");
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ from courses");
+            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+
+            return dados;
+        }
+
+        // Comando para selecionar os cursos da categoria
+        [HttpGet("coursesByCategorie/{id_categorie}")]
+        public IEnumerable<Courses> ListCourses(int id_categorie)
+        {
+            Conexao c = new();
+            using var connection = c.RealizarConexao();
+
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_categorie", id_categorie);
+
+            var builder = new SqlBuilder();
+            builder.Where(":id_categorie = id_categorie", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
+
+            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return courses;
+        }
+
         // Comando para criar ligacao dos desejos com cursos
         [HttpGet("wishesCourses")]
         public IEnumerable<Object> WishesCourses()
@@ -44,7 +81,6 @@ namespace DapperTrabalhoFinal.Controllers
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM interests /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
             return dados;
-
         }
 
         // Comando para criar ligacao com os comentarios, curso e usuario
@@ -97,7 +133,6 @@ namespace DapperTrabalhoFinal.Controllers
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM subcategories /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
             return dados;
-
         }
 
         // Comando para conectar o sub tema com a subcategoria
@@ -170,6 +205,27 @@ namespace DapperTrabalhoFinal.Controllers
             builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
             builder.Where(":id_course = id_course", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
+            var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            return dados;
+        }
+
+        // Comando para retornar curso conforme termo digitado
+        [HttpGet("searchTerm")]
+        public IEnumerable<Object> SearchTerm(string termo)
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":termo_digitado", termo);
+
+            var builder = new SqlBuilder();
+            builder.Select("courses.id_course");
+            builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
+            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.Where("courses.course_name LIKE '%termo_digitado%' OR '%termo_digitado%' = usuarios.user_name OR '%termo_digitado%' = categories.categorie_name", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();

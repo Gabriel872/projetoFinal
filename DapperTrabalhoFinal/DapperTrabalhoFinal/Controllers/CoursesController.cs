@@ -2,7 +2,7 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Data;
 
 namespace DapperTrabalhoFinal.Controllers
 {
@@ -41,16 +41,34 @@ namespace DapperTrabalhoFinal.Controllers
             return courses;
         }
 
-        //[HttpGet("formatarData")]
+        [HttpGet("validateCourse/{codigo}")]
+        public Mensagem Teste(int codigo)
+        {
 
-        //public IEnumerable<RequisicoesController> FormatarData()
-        //{
-        //    Conexao c = new Conexao();
+            // Instanciar objeto da classe Mensagem
+            Mensagem m = new Mensagem();
 
-        //    using var connection = c.RealizarConexao();
+            // Instanciar objeto da classe Conexão
+            Conexao c = new();
 
-        //    return connection.Query<RequisicoesController>("SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses");
-        //}
+            // Realizar conexão com o banco de dados Oracle - DAPPER
+            using var connection = c.RealizarConexao();
+
+            // Objeto dinâmico para executar a procedure
+            var obj = new DynamicParameters();
+            obj.Add(":id_cours", codigo, direction: ParameterDirection.Input);
+            obj.Add(":returns", "", direction: ParameterDirection.Output);
+
+            // Executar a inserção
+            connection.Query<Mensagem>("validate_course", obj, commandType: CommandType.StoredProcedure).ToString();
+
+            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
+            m.MensagemRetorno = obj.Get<string>(":returns");
+
+            // Retorno da API
+            return m;
+        }
+
         [HttpPost]
 
         public string RegisterCourses([FromBody] Courses cs)

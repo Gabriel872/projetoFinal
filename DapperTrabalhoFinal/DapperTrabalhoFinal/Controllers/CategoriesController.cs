@@ -23,26 +23,6 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<Categories>("SELECT * FROM categories").ToList();
         }
 
-        [HttpGet("{id_categorie}")]
-
-        public IEnumerable<Courses> ListCourses(int id_categorie)
-        {
-            Conexao c = new();
-            using var connection = c.RealizarConexao();
-
-            DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_categorie", id_categorie);
-
-            var builder = new SqlBuilder();
-            builder.Where(":id_categorie = id_categorie", Parametro);
-
-            var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
-
-            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
-
-            return courses;
-        }
-
         [HttpPost]
 
         public string RegisterCategories([FromBody] Categories cg)
@@ -101,7 +81,7 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
 
-        [HttpGet("{codigo}")]
+        [HttpGet("validateRemoval/{codigo}")]
         public Mensagem Teste(int codigo)
         {
 

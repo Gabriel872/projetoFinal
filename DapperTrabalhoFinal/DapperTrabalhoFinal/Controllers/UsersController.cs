@@ -2,6 +2,7 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace DapperTrabalhoFinal.Controllers
 {
@@ -41,6 +42,35 @@ namespace DapperTrabalhoFinal.Controllers
             var user = connection.Query<Users>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return user;
+        }
+
+        [HttpGet("validateInstructor/{codigo}")]
+        public Mensagem Teste(int codigo)
+        {
+
+            // Instanciar objeto da classe Mensagem
+            Mensagem m = new Mensagem();
+
+            // Instanciar objeto da classe Conexão
+            Conexao c = new();
+
+            // Realizar conexão com o banco de dados Oracle - DAPPER
+            using var connection = c.RealizarConexao();
+
+            // Objeto dinâmico para executar a procedure
+            var obj = new DynamicParameters();
+            obj.Add(":id_instructor", codigo, direction: ParameterDirection.Input);
+            obj.Add(":id_cours", codigo, direction: ParameterDirection.Input);
+            obj.Add(":returns", "", direction: ParameterDirection.Output);
+
+            // Executar a inserção
+            connection.Query<Mensagem>("validate_instructor", obj, commandType: CommandType.StoredProcedure).ToString();
+
+            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
+            m.MensagemRetorno = obj.Get<string>(":returns");
+
+            // Retorno da API
+            return m;
         }
 
         [HttpPost]
