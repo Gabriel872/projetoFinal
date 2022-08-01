@@ -2,7 +2,7 @@
   <div class="navbar-custom">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top" :key="componentKey">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/">Navbar</router-link>
+        <router-link class="navbar-brand" to="/">Q'Estudos</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -24,11 +24,11 @@
           <div class="d-flex container-fluid">
             <div class="container-fluid">
               <form role="search">
-                <input class="form-control me-2 search-bar" type="search" placeholder="Pesquisar curso"
+                <input class="form-control me-2 search-bar" v-model="search" type="search" placeholder="Pesquisar curso"
                   aria-label="Search">
               </form>
             </div>
-            <button v-on:click="searchCourse()" class="btn btn-primary btn-search">
+            <button @click="searchCourse()" class="btn btn-primary btn-search">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                 viewBox="0 0 16 16">
                 <path
@@ -86,7 +86,8 @@ export default {
       role: 'user',
       componentKey: 0,
       categories: [],
-      teste : true
+      teste : true,
+      search: ""
     }
   },
   beforeMount() {
@@ -94,36 +95,36 @@ export default {
     setInterval(() =>{
         this.login = localStorage.getItem("login");
         this.role = localStorage.getItem("userRole");
-        console.log(this.role);
       }
       , 500);
   },
   methods: {
     logIn() {
-      this.$router.replace({ path: '/login' })
+      this.$router.replace({ path: '/login' });
     },
     signUp() {
-      this.$router.replace({ path: '/signup' })
+      this.$router.replace({ path: '/signup' });
     },
     searchCourse() {
-      this.$router.replace({ path: '/searchCourse' })
+      this.$router.replace({ name: 'SearchPage', params: { term:  this.search} });
+      this.term = "";
     },
     userView() {
-      this.$router.replace({ path: '/user' })
+      this.$router.replace({ path: '/user' });
     },
     instructorView() {
-      this.$router.replace({ path: '/instructor' })
+      this.$router.replace({ path: '/instructor' });
     },
     exit() {
       localStorage.removeItem("login");
       localStorage.removeItem("userRole");
       localStorage.removeItem("userId");
       localStorage.removeItem("userName");
-      localStorage.removeItem("userEmail")
+      localStorage.removeItem("userEmail");
       localStorage.removeItem("userDescription");
       localStorage.removeItem("userPassword");
       
-      this.$router.replace({ path: '/' })
+      this.$router.replace({ path: '/' });
     },
     async getCategories(){
         const request = await fetch("https://localhost:7114/api/Categories");
@@ -132,7 +133,7 @@ export default {
     }
   },
   props: {
-    msg: String
+    msg: String,
   }
 }
 

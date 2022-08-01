@@ -2,7 +2,6 @@
   <div class="view">
     <section class="first" style="margin-top: 5rem;">
       <div class="container">
-
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner" style="border-radius: 10px; overflow:hidden;">
             <div class="carousel-item active">
@@ -32,7 +31,6 @@
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
-            <!-- Teste -->
             <Slide v-for="card in cards" :key="card.ID_COURSE">
               <router-link style="text-decoration: none; color:white;"
                 :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }">
@@ -61,7 +59,6 @@
                       <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ {{card.PRICE_COURSE_VALUE}}</b></h2>
                     </div>
                   </div>
-
                 </div>
               </router-link>
             </Slide>
@@ -132,7 +129,7 @@
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
                       style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: rgb(54, 60, 66);">
-                      <h1>"<b>Olá</b>"</h1>
+                      <h1>"<b>&lt;/&gt;</b>"</h1>
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
@@ -162,12 +159,10 @@
           </Carousel>
         </div>
       </div>
-
     </section>
     <section class="first">
       <div class="container">
         <div class="banner-teamplate">
-
         </div>
       </div>
     </section>
@@ -175,11 +170,9 @@
 </template>
 
 <script>
-
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import CardCarouselVue from '@/components/CardCarousel.vue';
 import 'vue3-carousel/dist/carousel.css';
-
 
 export default {
   name: 'HomeView',
@@ -200,10 +193,9 @@ export default {
   },
   methods: {
     async list() {
-      const request = await fetch("https://localhost:7114/api/Requisicoes/cardCourse");
+      const request = await fetch("https://localhost:7114/api/Requests/cardCourse");
       const retorno = await request.json();
       this.cards = retorno;
-      console.log(this.cards);
     }
   }
 }

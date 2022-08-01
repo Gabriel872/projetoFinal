@@ -188,4 +188,11 @@ export default {
   background-color: transparent;
   border: none;
 }
+
+.btn-custom:hover {
+  background-color: transparent;
+  border: none;
+  color:white;
+}
+
 </style>

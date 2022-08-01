@@ -39,12 +39,6 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/searchCourse',
-    name: "SeachCourse",
-    component: SearchCourseView
-  }
-  ,
-  {
     path: '/user',
     name: "UserView",
     component: UserView
@@ -59,6 +53,11 @@ const routes = [
     path: '/course/:id',
     name: 'CoursePage',
     component: CoursePage,
+  },
+  {
+    path: '/search/:term',
+    name: 'SearchPage',
+    component: SearchCourseView,
   }
 ]
 
