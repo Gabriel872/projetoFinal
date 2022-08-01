@@ -212,19 +212,22 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         // Comando para retornar curso conforme termo digitado
-        [HttpGet("searchTerm")]
-        public IEnumerable<Object> SearchTerm(string termo)
+        [HttpGet("searchTerm/{term}")]
+        public IEnumerable<Object> SearchTerm(string term)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":termo_digitado", termo);
+            Parametro.Add(":termo_digitado", term);
 
             var builder = new SqlBuilder();
-            builder.Select("courses.id_course");
+            builder.Select("courses.*");
+            builder.Select("price_courses.price_course_value");
+            builder.Select("usuarios.user_name");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
             builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
             builder.Where("courses.course_name LIKE '%termo_digitado%' OR '%termo_digitado%' = usuarios.user_name OR '%termo_digitado%' = categories.categorie_name", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
