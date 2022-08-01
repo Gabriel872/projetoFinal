@@ -470,7 +470,7 @@ ON courses.id_price_course = price_courses.id_price_course;
 SELECT
    courses.course_name
 FROM courses
-WHERE termo_digitado = courses.course_name OR termo_digitado = usuarios.user_name OR termo_digitado = categories.categorie_name;
+WHERE termo LIKE '%termo_digitado%' OR termo_digitado = usuarios.user_name OR termo_digitado = categories.categorie_name;
 
 -- Comando para retornar curso conforme termo digitado (nome curso, nome autor, nome categoria 2.0
 SELECT
