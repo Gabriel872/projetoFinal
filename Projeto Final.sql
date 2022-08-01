@@ -421,7 +421,7 @@ BEGIN
 END;
 
 -- Comando para formatar data em DD/MM/YYYY
-SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;
+SELECT TO_CHAR(course_creation_date, 'DD/MM/YYYY') AS format_date FROM courses;
 
 -- Comando para selecionar os cursos da categoria
 SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = categories.id_categorie;
@@ -527,4 +527,4 @@ DROP TABLE usuarios;
 DROP TABLE pagseguro;
 DROP TABLE wishes;
 
-select * from usuarios;
+select * from courses;

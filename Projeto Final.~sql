@@ -421,7 +421,9 @@ BEGIN
 END;
 
 -- Comando para formatar data em DD/MM/YYYY
-SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;
+SELECT TO_CHAR(course_creation_date, 'DD/MM/YYYY') AS format_date FROM courses;
+
+SELECT course_creation_date from courses;
 
 -- Comando para selecionar os cursos da categoria
 SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = categories.id_categorie;
@@ -436,7 +438,7 @@ SELECT wishes.id_course FROM wishes INNER JOIN courses ON courses.id_course = wi
 SELECT interests.id_categorie FROM interests INNER JOIN categories ON categories.id_categorie = interests.id_categorie INNER JOIN usuarios ON usuarios.id_user = interests.id_user WHERE interests.id_categorie = categories.id_categorie;
 
 -- Comando para criar ligacao com os comentarios, curso e usuario
-SELECT ratings.id_rating FROM ratings INNER JOIN courses ON courses.id_course = ratings.id_course INNER JOIN usuarios ON usuarios.id_user = ratings.id_user WHERE ratings.id_course = course.id_course;
+SELECT ratings.id_rating FROM ratings INNER JOIN courses ON courses.id_course = ratings.id_course INNER JOIN usuarios ON usuarios.id_user = ratings.id_user WHERE ratings.id_course = courses.id_course;
 
 -- Comando para conectar o curso com a aula
 SELECT classes.id_course FROM classes INNER JOIN courses ON courses.id_course = classes.id_course WHERE classes.id_course = courses.id_course;
