@@ -16,7 +16,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li v-for="c in categories" v-bind:key="c.id_categorie">
-                  <router-link class="dropdown-item" to="/">{{c.categorie_name}}</router-link>
+                  <router-link class="dropdown-item" :to="{ name: 'SearchPage', params: { term: c.categorie_name } }">{{c.categorie_name}}</router-link>
                 </li>
               </ul>
             </li>
@@ -38,9 +38,9 @@
           </div>
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li v-show="login" class="nav-item">
-              <a class="nav-link" href="" role="button" aria-expanded="false">
+              <router-link class="nav-link" to="/mycourses" role="button" aria-expanded="false">
                 My courses
-              </a>
+              </router-link>
             </li>
             <li v-show="role == 'instructor' || role == 'adm'" class="nav-item">
               <router-link class="nav-link" to="/instructor" role="button" aria-expanded="false">
@@ -106,7 +106,7 @@ export default {
       this.$router.replace({ path: '/signup' });
     },
     searchCourse() {
-      this.$router.replace({ name: 'SearchPage', params: { term:  this.search} });
+      this.$router.push({ name: 'SearchPage', params: { term: this.search} });
       this.term = "";
     },
     userView() {

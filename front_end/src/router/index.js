@@ -7,7 +7,7 @@ import SearchCourseView from '@/views/SearchCourseView.vue'
 import InstructorView from '@/views/InstructorView.vue'
 import UserView from '@/views/UserView.vue'
 import CoursePage from '@/views/CoursePage.vue'
-
+import MyCoursesPage from '@/views/MyCoursesPage.vue'
 
 const routes = [
   {
@@ -58,6 +58,11 @@ const routes = [
     path: '/search/:term',
     name: 'SearchPage',
     component: SearchCourseView,
+  },
+  {
+    path: '/mycourses',
+    name: 'MyCoursesPage',
+    component: MyCoursesPage,
   }
 ]
 

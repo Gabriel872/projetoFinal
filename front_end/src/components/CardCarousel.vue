@@ -78,8 +78,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
 
 .card{
