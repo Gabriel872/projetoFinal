@@ -33,8 +33,8 @@ END;
 -- Criando tabela CURSOS (CRUD)   == TABELA
 CREATE TABLE courses (
        id_course NUMBER CONSTRAINT pk_id_course PRIMARY KEY,
-       course_name VARCHAR2(30) NOT NULL,
-       course_subtitle VARCHAR2(30) NOT NULL, 
+       course_name VARCHAR2(50) NOT NULL,
+       course_subtitle VARCHAR2(60) NOT NULL, 
        course_people_amt NUMBER,
        course_rating NUMBER,
        course_language VARCHAR2(30) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE courses (
        course_knowledge_level VARCHAR2(20) NOT NULL,
        course_message VARCHAR2(60),
        id_author NUMBER, -- tabela usuarios
-       id_categorie NUMBER, -- tabela categorie
+       id_category NUMBER, -- tabela categorie
        id_price_course NUMBER -- tabela price courses
 );
 
@@ -133,8 +133,8 @@ FOREIGN KEY (id_price_course) REFERENCES price_courses(id_price_course);
 -----------------------------------
 -- Criando tabela CATEGORIAS (CRUD)   == TABELA
 CREATE TABLE categories (
-       id_categorie NUMBER CONSTRAINT pk_id_categorie PRIMARY KEY,
-       categorie_name VARCHAR(30) NOT NULL
+       id_category NUMBER CONSTRAINT pk_id_category PRIMARY KEY,
+       category_name VARCHAR(30) NOT NULL
 );
 
 -- Criando sequencia CATEGORIAS   == SEQUENCIA
@@ -144,24 +144,24 @@ START WITH 1
 INCREMENT BY 1;
 
 -- Criando trigger para incremento do codigo CATEGORIAS   == TRIGGER
-CREATE OR REPLACE TRIGGER increment_id_categorie
+CREATE OR REPLACE TRIGGER increment_id_category
 BEFORE INSERT ON categories
 FOR EACH ROW
 BEGIN
-  :new.id_categorie := auto_increment_categories.NEXTVAL;
+  :new.id_category := auto_increment_categories.NEXTVAL;
 END;
 
 -- Adicionar uma chave estrangeira CURSOS
 ALTER TABLE courses
-ADD CONSTRAINT fk_id_categorie_courses
-FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie);
+ADD CONSTRAINT fk_id_category_courses
+FOREIGN KEY (id_category) REFERENCES categories(id_category);
 
 -----------------------------------
 -- Criando tabela INTERESSES (CRUD)   == TABELA
 CREATE TABLE interests (
        id_interests NUMBER CONSTRAINT pk_id_interests PRIMARY KEY,
        id_user NUMBER, -- tabela usuarios
-       id_categorie NUMBER -- tabela categories
+       id_category NUMBER -- tabela categories
 );
 
 -- Criando sequencia INTERESSES   == SEQUENCIA
@@ -184,8 +184,8 @@ ADD CONSTRAINT fk_id_user_interests
 FOREIGN KEY (id_user) REFERENCES usuarios(id_user);
 
 ALTER TABLE interests
-ADD CONSTRAINT fk_id_categorie_interests
-FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie);
+ADD CONSTRAINT fk_id_category_interests
+FOREIGN KEY (id_category) REFERENCES categories(id_category);
 
 -----------------------------------
 -- Criando tabela AULAS (CRUD)   == TABELA
@@ -282,9 +282,9 @@ FOREIGN KEY (id_course) REFERENCES courses(id_course);
 -----------------------------------
 -- Criando tabela SUBCATEGORIAS (CRUD)   == TABELA
 CREATE TABLE subcategories (
-       id_subcategorie NUMBER CONSTRAINT pk_id_subcategorie PRIMARY KEY,
-       subcategorie_name VARCHAR2(30),
-       id_categorie NUMBER -- tabela categories
+       id_subcategory NUMBER CONSTRAINT pk_id_subcategory PRIMARY KEY,
+       subcategory_name VARCHAR2(30),
+       id_category NUMBER -- tabela categories
 );
 
 -- Criando sequencia SUBCATEGORIAS   == SEQUENCIA
@@ -294,24 +294,24 @@ START WITH 1
 INCREMENT BY 1;
 
 -- Criando trigger para incremento do codigo SUBCATEGORIAS   == TRIGGER
-CREATE OR REPLACE TRIGGER increment_id_subcategorie
+CREATE OR REPLACE TRIGGER increment_id_subcategory
 BEFORE INSERT ON subcategories
 FOR EACH ROW
 BEGIN
-  :new.id_subcategorie := auto_increment_subcategories.NEXTVAL;
+  :new.id_subcategory := auto_increment_subcategories.NEXTVAL;
 END;
 
 -- Adicionar uma chave estrangeira SUBCATEGORIAS
 ALTER TABLE subcategories
-ADD CONSTRAINT fk_id_categorie_subcategories
-FOREIGN KEY (id_categorie) REFERENCES categories(id_categorie);
+ADD CONSTRAINT fk_id_category_subcategories
+FOREIGN KEY (id_category) REFERENCES categories(id_category);
 
 -----------------------------------
 -- Criando tabela SUBTEMAS (CRUD)   == TABELA
 CREATE TABLE sub_themes (
        id_sub_theme NUMBER CONSTRAINT pk_id_sub_theme PRIMARY KEY,
        sub_theme_name VARCHAR2(30),
-       id_subcategorie NUMBER -- tabela subcategories
+       id_subcategory NUMBER -- tabela subcategories
 );
 
 -- Criando sequencia SUBCATEGORIAS   == SEQUENCIA
@@ -330,8 +330,8 @@ END;
 
 -- Adicionar uma chave estrangeira SUBCATEGORIAS
 ALTER TABLE sub_themes
-ADD CONSTRAINT fk_id_subcategorie_sub_themes
-FOREIGN KEY (id_subcategorie) REFERENCES subcategories(id_subcategorie);
+ADD CONSTRAINT fk_id_subcategory_sub_themes
+FOREIGN KEY (id_subcategory) REFERENCES subcategories(id_subcategory);
 
 -----------------------------------
 -- Criando tabela SECAO CURSO (CRUD)   == TABELA
@@ -373,11 +373,11 @@ CREATE OR REPLACE PROCEDURE validate_removal (id_categ IN NUMBER, returns OUT VA
 AS
     qtd_courses NUMBER;
 BEGIN
-   SELECT COUNT(*) INTO qtd_courses FROM courses WHERE id_categorie = id_categ;
+   SELECT COUNT(*) INTO qtd_courses FROM courses WHERE id_category = id_categ;
     
    -- Condicional
    IF qtd_courses = 0 THEN
-   DELETE FROM categories WHERE id_categorie = id_categ;
+   DELETE FROM categories WHERE id_category = id_categ;
    dbms_output.put_line('A categoria foi removida com sucesso!');
       ELSE
        dbms_output.put_line('Nao foi possivel remover a categoria, pois existem cursos vinculados a ela.'); 
@@ -422,7 +422,7 @@ END;
 SELECT TO_DATE(TO_CHAR(course_creation_date, 'DD/MM/YYYY'), 'DD/MM/YYYY') AS format_date FROM courses;
 
 -- Comando para selecionar os cursos da categoria
-SELECT courses.id_categorie FROM courses INNER JOIN categories ON categories.id_categorie = courses.id_categorie WHERE courses.id_categorie = categories.id_categorie;
+SELECT courses.id_category FROM courses INNER JOIN categories ON categories.id_category = courses.id_category WHERE courses.id_category = categories.id_category;
 
 -- Comando para criar ligacao com o valor e o curso
 SELECT * FROM courses INNER JOIN price_courses ON price_courses.id_price_course = courses.id_price_course WHERE price_courses.id_course = courses.id_course;
@@ -466,6 +466,21 @@ ON courses.id_categorie = categories.id_categorie
 INNER JOIN price_courses
 ON courses.id_price_course = price_courses.id_price_course;
 
+<<<<<<< HEAD
+=======
+-- Comando para retornar curso conforme termo digitado (nome curso, nome autor, nome categoria 1.0
+SELECT
+   courses.course_name
+FROM courses
+INNER JOIN usuarios
+ON courses.id_author = usuarios.id_user
+
+INNER JOIN categories
+ON courses.id_categorie = categories.id_categorie
+
+WHERE termo LIKE '%termo_digitado%' OR termo_digitado = usuarios.user_name OR termo_digitado = categories.categorie_name;
+
+>>>>>>> 6e6bf73c33938a9d1a7208595d39c352402a4772
 -- Comando para retornar curso conforme termo digitado (nome curso, nome autor, nome categoria 2.0
 SELECT
    courses.id_course
