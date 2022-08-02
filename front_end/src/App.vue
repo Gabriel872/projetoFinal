@@ -41,6 +41,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  white-space: nowrap;
+}
+
 nav {
   padding: 30px;
 }

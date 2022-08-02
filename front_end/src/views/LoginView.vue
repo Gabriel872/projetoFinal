@@ -152,14 +152,12 @@ export default {
           localStorage.removeItem("login");
           localStorage.removeItem("userEmail")
           localStorage.removeItem("userName");
-          localStorage.removeItem("userPassword");
           localStorage.removeItem("userDescription");
 
           localStorage.setItem("userRole", this.users[i].user_role);
           localStorage.setItem("userId", this.users[i].id_user);
           localStorage.setItem("login", true);
           localStorage.setItem("userName", this.users[i].user_name);
-          localStorage.setItem("userPassword", this.users[i].user_password);
           localStorage.setItem("userEmail", this.users[i].user_email);
           localStorage.setItem("userDescription", this.users[i].user_description);
         }

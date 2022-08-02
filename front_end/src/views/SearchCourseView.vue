@@ -21,11 +21,17 @@ export default {
     CourseList,
   },
   beforeMount() {
+    this.term = this.$route.params.term;
     this.getCourses();
+  },
+  beforeRouteUpdate(to, from, next){
+    this.term = to.params.term;
+    this.getCourses();
+    next();
   },
   methods: {
     async getCourses() {
-      const request = await fetch(`https://localhost:7114/api/Requests/searchTerm/${this.$route.params.term}`);
+      const request = await fetch(`https://localhost:7114/api/Requests/searchTerm/${this.term}`);
       const requestCourses = await request.json();
       this.cards = requestCourses;
     },

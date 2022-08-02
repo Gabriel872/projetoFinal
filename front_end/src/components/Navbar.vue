@@ -106,7 +106,7 @@ export default {
       this.$router.replace({ path: '/signup' });
     },
     searchCourse() {
-      this.$router.replace({ name: 'SearchPage', params: { term:  this.search} });
+      this.$router.push({ name: 'SearchPage', params: { term:  this.search} });
       this.term = "";
     },
     userView() {
@@ -131,15 +131,13 @@ export default {
         const retorno = await request.json();
         this.categories = retorno;
     }
-  },
-  props: {
-    msg: String,
   }
 }
 
 </script>
 
 <style scoped>
+
 .navbar-custom {
   text-align: center;
   color: #2c3e50;

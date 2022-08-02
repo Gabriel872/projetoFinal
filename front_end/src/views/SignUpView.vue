@@ -141,7 +141,6 @@ export default {
       localStorage.removeItem("userName");
       localStorage.removeItem("userEmail")
       localStorage.removeItem("userDescription");
-      localStorage.removeItem("userPassword");
 
       localStorage.setItem("login", true);
       localStorage.setItem("userRole", this.obj_register.user_role);
@@ -149,7 +148,6 @@ export default {
       localStorage.setItem("userName", this.obj_register.user_name);
       localStorage.setItem("userEmail", this.obj_register.user_email);
       localStorage.setItem("userDescription", this.obj_register.user_description);
-      localStorage.setItem("userPassword", this.obj_register.user_password);
     },
     validEmail(input) {
       var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+$/;
