@@ -106,7 +106,7 @@ export default {
       this.$router.replace({ path: '/signup' });
     },
     searchCourse() {
-      this.$router.push({ name: 'SearchPage', params: { term:  this.search} });
+      this.$router.replace({ name: 'SearchPage', params: { term:  this.search} });
       this.term = "";
     },
     userView() {

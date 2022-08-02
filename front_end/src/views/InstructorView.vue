@@ -85,9 +85,6 @@
                     <select v-model="obj_course.id_categorie" class="form-select" aria-label="Default select example" id="categoryOptions">
                       <option value="0" selected>Choose category</option>
                       <option v-for="category in categoryList" v-bind:key="category.id_categorie" :value=category.id_categorie>{{category.categorie_name}}</option>
-                      <!-- <option value="1">Beginner</option>
-                      <option value="2">Intermediary</option>
-                      <option value="3">Advanced</option> -->
                     </select>
                   </div>
                   <div class="mb-3 container-fluid">
@@ -95,9 +92,6 @@
                     <select v-model="obj_course.id_price_course" class="form-select" aria-label="Default select example" id="priceOptions">
                       <option selected>Choose price</option>
                       <option v-for="price in priceList" v-bind:key="price.id_price_course" :value=price.id_price_course>{{price.price_course_value}}</option>
-                      <!-- <option value="1">Beginner</option>
-                      <option value="2">Intermediary</option>
-                      <option value="3">Advanced</option> -->
                     </select>
                   </div>
                 </section>
@@ -114,7 +108,6 @@
                       id="audienceFormControlInput1" placeholder="">
                   </div>
                 </section>
-
               </div>
             </div>
             <div class="row mt-3">
