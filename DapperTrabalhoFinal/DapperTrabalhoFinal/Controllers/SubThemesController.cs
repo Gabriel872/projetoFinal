@@ -30,7 +30,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO sub_themes (sub_theme_name, id_subcategorie) VALUES (:Sub_theme_name, :Id_subcategorie)", st);
+            connection.Execute(@"INSERT INTO sub_themes (sub_theme_name, id_subcategory) VALUES (:Sub_theme_name, :Id_subcategory)", st);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -43,7 +43,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE sub_themes SET sub_theme_name = :Sub_theme_name, id_subcategorie = :Id_subcategorie WHERE id_sub_theme = :Id_sub_theme", st);
+            conncetion.Execute(@"UPDATE sub_themes SET sub_theme_name = :Sub_theme_name, id_subcategory = :Id_subcategory WHERE id_sub_theme = :Id_sub_theme", st);
 
             return "Sub tema alterado com sucesso!";
         }

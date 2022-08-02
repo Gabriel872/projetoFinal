@@ -77,7 +77,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO courses (course_name, course_subtitle, course_people_amt, course_rating, course_language, course_creation_date, course_description, course_requirements, course_time, course_link, course_audience, course_learnings, course_knowledge_level, course_message, id_author, id_categorie, id_price_course)  VALUES (:Course_name, :Course_subtitle, :Course_people_amt, :Course_rating, :Course_language, :Course_creation_date, :Course_description, :Course_requirements, :Course_time, :Course_link, :Course_audience, :Course_learnings, :Course_knowledge_level, :Course_message, :Id_author, :Id_categorie, :Id_price_course)", cs);
+            connection.Execute(@"INSERT INTO courses (course_name, course_subtitle, course_people_amt, course_rating, course_language, course_creation_date, course_description, course_requirements, course_time, course_link, course_audience, course_learnings, course_knowledge_level, course_message, id_author, id_category, id_price_course)  VALUES (:Course_name, :Course_subtitle, :Course_people_amt, :Course_rating, :Course_language, :Course_creation_date, :Course_description, :Course_requirements, :Course_time, :Course_link, :Course_audience, :Course_learnings, :Course_knowledge_level, :Course_message, :Id_author, :Id_category, :Id_price_course)", cs);
 
             return "Cadastro efetuado com sucesso!";
         }

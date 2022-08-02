@@ -19,7 +19,7 @@
         private string course_knowledge_level;
         private string course_message;
         private int id_author;
-        private int id_categorie;
+        private int id_category;
         private int id_price_course;
 
         public int Id_course { get => id_course; set => id_course = value; }
@@ -38,7 +38,7 @@
         public string Course_knowledge_level { get => course_knowledge_level; set => course_knowledge_level = value; }
         public string Course_message { get => course_message; set => course_message = value; }
         public int Id_author { get => id_author; set => id_author = value; }
-        public int Id_categorie { get => id_categorie; set => id_categorie = value; }
+        public int Id_category { get => id_category; set => id_category = value; }
         public int Id_price_course { get => id_price_course; set => id_price_course = value; }
     }
 }

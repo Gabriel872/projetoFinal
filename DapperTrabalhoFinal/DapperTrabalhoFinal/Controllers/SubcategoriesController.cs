@@ -30,7 +30,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO subcategories (subcategorie_name, id_categorie) VALUES (:Subcategorie_name, :Id_categorie)", sb);
+            connection.Execute(@"INSERT INTO subcategories (subcategory_name, id_category) VALUES (:Subcategory_name, :Id_category)", sb);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -43,24 +43,24 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE subcategories SET subcategorie_name = :Subcategorie_name, id_categorie = :Id_categorie WHERE id_subcategorie = :Id_subcategorie", sb);
+            conncetion.Execute(@"UPDATE subcategories SET subcategory_name = :Subcategory_name, id_category = :Id_category WHERE id_subcategory = :Id_subcategory", sb);
 
             return "Subcategoria alterada com sucesso!";
         }
 
-        [HttpDelete("{id_subcategorie}")]
+        [HttpDelete("{id_subcategory}")]
 
-        public string DeleteSubcategories(int id_subcategorie)
+        public string DeleteSubcategories(int id_subcategory)
         {
             Conexao c = new();
 
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_subcategorie);
+            int count = contabilizar(id_subcategory);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM subcategories WHERE id_subcategorie = " + id_subcategorie);
+                connection.Execute(@"DELETE FROM subcategories WHERE id_subcategory = " + id_subcategory);
                 return "Subcategoria removida com sucesso!";
             }
             else
@@ -75,7 +75,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM subcategories WHERE id_subcategorie = " + id);
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM subcategories WHERE id_subcategory = " + id);
         }
     }
 }

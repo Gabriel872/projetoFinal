@@ -27,17 +27,17 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         // Comando para selecionar os cursos da categoria
-        [HttpGet("coursesByCategorie/{id_categorie}")]
-        public IEnumerable<Courses> ListCourses(int id_categorie)
+        [HttpGet("coursesByCategory/{id_category}")]
+        public IEnumerable<Courses> ListCourses(int id_category)
         {
             Conexao c = new();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_categorie", id_categorie);
+            Parametro.Add(":id_category", id_category);
 
             var builder = new SqlBuilder();
-            builder.Where(":id_categorie = id_categorie", Parametro);
+            builder.Where(":id_category = id_category", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
             var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
@@ -63,17 +63,17 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         // Comando para listar categorias nos interesses
-        [HttpGet("interestsByCategorie")]
-        public IEnumerable<Object> InterestsByCategorie()
+        [HttpGet("interestsByCategory")]
+        public IEnumerable<Object> InterestsByCategory()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
 
             var builder = new SqlBuilder();
-            builder.Select("interests.id_categorie");
-            builder.InnerJoin("categories ON categories.id_categorie = interests.id_categorie");
+            builder.Select("interests.id_category");
+            builder.InnerJoin("categories ON categories.id_category = interests.id_category");
             builder.InnerJoin("usuarios ON usuarios.id_user = interests.id_user");
-            builder.Where("interests.id_categorie = categories.id_categorie");
+            builder.Where("interests.id_category = categories.id_category");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM interests /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
@@ -116,16 +116,16 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         // Comando para conectar a subcategoria com a categoria
-        [HttpGet("subcategorie")]
-        public IEnumerable<Object> Subcategorie()
+        [HttpGet("subcategory")]
+        public IEnumerable<Object> Subcategory()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
 
             var builder = new SqlBuilder();
-            builder.Select("subcategories.id_categorie");
-            builder.InnerJoin("categories ON categories.id_categorie = subcategories.id_categorie");
-            builder.Where("subcategories.id_categorie = categories.id_categorie");
+            builder.Select("subcategories.id_category");
+            builder.InnerJoin("categories ON categories.id_category = subcategories.id_category");
+            builder.Where("subcategories.id_category = categories.id_category");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM subcategories /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
@@ -140,9 +140,9 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             var builder = new SqlBuilder();
-            builder.Select("sub_themes.id_subcategorie");
-            builder.InnerJoin("subcategories ON subcategories.id_subcategorie = sub_themes.id_subcategorie");
-            builder.Where("sub_themes.id_subcategorie = subcategories.id_subcategorie");
+            builder.Select("sub_themes.id_subcategory");
+            builder.InnerJoin("subcategories ON subcategories.id_subcategory = sub_themes.id_subcategory");
+            builder.Where("sub_themes.id_subcategory = subcategories.id_subcategory");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM sub_themes /**innerjoin**/ /**where**/");
             var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
@@ -177,7 +177,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Select("courses.*");
             builder.Select("categories.categorie_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
-            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/");
@@ -199,7 +199,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Select("courses.*");
             builder.Select("categories.categorie_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
-            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
             builder.Where(":id_course = id_course", Parametro);
 
@@ -241,11 +241,10 @@ namespace DapperTrabalhoFinal.Controllers
             Parametro.Add(":termo_digitado", "%" + term + "%");
 
             var builder = new SqlBuilder();
-            builder.Select("courses.*");
-            builder.Select("price_courses.price_course_value, usuarios.user_name");
+            builder.Select("courses.*, price_courses.price_course_value, usuarios.user_name");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
-            builder.InnerJoin("categories ON courses.id_categorie = categories.id_categorie");
+            builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.Where("LOWER(categories.categorie_name) LIKE LOWER(:termo_digitado)", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");

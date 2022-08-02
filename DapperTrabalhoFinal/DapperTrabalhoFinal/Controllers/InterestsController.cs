@@ -30,7 +30,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO interests (id_categorie, id_user) VALUES (:Id_categorie, :Id_user)", i);
+            connection.Execute(@"INSERT INTO interests (id_category, id_user) VALUES (:Id_category, :Id_user)", i);
 
             return "Interesse efetuado com sucesso!";
         }
@@ -43,7 +43,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE interests SET id_categorie = :Id_categorie, id_user = :Id_user WHERE id_interests = :Id_interests", i);
+            conncetion.Execute(@"UPDATE interests SET id_category = :Id_category, id_user = :Id_user WHERE id_interests = :Id_interests", i);
 
             return "Interesse alterada com sucesso!";
         }

@@ -31,7 +31,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO categories (categorie_name) VALUES (:Categorie_name)", cg);
+            connection.Execute(@"INSERT INTO categories (category_name) VALUES (:Category_name)", cg);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -44,24 +44,24 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE categories SET categorie_name = :Categorie_name WHERE id_categorie = :Id_categorie", cg);
+            conncetion.Execute(@"UPDATE categories SET category_name = :Category_name WHERE id_category = :Id_category", cg);
 
             return "Categoria alterada com sucesso!";
         }
 
-        [HttpDelete("{id_categorie}")]
+        [HttpDelete("{id_category}")]
 
-        public string DeleteCategories(int id_categorie)
+        public string DeleteCategories(int id_category)
         {
             Conexao c = new();
 
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_categorie);
+            int count = contabilizar(id_category);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM categories WHERE id_categorie = " + id_categorie);
+                connection.Execute(@"DELETE FROM categories WHERE id_category = " + id_category);
                 return "Categoria removida com sucesso!";
             }
             else
@@ -77,7 +77,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_categorie = " + id);
+            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM categories WHERE id_category = " + id);
         }
 
 

@@ -28,9 +28,9 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             connection.Execute(@"INSERT INTO courses (course_name, course_subtitle, course_language, course_creation_date, 
-                                    course_description, course_requirements, course_time, course_link, course_audience, course_knowledge_level, id_author, id_categorie, id_price_course) 
+                                    course_description, course_requirements, course_time, course_link, course_audience, course_knowledge_level, id_author, id_category, id_price_course) 
                                         VALUES (:Course_name, :Course_subtitle, :Course_language, :Course_creation_date, :Course_description, :Course_requirements, :Course_time, :Course_link, 
-                                            :Course_audience, :Course_knowledge_level, :Id_author, :Id_categorie, :Id_price_course)", rc);
+                                            :Course_audience, :Course_knowledge_level, :Id_author, :Id_category, :Id_price_course)", rc);
 
             return "Cadastro efetuado com sucesso!";
         }

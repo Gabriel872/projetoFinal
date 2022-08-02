@@ -3,12 +3,12 @@
     public class Subcategories
     {
 
-        private int id_subcategorie;
-        private string subcategorie_name;
-        private int id_categorie;
+        private int id_subcategory;
+        private string subcategory_name;
+        private int id_category;
 
-        public int Id_subcategorie { get => id_subcategorie; set => id_subcategorie = value; }
-        public string Subcategorie_name { get => subcategorie_name; set => subcategorie_name = value; }
-        public int Id_categorie { get => id_categorie; set => id_categorie = value; }
+        public int Id_subcategory { get => id_subcategory; set => id_subcategory = value; }
+        public string Subcategory_name { get => subcategory_name; set => subcategory_name = value; }
+        public int Id_category { get => id_category; set => id_category = value; }
     }
 }
