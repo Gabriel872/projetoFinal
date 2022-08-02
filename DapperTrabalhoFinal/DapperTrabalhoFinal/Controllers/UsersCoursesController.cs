@@ -20,6 +20,27 @@ namespace DapperTrabalhoFinal.Controllers
             return connection.Query<UsersCourses>("SELECT * FROM user_courses");
         }
 
+
+        [HttpGet("{id_user}")]
+
+        public IEnumerable<Courses> ListCoursesById(int id_user)
+        {
+            Conexao c = new Conexao();
+            using var connection = c.RealizarConexao();
+
+            DynamicParameters Parametro = new DynamicParameters();
+            Parametro.Add(":id_user", id_user);
+
+            var builder = new SqlBuilder();
+            builder.Where(":id_user = id_user", Parametro);
+
+            var builderTemplate = builder.AddTemplate("SELECT * FROM user_courses /**where**/");
+
+            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+
+            return courses;
+        }
+
         [HttpPost]
 
         public string RegisterUsersCourses([FromBody] UsersCourses uc)
