@@ -466,6 +466,21 @@ ON courses.id_categorie = categories.id_categorie
 INNER JOIN price_courses
 ON courses.id_price_course = price_courses.id_price_course;
 
+<<<<<<< HEAD
+=======
+-- Comando para retornar curso conforme termo digitado (nome curso, nome autor, nome categoria 1.0
+SELECT
+   courses.course_name
+FROM courses
+INNER JOIN usuarios
+ON courses.id_author = usuarios.id_user
+
+INNER JOIN categories
+ON courses.id_categorie = categories.id_categorie
+
+WHERE termo LIKE '%termo_digitado%' OR termo_digitado = usuarios.user_name OR termo_digitado = categories.categorie_name;
+
+>>>>>>> 6e6bf73c33938a9d1a7208595d39c352402a4772
 -- Comando para retornar curso conforme termo digitado (nome curso, nome autor, nome categoria 2.0
 SELECT
    courses.id_course
