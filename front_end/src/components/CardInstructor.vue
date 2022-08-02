@@ -1,5 +1,5 @@
 <template>
-  <router-link class="test"
+  <router-link
     style="text-decoration: none; color: white"
     :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }"
   >
@@ -25,7 +25,7 @@
             background-color: rgb(54, 60, 66);
           "
         >
-          <h1>"<b>O</b>"</h1>
+          <h1>"<b>Olá</b>"</h1>
         </div>
       </div>
       <div
@@ -35,9 +35,6 @@
         <h1 class="card-title mb-2" style="font-size: 20px">
           <b>{{ card.COURSE_NAME }}</b>
         </h1>
-        <h2 class="card-text mb-2" style="font-size: 14px">
-          {{ card.USER_NAME }}
-        </h2>
         <div class="flex" style="justify-content: space-between">
           <div class="flex" style="color: #ffbc00">
             <svg
@@ -59,9 +56,7 @@
               <b>{{card.COURSE_RATING}}</b>
             </h2>
           </div>
-          <h2 v-if="id_user != card.ID_AUTHOR" class="card-text mb-0" style="font-size: 16px">
-            <b>R$ {{ card.PRICE_COURSE_VALUE }}</b>
-          </h2>
+          <button class="btn btn-danger">X</button>
         </div>
       </div>
     </div>
@@ -72,11 +67,6 @@
 
 export default {
     name: 'CardCarousel',
-    data(){
-      return{
-        id_user: localStorage.getItem("userId")
-      }
-    },
     props: {
         card: Object,
     },
@@ -87,12 +77,6 @@ export default {
 
 .card{
     margin: 6px 6px;
-}
-
-.test:hover{
-  transform: scale(1.04, 1.04);
-  transition-property: transform;
-  transition-duration: .4s;
 }
 
 </style>

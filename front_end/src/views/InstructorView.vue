@@ -18,10 +18,10 @@
       <div class="row" style="padding-top: 1rem">
         <div class="col-2">
           <div class="container-fluid">
-            <button class="btn btn-primary btn-custom" style="display: block">
+            <button class="btn btn-primary btn-custom" style="display: block" @click="changeView(0)">
               Courses
             </button>
-            <button class="btn btn-primary btn-custom" style="display: block">
+            <button class="btn btn-primary btn-custom" style="display: block" @click="changeView(1)">
               Create courses
             </button>
           </div>
@@ -34,10 +34,10 @@
               </div>
             </div>
             <hr />
-            <div class="row">
-              <CourseList />
+            <div class="row" v-show="visible">
+              <CourseList :cards="cards" />
             </div>
-            <div class="row">
+            <div class="row"  v-show="!visible">
               <div class="container-fluid">
                 <section
                   class="container-fluid flex mt-3"
@@ -152,7 +152,7 @@
                       >Category</label
                     >
                     <select
-                      v-model="obj_course.id_categorie"
+                      v-model="obj_course.id_category"
                       class="form-select"
                       aria-label="Default select example"
                       id="categoryOptions"
@@ -160,10 +160,10 @@
                       <option value="0" selected>Choose category</option>
                       <option
                         v-for="category in categoryList"
-                        v-bind:key="category.id_categorie"
-                        :value="category.id_categorie"
+                        v-bind:key="category.id_category"
+                        :value="category.id_category"
                       >
-                        {{ category.categorie_name }}
+                        {{ category.category_name }}
                       </option>
                     </select>
                   </div>
@@ -247,6 +247,7 @@ export default {
       priceList: [],
       categoryList: [],
       cards: [],
+      visible: true,
     };
   },
   beforeMount() {
@@ -256,10 +257,16 @@ export default {
     this.getCategories();
   },
   methods: {
-    async getCourse(){
-      const request = await fetch(``);
+    async getCourse() {
+      const request = await fetch(
+        "https://localhost:7114/api/Requests/cardCourse"
+      );
       const request_return = await request.json();
-      this.cards = request_return;
+      for (var i = 0; i < request_return.length; i++) {
+        if (request_return[i].ID_AUTHOR == this.id_user) {
+          this.cards.push(request_return[i]);
+        }
+      }
     },
     async createCourse() {
       var today = new Date();
@@ -272,8 +279,6 @@ export default {
 
       this.obj_course.course_creation_date = date;
       this.obj_course.id_author = this.id_user;
-
-      console.table(this.obj_course);
 
       await fetch("https://localhost:7114/api/RegisterCourse", {
         method: "post",
@@ -300,6 +305,13 @@ export default {
         localStorage.getItem("login") == null
       ) {
         this.$router.replace({ path: "/" });
+      }
+    },
+    changeView(btn) {
+      if (btn == 0) {
+        this.visible = true;
+      } else {
+        this.visible = false;
       }
     },
   },

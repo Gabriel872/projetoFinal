@@ -93,7 +93,6 @@ export default {
       user_email: localStorage.getItem("userEmail"),
       user_role: localStorage.getItem("userRole"),
       user_description: localStorage.getItem("userDescription"),
-      user_password: localStorage.getItem("userPassword")
     }
   },
   methods: {
@@ -103,7 +102,6 @@ export default {
       if (a) {
         this.deleteAccount();
       }
-
     },
     async deleteAccount() {
       await fetch(`https://localhost:7114/api/Users/${this.id_user}`, {

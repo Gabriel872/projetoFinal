@@ -5,13 +5,10 @@
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner" style="border-radius: 10px; overflow:hidden;">
             <div class="carousel-item active">
-              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
+              <img src="https://img-c.udemycdn.com/notices/web_banner/slide_1_image_udlite/7869fd17-9599-4a5e-9b03-4748a3dae016.jpg" class="d-block w-100 img-fluid" style="" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="../img/banner2.png" class="d-block w-100 img-fluid" style="" alt="...">
+              <img src="https://img-c.udemycdn.com/notices/web_banner/slide_2_image_udlite/e6cc1a30-2dec-4dc5-b0f2-c5b656909d5b.jpg" class="d-block w-100 img-fluid" style="" alt="...">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -40,7 +37,7 @@
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
                     <div
                       style="display: flex; align-items: center; justify-content: center; width:240px; height: 130px; background-color: rgb(54, 60, 66);">
-                      <h1>"<b>Olá</b>"</h1>
+                      <h1>"<b>&lt;/&gt;</b>"</h1>
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
@@ -134,7 +131,7 @@
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
                     <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.COURSE_NAME }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">autor {{ card.USER_NAME }}</h2>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">{{ card.USER_NAME }}</h2>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

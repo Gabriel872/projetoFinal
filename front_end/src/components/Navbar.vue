@@ -12,11 +12,11 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Categories
+                Categorias
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li v-for="c in categories" v-bind:key="c.id_categorie">
-                  <router-link class="dropdown-item" :to="{ name: 'SearchPage', params: { term: c.categorie_name } }">{{c.categorie_name}}</router-link>
+                <li v-for="c in categories" v-bind:key="c.id_category">
+                  <router-link class="dropdown-item" :to="{ name: 'SearchPage', params: { term: c.category_name } }">{{c.category_name}}</router-link>
                 </li>
               </ul>
             </li>
@@ -39,21 +39,25 @@
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li v-show="login" class="nav-item">
               <router-link class="nav-link" to="/mycourses" role="button" aria-expanded="false">
-                My courses
+                Meus cursos
               </router-link>
             </li>
             <li v-show="role == 'instructor' || role == 'adm'" class="nav-item">
               <router-link class="nav-link" to="/instructor" role="button" aria-expanded="false">
-                Instructor
+                Instrutor
+              </router-link>
+            </li>
+            <li v-show="role == 'adm'" class="nav-item">
+              <router-link class="nav-link" to="/adm" role="button" aria-expanded="false">
+                Admin
               </router-link>
             </li>
           </ul>
           <div class="d-flex jf_center">
             <button v-show="!login" v-on:click="signUp()" class="btn btn-primary signin" style="margin-right: 8px;"
-              type="submit"><b>Sign
-                in</b></button>
-            <button v-show="!login" v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Log
-                in</b></button>
+              type="submit"><b>Cadastrar
+                </b></button>
+            <button v-show="!login" v-on:click="logIn()" class="btn btn-primary btn-login" type="submit"><b>Entrar</b></button>
             <button v-show="login" v-on:click="userView()" class="btn btn-user">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-person-fill" viewBox="0 0 16 16">
@@ -140,7 +144,7 @@ export default {
 
 .navbar-custom {
   text-align: center;
-  color: #2c3e50;
+  
 }
 
 .navbar-brand {
