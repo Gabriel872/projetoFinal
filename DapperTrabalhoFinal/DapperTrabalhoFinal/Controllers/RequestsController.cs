@@ -13,7 +13,7 @@ namespace DapperTrabalhoFinal.Controllers
     {
         // Comando para formatar data em DD/MM/YYYY
         [HttpGet("formatDate")]
-        public IEnumerable<Object> formatDate()
+        public IEnumerable<Courses> formatDate()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -22,7 +22,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Select("TO_CHAR(course_creation_date, 'DD/MM/YYYY') AS format_date");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ from courses");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Courses>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
@@ -46,7 +46,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         // Comando para criar ligacao dos desejos com cursos
         [HttpGet("wishesCourses")]
-        public IEnumerable<Object> WishesCourses()
+        public IEnumerable<Wishes> WishesCourses()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -58,13 +58,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("wishes.id_course = courses.id_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM wishes /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Wishes>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para listar categorias nos interesses
         [HttpGet("interestsByCategory")]
-        public IEnumerable<Object> InterestsByCategory()
+        public IEnumerable<Interests> InterestsByCategory()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -76,13 +76,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("interests.id_category = categories.id_category");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM interests /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Interests>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para criar ligacao com os comentarios, curso e usuario
         [HttpGet("userRating")]
-        public IEnumerable<Object> UserRating()
+        public IEnumerable<Ratings> UserRating()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -94,13 +94,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("ratings.id_course = courses.id_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM ratings /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Ratings>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para conectar o curso com a aula
         [HttpGet("classCourse")]
-        public IEnumerable<Object> ClassCourse()
+        public IEnumerable<Classes>ClassCourse()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -111,13 +111,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("classes.id_course = courses.id_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM classes /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Classes>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para conectar a subcategoria com a categoria
         [HttpGet("subcategory")]
-        public IEnumerable<Object> Subcategory()
+        public IEnumerable<Subcategories> Subcategory()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -128,13 +128,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("subcategories.id_category = categories.id_category");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM subcategories /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Subcategories>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para conectar o sub tema com a subcategoria
         [HttpGet("subtheme")]
-        public IEnumerable<Object> Subtheme()
+        public IEnumerable<SubThemes> Subtheme()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -145,13 +145,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("sub_themes.id_subcategory = subcategories.id_subcategory");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM sub_themes /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<SubThemes>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para conectar o curso com as seções de curso
         [HttpGet("courseSections")]
-        public IEnumerable<Object> CourseSections()
+        public IEnumerable<CourseSections> CourseSections()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -162,13 +162,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("course_sections.id_course = courses.id_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM course_sections /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<CourseSections>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para retornar dados curso, nome categoria, nome autor e preço curso
         [HttpGet("cardCourse")]
-        public IEnumerable<Object> CardCourse()
+        public IEnumerable<Courses> CardCourse()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -181,13 +181,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<Courses>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para retornar dados curso, nome categoria, nome autor e preço curso pelo id do curso
         [HttpGet("cardCourseById/{id_course}")]
-        public IEnumerable<Object> CardCourseById(int id_course)
+        public IEnumerable<Courses> CardCourseById(int id_course)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -204,13 +204,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where(":id_course = id_course", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
 
         // Comando para retornar curso conforme termo digitado
         [HttpGet("search/{term}")]
-        public IEnumerable<Object> SearchTerm(string term)
+        public IEnumerable<Courses> SearchTerm(string term)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -227,12 +227,12 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("LOWER(courses.course_name) LIKE LOWER(:termo_digitado)", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
 
         [HttpGet("search/category/{term}")]
-        public IEnumerable<Object> SearchCategory(string term)
+        public IEnumerable<Courses> SearchCategory(string term)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -248,7 +248,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("LOWER(categories.category_name) LIKE LOWER(:termo_digitado)", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Object>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
     }
