@@ -175,7 +175,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builder = new SqlBuilder();
             builder.Select("courses.*");
-            builder.Select("categories.categorie_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
+            builder.Select("categories.category_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
             builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
