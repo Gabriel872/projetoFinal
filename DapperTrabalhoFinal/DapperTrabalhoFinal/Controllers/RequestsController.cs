@@ -19,7 +19,7 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             var builder = new SqlBuilder();
-            builder.Select("TO_CHAR(course_creation_date, 'DD/MM/YYYY') AS format_date");
+            builder.Select("TO_CHAR(course_creation_date, 'DD/MM/YYYY')");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ from courses");
             var dados = connection.Query<Courses>(builderTemplate.RawSql).ToList();
@@ -168,7 +168,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         // Comando para retornar dados curso, nome categoria, nome autor e preço curso
         [HttpGet("cardCourse")]
-        public IEnumerable<Courses> CardCourse()
+        public IEnumerable<CardCourses> CardCourse()
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -181,13 +181,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/");
-            var dados = connection.Query<Courses>(builderTemplate.RawSql).ToList();
+            var dados = connection.Query<CardCourses>(builderTemplate.RawSql).ToList();
             return dados;
         }
 
         // Comando para retornar dados curso, nome categoria, nome autor e preço curso pelo id do curso
         [HttpGet("cardCourseById/{id_course}")]
-        public IEnumerable<Courses> CardCourseById(int id_course)
+        public IEnumerable<CardCourses> CardCourseById(int id_course)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -204,13 +204,13 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where(":id_course = id_course", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
 
         // Comando para retornar curso conforme termo digitado
         [HttpGet("search/{term}")]
-        public IEnumerable<Courses> SearchTerm(string term)
+        public IEnumerable<CardCourses> SearchTerm(string term)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -227,12 +227,12 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("LOWER(courses.course_name) LIKE LOWER(:termo_digitado)", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
 
         [HttpGet("search/category/{term}")]
-        public IEnumerable<Courses> SearchCategory(string term)
+        public IEnumerable<CardCourses> SearchCategory(string term)
         {
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
@@ -248,7 +248,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.Where("LOWER(categories.category_name) LIKE LOWER(:termo_digitado)", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT /**select**/ FROM courses /**innerjoin**/ /**where**/");
-            var dados = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var dados = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
             return dados;
         }
     }
