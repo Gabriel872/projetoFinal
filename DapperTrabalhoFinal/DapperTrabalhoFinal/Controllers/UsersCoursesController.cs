@@ -23,7 +23,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpGet("{id_user}")]
 
-        public IEnumerable<Courses> ListCoursesById(int id_user)
+        public IEnumerable<CardCourses> ListCoursesById(int id_user)
         {
 
             Conexao c = new Conexao();
@@ -38,7 +38,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM user_courses /**innerjoin**/ /**where**/");
 
-            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var courses = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return courses;
         }
