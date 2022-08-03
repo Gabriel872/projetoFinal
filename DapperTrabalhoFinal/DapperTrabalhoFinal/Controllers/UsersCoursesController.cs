@@ -25,6 +25,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public IEnumerable<Courses> ListCoursesById(int id_user)
         {
+
             Conexao c = new Conexao();
             using var connection = c.RealizarConexao();
 
@@ -32,9 +33,10 @@ namespace DapperTrabalhoFinal.Controllers
             Parametro.Add(":id_user", id_user);
 
             var builder = new SqlBuilder();
+            builder.InnerJoin("courses on courses.id_course = user_courses.id_course");
             builder.Where(":id_user = id_user", Parametro);
 
-            var builderTemplate = builder.AddTemplate("SELECT * FROM user_courses /**where**/");
+            var builderTemplate = builder.AddTemplate("SELECT * FROM user_courses /**innerjoin**/ /**where**/");
 
             var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
