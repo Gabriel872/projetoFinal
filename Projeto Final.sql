@@ -33,20 +33,20 @@ END;
 -- Criando tabela CURSOS (CRUD)   == TABELA
 CREATE TABLE courses (
        id_course NUMBER CONSTRAINT pk_id_course PRIMARY KEY,
-       course_name VARCHAR2(50) NOT NULL,
-       course_subtitle VARCHAR2(60) NOT NULL, 
+       course_name VARCHAR2(70) NOT NULL,
+       course_subtitle VARCHAR2(140) NOT NULL, 
        course_people_amt NUMBER,
        course_rating NUMBER,
        course_language VARCHAR2(30) NOT NULL,
        course_creation_date DATE NOT NULL,
-       course_description VARCHAR2(150) NOT NULL,
-       course_requirements VARCHAR2(100) NOT NULL,
+       course_description VARCHAR2(500) NOT NULL,
+       course_requirements VARCHAR2(200) NOT NULL,
        course_time NUMBER NOT NULL,
-       course_link VARCHAR2(150) NOT NULL,
+       course_link VARCHAR2(200) NOT NULL,
        course_audience VARCHAR2(100) NOT NULL,
        course_learnings VARCHAR2(160),
-       course_knowledge_level VARCHAR2(20) NOT NULL,
-       course_message VARCHAR2(60),
+       course_knowledge_level VARCHAR2(30) NOT NULL,
+       course_message VARCHAR2(100),
        id_author NUMBER, -- tabela usuarios
        id_category NUMBER, -- tabela categorie
        id_price_course NUMBER -- tabela price courses
