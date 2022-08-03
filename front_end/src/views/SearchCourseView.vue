@@ -35,7 +35,7 @@
               </div>
             </div> -->
           </div>
-          <CourseList :cards="cards" />
+          <CourseList :cards="cards" :visibility="true"/>
         </div>
       </div>
     </section>
@@ -59,7 +59,6 @@ export default {
   beforeMount() {
     this.cards = [];
     this.term = this.$route.params.term;
-    console.log(this.term);
     this.getCourses();
   },
   beforeRouteUpdate(to, from, next) {
@@ -75,8 +74,6 @@ export default {
       );
       const requestCourses = await request.json();
       this.cards = requestCourses;
-      console.log(requestCourses);
-
 
       const requestByCategory = await fetch(
         `https://localhost:7114/api/Requests/search/category/${this.term}`
@@ -86,8 +83,6 @@ export default {
       for(var i = 0; i < requestCoursesByCategory.length; i++ ){
         this.cards.push(requestCoursesByCategory[i]);
       }
-      console.log(this.cards);
-      console.log(requestCoursesByCategory);
     },
   },
 };

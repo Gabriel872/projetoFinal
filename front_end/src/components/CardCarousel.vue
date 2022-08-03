@@ -1,5 +1,6 @@
 <template>
-  <router-link class="test"
+  <router-link
+    class="test"
     style="text-decoration: none; color: white"
     :to="{ name: 'CoursePage', params: { id: card.id_course } }"
   >
@@ -30,7 +31,13 @@
       </div>
       <div
         class="card-body pt-2 pb-2"
-        style="text-align: initial; height: 126px"
+        style="
+          text-align: initial;
+          height: 126px;
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+        "
       >
         <h1 class="card-title mb-2" style="font-size: 20px">
           <b>{{ card.course_name }}</b>
@@ -56,10 +63,14 @@
               class="card-text mb-2 ms-1"
               style="font-size: 16px; color: #ff8d00"
             >
-              <b>{{card.course_rating}}</b>
+              <b>{{ card.course_rating }}</b>
             </h2>
           </div>
-          <h2 v-if="id_user != card.id_author" class="card-text mb-0" style="font-size: 16px">
+          <h2
+            v-if="id_user != card.id_author && visible"
+            class="card-text mb-0"
+            style="font-size: 16px"
+          >
             <b>R$ {{ card.price_course_value }}</b>
           </h2>
         </div>
@@ -69,30 +80,47 @@
 </template>
 
 <script>
-
 export default {
-    name: 'CardCarousel',
-    data(){
-      return{
-        id_user: localStorage.getItem("userId")
+  name: "CardCarousel",
+  data() {
+    return {
+      id_user: localStorage.getItem("userId"),
+      title: "",
+    };
+  },
+  props: {
+    card: Object,
+    visible: Boolean,
+  },
+  beforeMount() {
+    console.log(this.card);
+    // this.formatTitle();
+  },
+  methods: {
+    formatTitle() {
+      var title = this.card.course_name;
+      this.card.course_name = "";
+
+      if (title.length > 31) {
+        for (var i = 0; i < 29; i++) {
+          this.card.course_name += title[i];
+        }
+
+        this.card.course_name + "...";
       }
     },
-    props: {
-        card: Object,
-    },
+  },
 };
 </script>
 
 <style scoped>
-
-.card{
-    margin: 6px 6px;
+.card {
+  margin: 6px 6px;
 }
 
-.test:hover{
+.test:hover {
   transform: scale(1.04, 1.04);
   transition-property: transform;
-  transition-duration: .4s;
+  transition-duration: 0.4s;
 }
-
 </style>

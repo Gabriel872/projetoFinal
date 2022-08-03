@@ -242,7 +242,7 @@ export default {
         body: JSON.stringify(this.obj_register),
       });
 
-      this.obj_register.user_description = "Description...";
+      this.obj_register.user_description = "Descrição...";
 
       localStorage.removeItem("login");
       localStorage.removeItem("userRole");

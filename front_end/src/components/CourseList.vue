@@ -3,6 +3,7 @@
         <div class="container-fluid" style="display: flex; flex-wrap: wrap">
           <CardCarousel
             class="margin: 0px;"
+            :visible="visibility"
             :card="card"
             v-for="card in cards"
             :key="card.id_course"
@@ -21,6 +22,7 @@ export default {
   },
   props: {
     cards: [],
+    visibility: Boolean
   },
 };
 </script>

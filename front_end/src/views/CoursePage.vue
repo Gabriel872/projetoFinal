@@ -28,8 +28,8 @@
                 />
               </svg>
               <div class="container-fluid">
-                <h1>{{ obj_course.COURSE_NAME }}</h1>
-                <h2>{{ obj_course.COURSE_SUBTITLE }}</h2>
+                <h1>{{ obj_course.course_name }}</h1>
+                <h2>{{ obj_course.course_subtitle }}</h2>
                 <div class="rating mb-2 flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -43,14 +43,14 @@
                       d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
                     />
                   </svg>
-                  <h3 style="margin-left: 0.5rem; font-size: 20px">{{obj_course.COURSE_RATING}}</h3>
+                  <h3 style="margin-left: 0.5rem; font-size: 20px">{{obj_course.course_rating}}</h3>
                 </div>
                 <div class="flex">
                   <h3
                     style="font-size: 16px; color: #35d3bc; margin-bottom: 0px"
                   >
                     Autor:<span style="margin-left: 0.2rem; color: white">{{
-                      obj_course.USER_NAME
+                      obj_course.user_name
                     }}</span>
                   </h3>
                   <p
@@ -60,12 +60,12 @@
                       margin-bottom: 0px;
                     "
                   >
-                    Data de criação: {{ obj_course.COURSE_CREATION_DATE }}
+                    Data de criação: {{ obj_course.course_creation_date }}
                   </p>
                 </div>
                 <div>
                   <p style="font-size: 16px; margin-bottom: 0px">
-                    {{ obj_course.COURSE_LANGUAGE }}
+                    {{ obj_course.course_language }}
                   </p>
                 </div>
               </div>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="card-body">
                       <p class="card-text">
-                        {{ obj_course.COURSE_DESCRIPTION }}
+                        {{ obj_course.course_description }}
                       </p>
                     </div>
                   </div>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="card-body">
                       <p class="card-text">
-                        {{ obj_course.COURSE_REQUIREMENTS }}
+                        {{ obj_course.course_requirements }}
                       </p>
                     </div>
                   </div>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="card-body">
                       <p class="card-text">
-                        {{ obj_course.COURSE_KNOWLEDGE_LEVEL }}
+                        {{ obj_course.course_knowledge_level }}
                       </p>
                     </div>
                   </div>
@@ -135,7 +135,7 @@
                       O que você aprenderá
                     </div>
                     <div class="card-body">
-                      <p class="card-text">{{ obj_course.COURSE_LEARNINGS }}</p>
+                      <p class="card-text">{{ obj_course.course_learnings }}</p>
                     </div>
                   </div>
                 </div>
@@ -166,7 +166,7 @@
           <div class="container-fluid flex-grid" style="color: #212529">
             <div class="container-fluid" style="color: lightgray">
               <div class="flex">
-                <h1 style="">R$ {{ obj_course.PRICE_COURSE_VALUE }}</h1>
+                <h1 style="">R$ {{ obj_course.price_course_value }}</h1>
               </div>
               <div class="flex">
                 <svg
@@ -184,19 +184,19 @@
                 <p class="ms-1" style="margin-bottom: 0px">Certificado</p>
               </div>
               <div class="row mt-5">
-                <button @click="verifyLogin()" v-show="id_user != obj_course.ID_AUTHOR"
+                <button @click="verifyLogin()" v-show="id_user != obj_course.id_author"
                   class="btn btn-primary btn-default"
                   style="font-size: 30px"
                 >
                   <b>Comprar</b>
                 </button>
-                <button v-show="id_user == obj_course.ID_AUTHOR"
+                <button v-show="id_user == obj_course.id_author"
                   class="btn btn-primary btn-default"
                   style="font-size: 20px"
                 >
                   <b>Editar</b>
                 </button>
-                <button @click="deleteCourse()" v-show="id_user == obj_course.ID_AUTHOR"
+                <button @click="deleteCourse()" v-show="id_user == obj_course.id_author"
                   class="btn btn-danger mt-2"
                   style=" color: white;font-size: 20px"
                 >
@@ -235,7 +235,6 @@ export default {
       );
       const course_request = await request.json();
       this.obj_course = await course_request[0];
-      console.log(this.obj_course);
     },
     async purchaseCourse(){
       this.obj_users_courses.id_user = localStorage.getItem("userId");
