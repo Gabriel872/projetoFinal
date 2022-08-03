@@ -20,6 +20,7 @@
         private string user_name;
         private string category_name;
         private double price_course_value;
+        private int id_author;
 
         public int Id_course { get => id_course; set => id_course = value; }
         public string Course_name { get => course_name; set => course_name = value; }
@@ -39,5 +40,6 @@
         public string User_name { get => user_name; set => user_name = value; }
         public string Category_name { get => category_name; set => category_name = value; }
         public double Price_course_value { get => price_course_value; set => price_course_value = value; }
+        public int Id_author { get => id_author; set => id_author = value; }
     }
 }
