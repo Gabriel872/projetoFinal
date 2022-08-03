@@ -33,14 +33,14 @@ namespace DapperTrabalhoFinal.Controllers
             Parametro.Add(":id_user", id_user);
 
             var builder = new SqlBuilder();
+            builder.Select("categories.category_name, usuarios.user_name, price_courses.price_course_value");
             builder.InnerJoin("courses on courses.id_course = user_courses.id_course");
-            builder.Select("categories.category_name, usuarios.user_name, price_courses.price_course_value, price_courses.price_course_coin");
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
             builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
-            builder.Where(":id_user = id_user", Parametro);
+            builder.Where(":id_user = user_courses.id_user", Parametro);
 
-            var builderTemplate = builder.AddTemplate("SELECT * FROM user_courses /**innerjoin**/ /**where**/");
+            var builderTemplate = builder.AddTemplate("SELECT courses.*, /**select**/ FROM user_courses /**innerjoin**/ /**where**/");
 
             var courses = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
