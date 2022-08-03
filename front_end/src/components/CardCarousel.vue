@@ -1,7 +1,7 @@
 <template>
   <router-link class="test"
     style="text-decoration: none; color: white"
-    :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }"
+    :to="{ name: 'CoursePage', params: { id: card.id_course } }"
   >
     <div
       class="card ml_mr carousel__item bg-dark text-bg-dark"
@@ -33,10 +33,10 @@
         style="text-align: initial; height: 126px"
       >
         <h1 class="card-title mb-2" style="font-size: 20px">
-          <b>{{ card.COURSE_NAME }}</b>
+          <b>{{ card.course_name }}</b>
         </h1>
         <h2 class="card-text mb-2" style="font-size: 14px">
-          {{ card.USER_NAME }}
+          {{ card.user_name }}
         </h2>
         <div class="flex" style="justify-content: space-between">
           <div class="flex" style="color: #ffbc00">
@@ -56,11 +56,11 @@
               class="card-text mb-2 ms-1"
               style="font-size: 16px; color: #ff8d00"
             >
-              <b>{{card.COURSE_RATING}}</b>
+              <b>{{card.course_rating}}</b>
             </h2>
           </div>
-          <h2 v-if="id_user != card.ID_AUTHOR" class="card-text mb-0" style="font-size: 16px">
-            <b>R$ {{ card.PRICE_COURSE_VALUE }}</b>
+          <h2 v-if="id_user != card.id_author" class="card-text mb-0" style="font-size: 16px">
+            <b>R$ {{ card.price_course_value }}</b>
           </h2>
         </div>
       </div>

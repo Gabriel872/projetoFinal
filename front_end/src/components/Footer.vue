@@ -6,18 +6,9 @@
           <div class="row">
             <div class="col-xl-4 col-md-4 mb-30">
               <div class="single-cta">
-                <i class="fas fa-map-marker-alt"></i>
-                <div class="cta-text">
-                  <h4>Find us</h4>
-                  <span>1010 Avenue, sw 54321, chandigarh</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-4 mb-30">
-              <div class="single-cta">
                 <i class="fas fa-phone"></i>
                 <div class="cta-text">
-                  <h4>Call us</h4>
+                  <h4>Telefone</h4>
                   <span>9876543210 0</span>
                 </div>
               </div>
@@ -26,8 +17,8 @@
               <div class="single-cta">
                 <i class="far fa-envelope-open"></i>
                 <div class="cta-text">
-                  <h4>Mail us</h4>
-                  <span>mail@info.com</span>
+                  <h4>Email</h4>
+                  <span>qestudos@info.com</span>
                 </div>
               </div>
             </div>
@@ -35,19 +26,13 @@
         </div>
         <div class="footer-content pt-5 pb-5">
           <div class="row">
-            
             <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
               <div class="footer-widget">
                 <div class="footer-widget-heading">
-                  <h3>Useful Links</h3>
+                  <h3>Links</h3>
                 </div>
                 <ul>
                   <li><a href="#">Home</a></li>
-                  <li><a href="#">Contact</a></li>
-                  <li><a href="#">About us</a></li>
-                  <li><a href="#">Our Services</a></li>
-                  <li><a href="#">Expert Team</a></li>
-                  <li><a href="#">Contact us</a></li>
                 </ul>
               </div>
             </div>
@@ -59,18 +44,7 @@
           <div class="row">
             <div class="col-xl-6 col-lg-6 text-center text-lg-left">
               <div class="copyright-text">
-                <p>Copyright &copy; 2022, All Right Reserved <a href="https://codepen.io/anupkumar92/">Anup</a></p>
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
-              <div class="footer-menu">
-                <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Terms</a></li>
-                  <li><a href="#">Privacy</a></li>
-                  <li><a href="#">Policy</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
+                <p>Copyright &copy; 2022, All Right Reserved <router-link to="/">Q'Estudos</router-link></p>
               </div>
             </div>
           </div>

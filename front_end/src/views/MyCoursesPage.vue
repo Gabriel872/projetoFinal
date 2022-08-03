@@ -34,6 +34,7 @@ export default{
         }
     },
     beforeMount(){
+        this.id_user = localStorage.getItem("userId");
         this.verifyLogin();
         this.getCourses();
     },

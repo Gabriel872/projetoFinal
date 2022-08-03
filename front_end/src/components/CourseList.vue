@@ -5,7 +5,7 @@
             class="margin: 0px;"
             :card="card"
             v-for="card in cards"
-            :key="card.ID_COURSE"
+            :key="card.id_course"
           />
         </div>
       </div>

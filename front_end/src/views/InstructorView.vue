@@ -11,33 +11,44 @@
     >
       <div class="row">
         <div class="header-instructor">
-          <h1>Instructor</h1>
+          <h1>Instrutor</h1>
         </div>
       </div>
       <hr style="color: white" />
       <div class="row" style="padding-top: 1rem">
         <div class="col-2">
           <div class="container-fluid">
-            <button class="btn btn-primary btn-custom" style="display: block" @click="changeView(0)">
-              Courses
+            <button
+              class="btn btn-primary btn-custom"
+              style="display: block"
+              @click="changeView(0)"
+            >
+              Cursos
             </button>
-            <button class="btn btn-primary btn-custom" style="display: block" @click="changeView(1)">
-              Create courses
+            <button
+              class="btn btn-primary btn-custom"
+              style="display: block"
+              @click="changeView(1)"
+            >
+              Criar curso
             </button>
           </div>
         </div>
         <div class="col-10">
           <div class="container-fluid" style="color: white; padding: 20px">
             <div class="row">
-              <div class="">
-                <h2>Create course</h2>
+              <div v-show="!visible">
+                <h2>Criar curso</h2>
+              </div>
+              <div v-show="visible">
+                <h2>Cursos</h2>
               </div>
             </div>
             <hr />
             <div class="row" v-show="visible">
               <CourseList :cards="cards" />
             </div>
-            <div class="row"  v-show="!visible">
+            <div class="row" v-show="!visible">
               <div class="container-fluid">
                 <section
                   class="container-fluid flex mt-3"
@@ -45,7 +56,7 @@
                 >
                   <div class="mb-3 container-fluid" style="width: 35rem">
                     <label for="titleFormControlInput1" class="form-label"
-                      >Title</label
+                      >Título</label
                     >
                     <input
                       v-model="obj_course.course_name"
@@ -57,7 +68,7 @@
                   </div>
                   <div class="mb-3 container-fluid" style="width: 35rem">
                     <label for="subtitleFormControlInput1" class="form-label"
-                      >Subtitle</label
+                      >Subtítulo</label
                     >
                     <input
                       v-model="obj_course.course_subtitle"
@@ -72,28 +83,28 @@
                 <section class="container-fluid mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="exampleFormControlTextarea1" class="form-label"
-                      >Description</label
+                      >Descrição</label
                     >
                     <textarea
                       v-model="obj_course.course_description"
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="4"
-                      placeholder="Description here..."
+                      placeholder="Descrição do curso..."
                     ></textarea>
                   </div>
                   <div class="mb-3 container-fluid">
                     <label
                       for="requirementsFormControlTextarea1"
                       class="form-label"
-                      >Requirements</label
+                      >Requisitos</label
                     >
                     <textarea
                       v-model="obj_course.course_requirements"
                       class="form-control"
                       id="requirementsFormControlTextarea1"
                       rows="4"
-                      placeholder="Requiriment"
+                      placeholder="Requisitos do curso..."
                     ></textarea>
                   </div>
                 </section>
@@ -101,7 +112,7 @@
                 <section class="container-fluid flex mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="selectlanguage" class="form-label"
-                      >Language</label
+                      >Idioma</label
                     >
                     <select
                       v-model="obj_course.course_language"
@@ -109,15 +120,15 @@
                       aria-label="Default select example"
                       id="selectlanguage"
                     >
-                      <option selected>Choose language</option>
-                      <option value="Portuguese">Portuguese</option>
-                      <option value="English">English</option>
-                      <option value="Spanish">Spanish</option>
+                      <option selected>Escolha o idioma</option>
+                      <option value="Portuguese">Português</option>
+                      <option value="English">Inglês</option>
+                      <option value="Spanish">Espanhol</option>
                     </select>
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="timeFormControlInput1" class="form-label"
-                      >Time</label
+                      >Tempo do curso</label
                     >
                     <input
                       min="0"
@@ -133,7 +144,7 @@
                 <section class="container-fluid flex mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="selectlanguage" class="form-label"
-                      >Knowledge level</label
+                      >Nível de conhecimento</label
                     >
                     <select
                       v-model="obj_course.course_knowledge_level"
@@ -141,15 +152,15 @@
                       aria-label="Default select example"
                       id="selectlanguage"
                     >
-                      <option selected>Choose level</option>
-                      <option value="Beginner">Beginner</option>
-                      <option value="Intermediary">Intermediary</option>
-                      <option value="Advanced">Advanced</option>
+                      <option selected>Escolha o nível de conhecimento</option>
+                      <option value="Beginner">Iniciante</option>
+                      <option value="Intermediary">Intermediário</option>
+                      <option value="Advanced">Avançado</option>
                     </select>
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="categoryOptions" class="form-label"
-                      >Category</label
+                      >Categorias</label
                     >
                     <select
                       v-model="obj_course.id_category"
@@ -157,7 +168,7 @@
                       aria-label="Default select example"
                       id="categoryOptions"
                     >
-                      <option value="0" selected>Choose category</option>
+                      <option value="0" selected>Escolha categoria</option>
                       <option
                         v-for="category in categoryList"
                         v-bind:key="category.id_category"
@@ -168,14 +179,14 @@
                     </select>
                   </div>
                   <div class="mb-3 container-fluid">
-                    <label for="priceOptions" class="form-label">Price</label>
+                    <label for="priceOptions" class="form-label">Preço</label>
                     <select
                       v-model="obj_course.id_price_course"
                       class="form-select"
                       aria-label="Default select example"
                       id="priceOptions"
                     >
-                      <option selected>Choose price</option>
+                      <option selected>Ecolha o preço</option>
                       <option
                         v-for="price in priceList"
                         v-bind:key="price.id_price_course"
@@ -190,7 +201,7 @@
                 <section class="container-fluid mt-3">
                   <div class="mb-3 container-fluid">
                     <label for="linkFormControlInput1" class="form-label"
-                      >Link</label
+                      >Link do curso</label
                     >
                     <input
                       v-model="obj_course.course_link"
@@ -202,7 +213,7 @@
                   </div>
                   <div class="mb-3 container-fluid">
                     <label for="audienceFormControlInput1" class="form-label"
-                      >Audience</label
+                      >Audiência</label
                     >
                     <input
                       v-model="obj_course.course_audience"
@@ -215,14 +226,14 @@
                 </section>
               </div>
             </div>
-            <div class="row mt-3">
+            <div v-show="!visible" class="row mt-3">
               <div class="flex" style="justify-content: center">
                 <button
                   v-on:click="createCourse()"
                   class="btn btn-primary"
                   style="width: 50rem"
                 >
-                  Create
+                  Criar
                 </button>
               </div>
             </div>

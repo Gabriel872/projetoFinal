@@ -13,7 +13,7 @@
         <div class="row"></div>
         <div class="row">
           <div class="col-2">
-            <div
+            <!-- <div
               class="container-fluid p-4"
               style="display: flex; justify-content: center; height: 100%"
             >
@@ -33,7 +33,7 @@
                   id="customRange3"
                 />
               </div>
-            </div>
+            </div> -->
           </div>
           <CourseList :cards="cards" />
         </div>
@@ -57,11 +57,13 @@ export default {
     CourseList,
   },
   beforeMount() {
+    this.cards = [];
     this.term = this.$route.params.term;
     console.log(this.term);
     this.getCourses();
   },
   beforeRouteUpdate(to, from, next) {
+    this.cards = [];
     this.term = to.params.term;
     this.getCourses();
     next();

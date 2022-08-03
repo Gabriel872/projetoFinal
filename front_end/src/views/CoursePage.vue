@@ -132,7 +132,7 @@
                     style="background-color: #363c42; border: none"
                   >
                     <div class="card-header" style="border-color: #808080">
-                      Learning
+                      O que você aprenderá
                     </div>
                     <div class="card-body">
                       <p class="card-text">{{ obj_course.COURSE_LEARNINGS }}</p>
@@ -184,7 +184,7 @@
                 <p class="ms-1" style="margin-bottom: 0px">Certificado</p>
               </div>
               <div class="row mt-5">
-                <button v-show="id_user != obj_course.ID_AUTHOR"
+                <button @click="verifyLogin()" v-show="id_user != obj_course.ID_AUTHOR"
                   class="btn btn-primary btn-default"
                   style="font-size: 30px"
                 >
@@ -217,6 +217,7 @@ export default {
     return {
       obj_id: 0,
       obj_course: {},
+      obj_users_courses: {},
       id_user: localStorage.getItem("userId"),
     };
   },
@@ -236,9 +237,31 @@ export default {
       this.obj_course = await course_request[0];
       console.log(this.obj_course);
     },
+    async purchaseCourse(){
+      this.obj_users_courses.id_user = localStorage.getItem("userId");
+      this.obj_users_courses.id_course = this.obj_id;
+      await fetch(`https://localhost:7114/api/UsersCourses`, {
+        method: "post",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.obj_users_courses),
+      });
+    },
     async deleteCourse(){
 
-    }
+    },
+    verifyLogin() {
+      if (
+        !localStorage.getItem("login") ||
+        localStorage.getItem("login") == null
+      ) {
+        this.$router.replace({ path: "/login" });
+      }else{
+        this.purchaseCourse();
+      }
+    },
   },
 };
 </script>

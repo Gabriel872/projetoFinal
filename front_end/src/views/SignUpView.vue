@@ -222,7 +222,7 @@ export default {
       } else {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
-          await this.register();
+          await this.register();  
           if (localStorage.getItem("login")) {
             this.goHomeView();
           }

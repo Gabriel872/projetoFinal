@@ -28,9 +28,9 @@
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
-            <Slide v-for="card in cards" :key="card.ID_COURSE">
+            <Slide v-for="card in cards" :key="card.id_course">
               <router-link style="text-decoration: none; color:white;"
-                :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }">
+                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
                 <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                   style="width: 240px; border: none; border-radius: 10px;">
 
@@ -41,8 +41,8 @@
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
-                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.COURSE_NAME }}</b></h1>
-                    <h3 class="card-text mb-2" style="font-size: 14px;">autor {{ card.USER_NAME }}</h3>
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
+                    <h3 class="card-text mb-2" style="font-size: 14px;">autor {{ card.user_name }}</h3>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -53,7 +53,7 @@
                         <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
                       </div>
 
-                      <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ {{card.PRICE_COURSE_VALUE}}</b></h2>
+                      <h2 class="card-text mb-0" style="font-size: 16px;"><b>R$ {{card.price_course_value}}</b></h2>
                     </div>
                   </div>
                 </div>
@@ -118,9 +118,9 @@
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
-            <Slide v-for="card in cards" :key="card.ID_COURSE">
+            <Slide v-for="card in cards" :key="card.id_course">
               <router-link style="text-decoration: none; color:white;"
-                :to="{ name: 'CoursePage', params: { id: card.ID_COURSE } }">
+                :to="{ name: 'CoursePage', params: { id: card.id_course } }">
                 <div class="card ml_mr carousel__item bg-dark text-bg-dark"
                   style="width: 240px; border: none; border-radius: 10px;">
                   <div class="flex" style="width:fit-content; overflow: hidden; border-radius: 10px  10px 0px 0px;">
@@ -130,8 +130,8 @@
                     </div>
                   </div>
                   <div class="card-body pt-2 pb-2" style="text-align: initial; height: 126px;">
-                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.COURSE_NAME }}</b></h1>
-                    <h2 class="card-text mb-2" style="font-size: 14px;">{{ card.USER_NAME }}</h2>
+                    <h1 class="card-title mb-2" style="font-size: 20px;"><b>{{ card.course_name }}</b></h1>
+                    <h2 class="card-text mb-2" style="font-size: 14px;">{{ card.user_name }}</h2>
                     <div class="flex" style="justify-content: space-between;">
                       <div class="flex" style="color: #ffbc00;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -142,7 +142,7 @@
                         <h2 class="card-text mb-2 ms-1" style="font-size: 16px; color: #ff8d00;"><b>5</b></h2>
                       </div>
                       <h2 class="card-text mb-0" style="font-size: 16px;">
-                        <b>R$ {{ card.PRICE_COURSE_VALUE }}</b>
+                        <b>R$ {{ card.price_course_value }}</b>
                       </h2>
                     </div>
                   </div>

@@ -15,7 +15,7 @@
             </div>
           </div>
           <router-link class="btn btn-primary btn-style" style="margin-top: 1rem;" to="/">
-            Go home page
+            Página inicial
           </router-link>
         </div>
       </div>
@@ -25,10 +25,10 @@
             <button v-on:click="option = 0" class="btn btn-primary btn-custom"
               style="display:block; width: 100%;">Dados</button>
             <button v-on:click="option = 1" class="btn btn-primary btn-custom"
-              style="display:block; width: 100%;">Security</button>
+              style="display:block; width: 100%;">Segurança</button>
             <hr>
             <button v-on:click="confirmDeleteAccount()" class="btn btn-danger btn-custom"
-              style="display:block; width: 100%;">Delete account</button>
+              style="display:block; width: 100%;">Deletar conta</button>
           </div>
         </div>
         <div class="col-10">
@@ -39,12 +39,12 @@
             <hr>
             <div class="row">
               <div class="mb-3">
-                <label for="nameFormControlInput1" class="form-label">Name</label>
+                <label for="nameFormControlInput1" class="form-label">Nome</label>
                 <input v-model="obj_user.user_name" type="text" class="form-control" id="nameFormControlInput1"
                   :placeholder="user_name">
               </div>
               <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <label for="exampleFormControlTextarea1" class="form-label">Descrição</label>
                 <textarea v-model="obj_user.user_description" class="form-control" id="exampleFormControlTextarea1"
                   rows="3" :placeholder="user_description"></textarea>
               </div>
@@ -52,12 +52,12 @@
           </div>
           <div v-if="option == 1" class="container-fluid" style="">
             <div class="row">
-              <h1 class="title" style="font-size: 25px;">Security</h1>
+              <h1 class="title" style="font-size: 25px;">Segurança</h1>
             </div>
             <hr>
             <div class="row">
               <div class="mb-3">
-                <label for="passwordFormControlInput1" class="form-label">Password</label>
+                <label for="passwordFormControlInput1" class="form-label">Senha</label>
                 <input v-model="obj_user.user_password" type="text" class="form-control"
                   id="passwordFormControlInput1" :placeholder="user_password">
               </div>
@@ -71,7 +71,7 @@
           <div class="container-fluid">
             <div class="row">
               <div class="container-fluid flex" style="justify-content: center;">
-                <button v-on:click="updateUser()" class="btn btn-primary" style="padding: 10px>">Save</button>
+                <button v-on:click="updateUser()" class="btn btn-primary" style="padding: 10px>">Salvar</button>
               </div>
             </div>
           </div>
