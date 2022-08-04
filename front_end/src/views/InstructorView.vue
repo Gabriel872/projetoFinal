@@ -4,7 +4,7 @@
       class="container"
       style="
         padding: 30px;
-        background-color: #212529;
+        background-color: #1a1d1e;
         margin-top: 10rem;
         border-radius: 10px 10px 0px 0px;
       "
@@ -274,7 +274,7 @@ export default {
       );
       const request_return = await request.json();
       for (var i = 0; i < request_return.length; i++) {
-        if (request_return[i].ID_AUTHOR == this.id_user) {
+        if (request_return[i].id_author == this.id_user) {
           this.cards.push(request_return[i]);
         }
       }
@@ -299,6 +299,8 @@ export default {
         },
         body: JSON.stringify(this.obj_course),
       });
+
+      this.visible = true;
     },
     async getPrices() {
       const request = await fetch("https://localhost:7114/api/PriceCourses");

@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <section class="first" style="margin-top: 7rem">
+    <section class="first" style="margin-top: 6rem">
       <div class="container">
         <div
           id="carouselExampleControls"
@@ -49,12 +49,18 @@
         </div>
       </div>
     </section>
-    <section class="second" style="margin-top:4rem; margin-bottom: 3rem;">
+    <section class="second" style="margin-top: 3rem; margin-bottom: 2rem">
       <div class="container">
+        <div class="row">
+          <div class="container-fluid flex">
+            <h1 style="margin-bottom:0px;"><b>Cursos</b>
+            <hr style=" margin-top:1px; width:50%; border:2px solid; border-radius: 5px;"></h1>
+          </div>
+        </div>
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">
             <Slide v-for="card in cards" :key="card.id_course">
-              <router-link
+              <router-link class="test"
                 style="text-decoration: none; color: white"
                 :to="{ name: 'CoursePage', params: { id: card.id_course } }"
               >
@@ -138,7 +144,7 @@
         </div>
       </div>
     </section>
-    <section class="third">
+    <section class="third" style="margin-bottom: 3rem;">
       <div class="container">
         <div class="row flex" style="justify-content: space-evenly">
           <div class="col-4">
@@ -330,23 +336,18 @@ export default {
       this.formatTitle();
     },
     formatTitle() {
-      
       for (var i = 0; i < this.cards.length; i++) {
-        
         var card_name = "";
         card_name = this.cards[i].course_name;
         this.cards[i].course_name = "";
 
         if (card_name.length > 31) {
-
           for (var j = 0; j < 29; j++) {
             this.cards[i].course_name += card_name[j];
           }
 
           this.cards[i].course_name += "...";
-          
-        }else{
-
+        } else {
           this.cards[i].course_name = card_name;
         }
       }
@@ -403,4 +404,15 @@ section {
   margin: auto;
   text-align: start;
 }
+
+.test{
+  transition-duration: 0.3s;
+}
+
+.test:hover {
+  transform: scale(1.04, 1.04);
+  transition-property: transform;
+  transition-duration: 0.3s;
+}
+
 </style>

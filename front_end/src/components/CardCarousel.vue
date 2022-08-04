@@ -118,9 +118,13 @@ export default {
   margin: 6px 6px;
 }
 
+.test{
+  transition-duration: 0.3s;
+}
+
 .test:hover {
   transform: scale(1.04, 1.04);
   transition-property: transform;
-  transition-duration: 0.4s;
+  transition-duration: 0.3s;
 }
 </style>
