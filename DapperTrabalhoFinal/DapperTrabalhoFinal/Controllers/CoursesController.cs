@@ -91,7 +91,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE courses SET course_name = :Course_name, course_subtitle = :Course_subtitle, course_people_amt = :Course_people_amt, course_rating = :Course_rating, course_language = :Course_language, course_creation_date = :Course_creation_date, course_description = :Course_description, course_requirements = :Course_requirements, course_time = :Course_time, course_link = :Course_link, course_audience = :Course_audience, course_learnings = :Course_learnings, course_knowledge_level = :Course_knowledge_level, course_message = :Course_message WHERE id_course = :Id_course", cs);
+            conncetion.Execute(@"UPDATE courses SET course_name = :Course_name, course_subtitle = :Course_subtitle, course_people_amt = :Course_people_amt, course_rating = :Course_rating, course_language = :Course_language, course_creation_date = :Course_creation_date, course_description = :Course_description, course_requirements = :Course_requirements, course_time = :Course_time, course_link = :Course_link, course_audience = :Course_audience, course_learnings = :Course_learnings, course_knowledge_level = :Course_knowledge_level, course_message = :Course_message, id_category = :Id_category WHERE id_course = :Id_course", cs);
 
             return "Curso alterado com sucesso!";
         }
