@@ -144,8 +144,11 @@ export default {
       const retorno = await request.json();
       this.users = retorno;
 
+      var login = false;
       for (var i = 0; i < this.users.length; i++) {
         if ((this.users[i].user_email == this.obj_login.user_email) && (this.users[i].user_password == this.obj_login.user_password)) {
+
+          login = true;
 
           localStorage.removeItem("userRole");
           localStorage.removeItem("userId");
@@ -161,6 +164,10 @@ export default {
           localStorage.setItem("userEmail", this.users[i].user_email);
           localStorage.setItem("userDescription", this.users[i].user_description);
         }
+      }
+
+      if(!login){
+        alert("Senha ou Email inválido");
       }
     },
     validEmail(input) {

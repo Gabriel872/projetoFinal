@@ -1,6 +1,6 @@
 <template>
   <div class="view">
-    <section class="first" style="margin-top: 5rem">
+    <section class="first" style="margin-top: 7rem">
       <div class="container">
         <div
           id="carouselExampleControls"
@@ -49,7 +49,7 @@
         </div>
       </div>
     </section>
-    <section class="second">
+    <section class="second" style="margin-top:4rem; margin-bottom: 3rem;">
       <div class="container">
         <div class="row">
           <Carousel :items-to-show="4.5" :wrap-around="true">

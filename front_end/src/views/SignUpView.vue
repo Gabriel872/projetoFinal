@@ -222,7 +222,7 @@ export default {
       } else {
         var valid = this.validEmail(this.obj_register.user_email);
         if (valid) {
-          await this.register();  
+          await this.register();
           if (localStorage.getItem("login")) {
             this.goHomeView();
           }
@@ -232,7 +232,9 @@ export default {
     async register() {
       this.obj_register.user_description = "Adicione uma descrição";
       this.obj_register.user_role = "user";
-
+      this.obj_register.user_description = "Descrição...";
+      alert("a");
+      
       await fetch(`https://localhost:7114/api/Cadastro`, {
         method: "post",
         headers: {
@@ -242,21 +244,7 @@ export default {
         body: JSON.stringify(this.obj_register),
       });
 
-      this.obj_register.user_description = "Descrição...";
-
-      localStorage.removeItem("login");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("userName");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userDescription");
-
-      localStorage.setItem("login", true);
-      localStorage.setItem("userRole", this.obj_register.user_role);
-      localStorage.setItem("userId", this.obj_register.id_user);
-      localStorage.setItem("userName", this.obj_register.user_name);
-      localStorage.setItem("userEmail", this.obj_register.user_email);
-      localStorage.setItem("userDescription", this.obj_register.user_description);
+      this.$router.replace({ path: "/login" });
     },
     validEmail(input) {
       var validRegex =

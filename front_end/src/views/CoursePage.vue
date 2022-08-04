@@ -28,8 +28,8 @@
                 />
               </svg>
               <div class="container-fluid">
-                <h1>{{ obj_course.course_name }}</h1>
-                <h2>{{ obj_course.course_subtitle }}</h2>
+                <h1><b>{{ obj_course.course_name }}</b></h1>
+                <h2 style="font-size: 20px;">{{ obj_course.course_subtitle }}</h2>
                 <div class="rating mb-2 flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
