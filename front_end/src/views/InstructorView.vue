@@ -301,6 +301,7 @@ export default {
       });
 
       this.visible = true;
+      alert("Curso criado");
     },
     async getPrices() {
       const request = await fetch("https://localhost:7114/api/PriceCourses");
