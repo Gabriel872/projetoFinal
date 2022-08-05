@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class PagSeguro
+    public class Pagseguro
     {
 
         private string pagseguro_name;

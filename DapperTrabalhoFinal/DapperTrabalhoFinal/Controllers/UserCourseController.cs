@@ -7,26 +7,26 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersCoursesController
+    public class UserCourseController
     {
         [HttpGet]
 
-        public IEnumerable<UsersCourses> ListUsersCourses()
+        public IEnumerable<UserCourse> ListUsersCourses()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<UsersCourses>("SELECT * FROM user_courses");
+            return connection.Query<UserCourse>("SELECT * FROM user_courses");
         }
 
 
         [HttpGet("{id_user}")]
 
-        public IEnumerable<CardCourses> ListCoursesById(int id_user)
+        public IEnumerable<CardCourse> ListCoursesById(int id_user)
         {
 
-            Conexao c = new Conexao();
+            Connection c = new Connection();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
@@ -42,16 +42,16 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT courses.*, /**select**/ FROM user_courses /**innerjoin**/ /**where**/");
 
-            var courses = connection.Query<CardCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var courses = connection.Query<CardCourse>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return courses;
         }
 
         [HttpPost]
 
-        public string RegisterUsersCourses([FromBody] UsersCourses uc)
+        public string RegisterUsersCourses([FromBody] UserCourse uc)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -65,7 +65,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteUsersCourses(int id_user_course)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -84,7 +84,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

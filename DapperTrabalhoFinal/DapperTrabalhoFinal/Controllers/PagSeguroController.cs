@@ -11,32 +11,30 @@ namespace DapperTrabalhoFinal.Controllers
     [ApiController]
 
 
-    public class PagSeguroController
+    public class PagseguroController
     {
         [HttpGet]
 
-        public IEnumerable<PagSeguro> ListPagseguro()
+        public IEnumerable<Pagseguro> ListPagseguro()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<PagSeguro>("SELECT * FROM pagseguro").ToList();
+            return connection.Query<Pagseguro>("SELECT * FROM pagseguro").ToList();
 
         }
 
         [HttpPost]
 
-        public string RegisterPagseguro([FromBody] PagSeguro pg)
+        public string RegisterPagseguro([FromBody] Pagseguro pg)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
             bool verificacaoEmail = IsValidEmail(pg.Pagseguro_email);
             bool verificaCpf = VerifyCpf(pg.Pagseguro_cpf);
-            //bool existeEmail = emailExiste(pg.Pagseguro_email);
-
 
             if (verificacaoEmail && verificaCpf)
             {
@@ -85,20 +83,6 @@ namespace DapperTrabalhoFinal.Controllers
                 return false;
             }
         }
-
-        /*private bool emailExiste(string email)
-        {
-            PagSeguro pg = new PagSeguro();
-
-            if (email == pg.Pagseguro_email)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }*/
 
         private bool VerifyCpf(string cpf)
         {

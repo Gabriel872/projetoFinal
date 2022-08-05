@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class SubThemes
+    public class SubTheme
     {
 
         private int id_sub_theme;

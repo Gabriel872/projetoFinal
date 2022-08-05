@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class CourseSections
+    public class CourseSection
     {
 
         private int id_course_sect;

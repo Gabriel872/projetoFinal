@@ -8,25 +8,25 @@ namespace DapperTrabalhoFinal.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class SubThemesController
+    public class SubThemeController
     {
 
         [HttpGet]
 
-        public IEnumerable<SubThemes> ListSubThemes()
+        public IEnumerable<SubTheme> ListSubThemes()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<SubThemes>("SELECT * FROM sub_themes").ToList();
+            return connection.Query<SubTheme>("SELECT * FROM sub_themes").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterSubThemes([FromBody] SubThemes st)
+        public string RegisterSubThemes([FromBody] SubTheme st)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -37,9 +37,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateSubThemes([FromBody] SubThemes st)
+        public string UpdateSubThemes([FromBody] SubTheme st)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -52,7 +52,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteSubThemes(int id_sub_theme)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -71,7 +71,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

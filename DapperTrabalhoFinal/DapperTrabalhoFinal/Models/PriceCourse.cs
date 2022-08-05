@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class PriceCourses
+    public class PriceCourse
     {
 
         private int id_price_course;

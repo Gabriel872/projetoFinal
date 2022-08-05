@@ -8,25 +8,25 @@ namespace DapperTrabalhoFinal.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class InterestsController
+    public class InterestController
     {
 
         [HttpGet]
 
-        public IEnumerable<Interests> ListInterests()
+        public IEnumerable<Interest> ListInterests()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Interests>("SELECT * FROM interests").ToList();
+            return connection.Query<Interest>("SELECT * FROM interests").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterInterests([FromBody] Interests i)
+        public string RegisterInterests([FromBody] Interest i)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -37,9 +37,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateInterests([FromBody] Interests i)
+        public string UpdateInterests([FromBody] Interest i)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -52,7 +52,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteInterests(int id_interests)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -71,7 +71,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

@@ -10,25 +10,25 @@ namespace DapperTrabalhoFinal.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class UsersController
+    public class UserController
     {
 
         [HttpGet]
 
-        public IEnumerable<Users> ListUsers()
+        public IEnumerable<User> ListUsers()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Users>("SELECT * FROM usuarios").ToList();
+            return connection.Query<User>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpGet("{id_user}")]
 
-        public IEnumerable<Users> ListIdUsers(int id_user)
+        public IEnumerable<User> ListIdUsers(int id_user)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
@@ -39,35 +39,34 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM usuarios /**where**/");
 
-            var user = connection.Query<Users>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var user = connection.Query<User>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return user;
         }
 
-        [HttpGet("validateInstructor/{codigo}")]
-        public Mensagem Teste(int codigo)
+        [HttpGet("validateInstructor/{id_instructor}")]
+        public Message ValidateInstructor(int id_instructor)
         {
 
             // Instanciar objeto da classe Mensagem
-            Mensagem m = new Mensagem();
+            Message m = new Message();
 
             // Instanciar objeto da classe Conexão
-            Conexao c = new();
+            Connection c = new();
 
             // Realizar conexão com o banco de dados Oracle - DAPPER
             using var connection = c.RealizarConexao();
 
             // Objeto dinâmico para executar a procedure
             var obj = new DynamicParameters();
-            obj.Add(":id_instructor", codigo, direction: ParameterDirection.Input);
-            obj.Add(":id_cours", codigo, direction: ParameterDirection.Input);
+            obj.Add(":id_instructor", id_instructor, direction: ParameterDirection.Input);
             obj.Add(":returns", "", direction: ParameterDirection.Output);
 
             // Executar a inserção
-            connection.Query<Mensagem>("validate_instructor", obj, commandType: CommandType.StoredProcedure).ToString();
+            connection.Query<Message>("validate_instructor", obj, commandType: CommandType.StoredProcedure).ToString();
 
             // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.MensagemRetorno = obj.Get<string>(":returns");
+            m.ReturnMessage = obj.Get<string>(":returns");
 
             // Retorno da API
             return m;
@@ -75,9 +74,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPost]
 
-        public string RegisterUsersTeste([FromBody] Users u)
+        public string RegisterUsersTeste([FromBody] User u)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -97,7 +96,7 @@ namespace DapperTrabalhoFinal.Controllers
         }
         private bool emailExiste(string email)
         {
-            Cadastro cd = new Cadastro();
+            Registration cd = new Registration();
 
             if (email == cd.User_email)
             {
@@ -111,9 +110,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateUsers([FromBody] Users u)
+        public string UpdateUsers([FromBody] User u)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -122,11 +121,11 @@ namespace DapperTrabalhoFinal.Controllers
             return "Pessoa alterada com sucesso!";
         }
 
-        [HttpPut("perfil")]
+        [HttpPut("profile")]
 
-        public string UpdateUsersPerfil([FromBody] Users u)
+        public string UpdateUsersPerfil([FromBody] User u)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -139,7 +138,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteUsers(int id_user)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -158,7 +157,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

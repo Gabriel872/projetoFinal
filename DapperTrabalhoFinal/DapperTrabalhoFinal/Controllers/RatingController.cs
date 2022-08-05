@@ -7,25 +7,25 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RatingsController
+    public class RatingController
     {
 
         [HttpGet]
 
-        public IEnumerable<Ratings> ListRatings()
+        public IEnumerable<Rating> ListRatings()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Ratings>("SELECT * FROM ratings").ToList();
+            return connection.Query<Rating>("SELECT * FROM ratings").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterRatings([FromBody] Ratings r)
+        public string RegisterRatings([FromBody] Rating r)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -36,9 +36,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateRatings([FromBody] Ratings r)
+        public string UpdateRatings([FromBody] Rating r)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -51,7 +51,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteRatings(int id_rating)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -70,7 +70,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

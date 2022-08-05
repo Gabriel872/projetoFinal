@@ -9,24 +9,24 @@ namespace DapperTrabalhoFinal.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class PriceCoursesController
+    public class PriceCourseController
     {
 
         [HttpGet]
 
-        public IEnumerable<PriceCourses> ListPriceCourses()
+        public IEnumerable<PriceCourse> ListPriceCourses()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<PriceCourses>("SELECT * FROM price_courses").ToList();
+            return connection.Query<PriceCourse>("SELECT * FROM price_courses").ToList();
         }
 
         [HttpGet("{id_price_course}")]
-        public IEnumerable<PriceCourses> ListPriceCourseById(int id_price_course)
+        public IEnumerable<PriceCourse> ListPriceCourseById(int id_price_course)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
@@ -37,16 +37,16 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM price_courses /**where**/");
 
-            var price_courses = connection.Query<PriceCourses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var price_courses = connection.Query<PriceCourse>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return price_courses;
         }
 
         [HttpPost]
 
-        public string RegisterPriceCourses([FromBody] PriceCourses pc)
+        public string RegisterPriceCourses([FromBody] PriceCourse pc)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -57,9 +57,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdatePriceCourses([FromBody] PriceCourses pc)
+        public string UpdatePriceCourses([FromBody] PriceCourse pc)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -72,7 +72,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeletePriceCourses(int id_price_course)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -91,7 +91,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

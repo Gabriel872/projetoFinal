@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SXst3HkiGAh2asLMdxSg+dJrj8o5tSkY57/Xn3T6afGCvwquWjKCXl7qJYXIPoROCNriSOnRuHUcqWc+IO5lZA==",
+  "dgSpecHash": "HOOiC5ZX/S/Ii5RojB0Xy916gCMx6TFEaTZZ2EdylHZ2DZlfqoPHFsOulnHVx/eb63Dk2MlQGRBTsjojgHXjng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\CyberQ\\Desktop\\ProjetoFinal\\backend\\projetoFinal\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
+  "projectFilePath": "C:\\Users\\CyberQ\\Desktop\\projetoFinal\\projetoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal\\DapperTrabalhoFinal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CyberQ\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\CyberQ\\.nuget\\packages\\dapper.sqlbuilder\\2.0.78\\dapper.sqlbuilder.2.0.78.nupkg.sha512",

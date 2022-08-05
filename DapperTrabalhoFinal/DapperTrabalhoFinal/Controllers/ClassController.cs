@@ -7,24 +7,24 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClassesController
+    public class ClassController
     {
         [HttpGet]
 
-        public IEnumerable<Classes> ListClasses()
+        public IEnumerable<Class> ListClasses()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Classes>("SELECT * FROM classes").ToList();
+            return connection.Query<Class>("SELECT * FROM classes").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterClasses([FromBody] Classes cl)
+        public string RegisterClasses([FromBody] Class cl)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -35,9 +35,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateClasses([FromBody] Classes cl)
+        public string UpdateClasses([FromBody] Class cl)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -50,7 +50,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteClasses(int id_class)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -69,7 +69,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

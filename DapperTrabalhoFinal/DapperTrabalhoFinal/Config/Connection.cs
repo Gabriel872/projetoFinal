@@ -2,7 +2,7 @@
 
 namespace DapperTrabalhoFinal.Config
 {
-    public class Conexao
+    public class Connection
     {
         public OracleConnection RealizarConexao()
         {

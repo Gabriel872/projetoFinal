@@ -9,25 +9,25 @@ namespace DapperTrabalhoFinal.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class CategoriesController
+    public class CategoryController
     {
 
         [HttpGet]
 
-        public IEnumerable<Categories> ListCategories()
+        public IEnumerable<Category> ListCategories()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Categories>("SELECT * FROM categories").ToList();
+            return connection.Query<Category>("SELECT * FROM categories").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterCategories([FromBody] Categories cg)
+        public string RegisterCategories([FromBody] Category cg)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -38,9 +38,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateCategories([FromBody] Categories cg)
+        public string UpdateCategories([FromBody] Category cg)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -53,7 +53,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteCategories(int id_category)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -72,7 +72,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
 
             using var connection = c.RealizarConexao();
@@ -81,29 +81,29 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
 
-        [HttpGet("validateRemoval/{codigo}")]
-        public Mensagem Teste(int codigo)
+        [HttpGet("validateRemoval/{id_category}")]
+        public Message validateRemoval(int id_category)
         {
 
             // Instanciar objeto da classe Mensagem
-            Mensagem m = new Mensagem();
+            Message m = new Message();
 
             // Instanciar objeto da classe Conexão
-            Conexao c = new();
+            Connection c = new();
 
             // Realizar conexão com o banco de dados Oracle - DAPPER
             using var connection = c.RealizarConexao();
 
             // Objeto dinâmico para executar a procedure
             var obj = new DynamicParameters();
-            obj.Add(":id_categ", codigo, direction: ParameterDirection.Input);
+            obj.Add(":id_categ", id_category, direction: ParameterDirection.Input);
             obj.Add(":returns", "", direction: ParameterDirection.Output);
 
             // Executar a inserção
-            connection.Query<Mensagem>("validate_removal", obj, commandType: CommandType.StoredProcedure).ToString();
+            connection.Query<Message>("validate_removal", obj, commandType: CommandType.StoredProcedure).ToString();
 
             // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.MensagemRetorno = obj.Get<string>(":returns");
+            m.ReturnMessage = obj.Get<string>(":returns");
 
             // Retorno da API
             return m;

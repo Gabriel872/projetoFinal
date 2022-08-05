@@ -11,19 +11,19 @@ namespace DapperTrabalhoFinal.Controllers
     {
         [HttpGet]
 
-        public IEnumerable<Cadastro> ListUsers()
+        public IEnumerable<Registration> ListUsers()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Cadastro>("SELECT * FROM usuarios").ToList();
+            return connection.Query<Registration>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPut]
         public string UpdateUser([FromBody] UpdateUser u)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 

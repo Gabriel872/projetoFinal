@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class Subcategories
+    public class Subcategory
     {
 
         private int id_subcategory;

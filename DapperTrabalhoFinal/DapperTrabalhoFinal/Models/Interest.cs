@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class Interests
+    public class Interest
     {
 
         private int id_interests;

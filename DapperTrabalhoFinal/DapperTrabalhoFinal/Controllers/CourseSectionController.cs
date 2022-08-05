@@ -7,25 +7,25 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseSectionsController
+    public class CourseSectionController
     {
 
         [HttpGet]
 
-        public IEnumerable<CourseSections> ListCourseSections()
+        public IEnumerable<CourseSection> ListCourseSections()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<CourseSections>("SELECT * FROM course_sections").ToList();
+            return connection.Query<CourseSection>("SELECT * FROM course_sections").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterCourseSections([FromBody] CourseSections cs)
+        public string RegisterCourseSections([FromBody] CourseSection cs)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -36,9 +36,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateCourseSections([FromBody] CourseSections cs)
+        public string UpdateCourseSections([FromBody] CourseSection cs)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -51,7 +51,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteCourseSections(int id_course_sect)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -70,7 +70,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

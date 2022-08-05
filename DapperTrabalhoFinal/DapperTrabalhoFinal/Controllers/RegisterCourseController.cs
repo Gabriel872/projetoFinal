@@ -13,7 +13,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public IEnumerable<RegisterCourse> ListCourses()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
@@ -23,7 +23,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string RegisterCourse([FromBody] RegisterCourse rc)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 

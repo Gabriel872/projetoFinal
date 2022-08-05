@@ -10,14 +10,14 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CadastroController
+    public class RegistrationController
     {
 
-        [HttpGet("Conexao")]
+        [HttpGet("Connection")]
 
         public string TestarConexao()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             OracleConnection obj = c.RealizarConexao();
 
@@ -38,31 +38,31 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpGet]
 
-        public IEnumerable<Cadastro> ListUsers()
+        public IEnumerable<Registration> ListUsers()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Cadastro>("SELECT * FROM usuarios").ToList();
+            return connection.Query<Registration>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPost]
 
-        public string RegisterUsers([FromBody] Cadastro cd)
+        public string RegisterUsers([FromBody] Registration r)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
 
-            bool verificacaoEmail = IsValidEmail(cd.User_email);
-            bool verificacaoSenha = isValidPassword(cd.User_password);
-            bool verificacaoNome = isValidUserName(cd.User_name);
+            bool verificacaoEmail = IsValidEmail(r.User_email);
+            bool verificacaoSenha = isValidPassword(r.User_password);
+            bool verificacaoNome = isValidUserName(r.User_name);
 
             if (verificacaoEmail && verificacaoSenha && verificacaoNome)
             {
-                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", cd);
+                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", r);
                 return "Cadastro efetuado com sucesso!";
             }
             else

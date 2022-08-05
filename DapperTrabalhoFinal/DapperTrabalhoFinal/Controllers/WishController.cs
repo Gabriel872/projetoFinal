@@ -7,24 +7,24 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WishesController
+    public class WishController
     {
         [HttpGet]
 
-        public IEnumerable<Wishes> ListWishes()
+        public IEnumerable<Wish> ListWishes()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Wishes>("SELECT * FROM wishes");
+            return connection.Query<Wish>("SELECT * FROM wishes");
         }
 
         [HttpPost]
 
-        public string RegisterWishes([FromBody] Wishes w)
+        public string RegisterWishes([FromBody] Wish w)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -35,9 +35,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateWishes([FromBody] Wishes w)
+        public string UpdateWishes([FromBody] Wish w)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -50,7 +50,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteWishes(int id_wish)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -69,7 +69,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

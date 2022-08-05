@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class Wishes
+    public class Wish
     {
 
         private int id_wish;

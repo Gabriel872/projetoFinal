@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class CardCourses
+    public class CardCourse
     {
         private int id_course;
         private string course_name;

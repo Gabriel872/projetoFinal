@@ -8,25 +8,25 @@ namespace DapperTrabalhoFinal.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class SubcategoriesController
+    public class SubcategoryController
     {
 
         [HttpGet]
 
-        public IEnumerable<Subcategories> ListSubcategories()
+        public IEnumerable<Subcategory> ListSubcategories()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Subcategories>("SELECT * FROM subcategories").ToList();
+            return connection.Query<Subcategory>("SELECT * FROM subcategories").ToList();
         }                                                                                                                                                                                                                                                                                   
 
         [HttpPost]
 
-        public string RegisterSubcategories([FromBody] Subcategories sb)
+        public string RegisterSubcategories([FromBody] Subcategory sb)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -37,9 +37,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPut]
 
-        public string UpdateSubcategories([FromBody] Subcategories sb)
+        public string UpdateSubcategories([FromBody] Subcategory sb)
         {       
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -52,7 +52,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteSubcategories(int id_subcategory)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -71,7 +71,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

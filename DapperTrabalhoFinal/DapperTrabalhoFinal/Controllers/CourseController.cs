@@ -8,24 +8,24 @@ namespace DapperTrabalhoFinal.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CoursesController
+    public class CourseController
     {
         [HttpGet]
 
-        public IEnumerable<Courses> ListCourses()
+        public IEnumerable<Course> ListCourses()
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 
-            return connection.Query<Courses>("SELECT * FROM courses").ToList();
+            return connection.Query<Course>("SELECT * FROM courses").ToList();
         }
 
         [HttpGet("{id_course}")]
 
-        public IEnumerable<Courses> ListCoursesById(int id_course)
+        public IEnumerable<Course> ListCoursesById(int id_course)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
@@ -36,34 +36,34 @@ namespace DapperTrabalhoFinal.Controllers
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
 
-            var courses = connection.Query<Courses>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
+            var courses = connection.Query<Course>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
 
             return courses;
         }
 
-        [HttpGet("validateCourse/{codigo}")]
-        public Mensagem Teste(int codigo)
+        [HttpGet("validateCourse/{id_course}")]
+        public Message ValidateCourse(int id_course)
         {
 
             // Instanciar objeto da classe Mensagem
-            Mensagem m = new Mensagem();
+            Message m = new Message();
 
             // Instanciar objeto da classe Conexão
-            Conexao c = new();
+            Connection c = new();
 
             // Realizar conexão com o banco de dados Oracle - DAPPER
             using var connection = c.RealizarConexao();
 
             // Objeto dinâmico para executar a procedure
             var obj = new DynamicParameters();
-            obj.Add(":id_cours", codigo, direction: ParameterDirection.Input);
+            obj.Add(":id_cours", id_course, direction: ParameterDirection.Input);
             obj.Add(":returns", "", direction: ParameterDirection.Output);
 
             // Executar a inserção
-            connection.Query<Mensagem>("validate_course", obj, commandType: CommandType.StoredProcedure).ToString();
+            connection.Query<Message>("validate_course", obj, commandType: CommandType.StoredProcedure).ToString();
 
             // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.MensagemRetorno = obj.Get<string>(":returns");
+            m.ReturnMessage = obj.Get<string>(":returns");
 
             // Retorno da API
             return m;
@@ -71,9 +71,9 @@ namespace DapperTrabalhoFinal.Controllers
 
         [HttpPost]
 
-        public string RegisterCourses([FromBody] Courses cs)
+        public string RegisterCourses([FromBody] Course cs)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -85,9 +85,9 @@ namespace DapperTrabalhoFinal.Controllers
        
         [HttpPut]
 
-        public string UpdateCourses([FromBody] Courses cs)
+        public string UpdateCourses([FromBody] Course cs)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var conncetion = c.RealizarConexao();
 
@@ -100,7 +100,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         public string DeleteCourses(int id_course)
         {
-            Conexao c = new();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -119,7 +119,7 @@ namespace DapperTrabalhoFinal.Controllers
 
         private int contabilizar(int id)
         {
-            Conexao c = new Conexao();
+            Connection c = new Connection();
 
             using var connection = c.RealizarConexao();
 

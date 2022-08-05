@@ -1,6 +1,6 @@
 ﻿namespace DapperTrabalhoFinal.Models
 {
-    public class Classes
+    public class Class
     {
 
         private int id_class;
