@@ -22,15 +22,14 @@ namespace DapperTrabalhoFinal.Controllers
 
 
         [HttpGet("{id_user}")]
-
         public IEnumerable<CardCourse> ListCoursesById(int id_user)
         {
 
-            Connection c = new Connection();
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_user", id_user);
+            DynamicParameters Parametro = new();
+            Parametro.Add("?id_user", id_user);
 
             var builder = new SqlBuilder();
             builder.Select("categories.category_name, usuarios.user_name, price_courses.price_course_value");
@@ -38,7 +37,7 @@ namespace DapperTrabalhoFinal.Controllers
             builder.InnerJoin("usuarios ON courses.id_author = usuarios.id_user");
             builder.InnerJoin("categories ON courses.id_category = categories.id_category");
             builder.InnerJoin("price_courses ON courses.id_price_course = price_courses.id_price_course");
-            builder.Where(":id_user = user_courses.id_user", Parametro);
+            builder.Where("?id_user = user_courses.id_user", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT courses.*, /**select**/ FROM user_courses /**innerjoin**/ /**where**/");
 
@@ -48,28 +47,26 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpPost]
-
         public string RegisterUsersCourses([FromBody] UserCourse uc)
         {
             Connection c = new();
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO user_courses (id_user, id_course) VALUES (:Id_user, :Id_course)", uc);
+            connection.Execute(@"INSERT INTO user_courses (id_user, id_course) VALUES (?Id_user, ?Id_course)", uc);
 
             return "Cadastro efetuado com sucesso!";
         }
 
 
         [HttpDelete("{id_user_course}")]
-
         public string DeleteUsersCourses(int id_user_course)
         {
             Connection c = new();
 
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_user_course);
+            int count = Contabilizar(id_user_course);
 
             if (count > 0)
             {
@@ -82,9 +79,9 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private int contabilizar(int id)
+        private static int Contabilizar(int id)
         {
-            Connection c = new Connection();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 

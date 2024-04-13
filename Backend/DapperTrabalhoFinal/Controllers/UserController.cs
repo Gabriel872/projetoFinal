@@ -14,10 +14,9 @@ namespace DapperTrabalhoFinal.Controllers
     {
 
         [HttpGet]
-
         public IEnumerable<User> ListUsers()
         {
-            Connection c = new Connection();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -25,17 +24,16 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpGet("{id_user}")]
-
         public IEnumerable<User> ListIdUsers(int id_user)
         {
-            Connection c = new Connection();
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
             DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_user", id_user);
+            Parametro.Add("?id_user", id_user);
 
             var builder = new SqlBuilder();
-            builder.Where(":id_user = id_user", Parametro);
+            builder.Where("?id_user = id_user", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM usuarios /**where**/");
 
@@ -49,7 +47,7 @@ namespace DapperTrabalhoFinal.Controllers
         {
 
             // Instanciar objeto da classe Mensagem
-            Message m = new Message();
+            Message m = new();
 
             // Instanciar objeto da classe Conexão
             Connection c = new();
@@ -58,15 +56,15 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             // Objeto dinâmico para executar a procedure
-            var obj = new DynamicParameters();
-            obj.Add(":id_instructor", id_instructor, direction: ParameterDirection.Input);
-            obj.Add(":returns", "", direction: ParameterDirection.Output);
+            DynamicParameters obj = new();
+            obj.Add("?id_instructor", id_instructor, direction: ParameterDirection.Input);
+            obj.Add("?returns", "", direction: ParameterDirection.Output);
 
             // Executar a inserção
             connection.Query<Message>("validate_instructor", obj, commandType: CommandType.StoredProcedure).ToString();
 
             // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.ReturnMessage = obj.Get<string>(":returns");
+            m.ReturnMessage = obj.Get<string>("?returns");
 
             // Retorno da API
             return m;
@@ -96,7 +94,7 @@ namespace DapperTrabalhoFinal.Controllers
         }
         private bool emailExiste(string email)
         {
-            Registration cd = new Registration();
+            Registration cd = new();
 
             if (email == cd.User_email)
             {

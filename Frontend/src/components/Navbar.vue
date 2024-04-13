@@ -185,6 +185,7 @@ export default {
     setInterval(() => {
       this.login = localStorage.getItem("login");
       this.role = localStorage.getItem("userRole");
+      console.log(localStorage.getItem("userRole"))
     }, 500);
   },
   methods: {

@@ -2,8 +2,7 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
-using Oracle.ManagedDataAccess.Client;
-using System.Data;
+using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 
 namespace DapperTrabalhoFinal.Controllers
@@ -14,12 +13,11 @@ namespace DapperTrabalhoFinal.Controllers
     {
 
         [HttpGet("Connection")]
-
         public string TestarConexao()
         {
-            Connection c = new Connection();
+            Connection c = new();
 
-            OracleConnection obj = c.RealizarConexao();
+            MySqlConnection obj = c.RealizarConexao();
 
             obj.Open();
 
@@ -37,7 +35,6 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpGet]
-
         public IEnumerable<Registration> ListUsers()
         {
             Connection c = new Connection();
@@ -48,7 +45,6 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpPost]
-
         public string RegisterUsers([FromBody] Registration r)
         {
             Connection c = new();
@@ -62,7 +58,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             if (verificacaoEmail && verificacaoSenha && verificacaoNome)
             {
-                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", r);
+                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (?User_name, ?User_email, ?User_password, ?User_role)", r);
                 return "Cadastro efetuado com sucesso!";
             }
             else
@@ -70,7 +66,7 @@ namespace DapperTrabalhoFinal.Controllers
                 return "Falha ao cadastrar";
             }
         }
-        
+
         private bool isValidPassword(string password)
         {
             var input = password;
@@ -79,7 +75,7 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 throw new Exception("Password should not be empty");
             }
-
+            //usuarios Q123@abc
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasMiniMaxChars = new Regex(@".{6,15}");
@@ -117,14 +113,14 @@ namespace DapperTrabalhoFinal.Controllers
         {
             bool isIntString = name.All(char.IsDigit);
 
-            if (name.Length < 5)
+            if (name.Length < 1)
             {
                 return false;
             }
             else
             {
                 return true;
-            }  
+            }
         }
 
         private bool IsValidEmail(string email)
