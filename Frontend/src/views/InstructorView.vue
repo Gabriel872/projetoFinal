@@ -164,7 +164,6 @@ export default {
     };
   },
   beforeMount() {
-    console.log(new Date().getDate())
     this.verifyLogin();
     this.getCourse();
     this.getPrices();

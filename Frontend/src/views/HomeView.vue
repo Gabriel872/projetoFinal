@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="row">
-          <Carousel :items-to-show="4.5" :wrap-around="true">
+          <Carousel :items-to-show="4.8" :wrap-around="true">
             <Slide v-for="card in cards" :key="card.id_course">
               <router-link
                 class="test"
@@ -228,9 +228,10 @@
     <section class="second">
       <div class="container">
         <div class="row">
-          <Carousel :items-to-show="4.5" :wrap-around="true">
+          <Carousel :items-to-show="4.8" :wrap-around="true">
             <Slide v-for="card in cards" :key="card.id_course">
               <router-link
+                class="test"
                 style="text-decoration: none; color: white"
                 :to="{ name: 'CoursePage', params: { id: card.id_course } }"
               >
@@ -422,5 +423,12 @@ section {
   transform: scale(1.04, 1.04);
   transition-property: transform;
   transition-duration: 0.3s;
+}
+
+</style>
+
+<style>
+.carousel__viewport{
+  padding: 5px;
 }
 </style>

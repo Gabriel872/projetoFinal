@@ -1,18 +1,17 @@
 <template>
   <div class="view">
-    <section class="container-fluid">
+    <section class="container container-fluid">
       <div class="row">
-        <div style="margin-top: 7rem; margin-left: 5rem; width: 116rem">
+        <div style="margin-top: 7rem;">
           <h1><b>Meus cursos</b></h1>
         </div>
       </div>
     </section>
     <section>
       <div
-        class="container-fluid"
+        class="container container-fluid"
         style="
           margin: 0.5rem auto 10rem auto;
-          width: 116rem;
           border-radius: 10px 10px 0px 0px;
           border: 1px solid lightgray;
           padding: 1%;
