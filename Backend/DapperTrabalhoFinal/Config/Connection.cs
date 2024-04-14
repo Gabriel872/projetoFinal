@@ -1,14 +1,18 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Oracle.ManagedDataAccess.Client;
 
 namespace DapperTrabalhoFinal.Config
 {
     public class Connection
     {
-        public MySqlConnection RealizarConexao()
+        public OracleConnection RealizarConexao()
         {
-            string StringConexao = "Server=127.0.0.1;Port=3306;Database=qestudos;Uid=root;Pwd=123456;";
+            string StringConexao = "DATA SOURCE = (DESCRIPTION ="
+                + "(ADDRESS = (PROTOCOL = TCP)(HOST=192.168.15.18)(PORT=1521))"
+                + "(CONNECT_DATA =(SERVER = DEDICATED)"
+                + "(SERVICE_NAME = TREINAMENTO))));"
+                + "User Id=aluno04;Password=aluno04;";
 
-            return new MySqlConnection(StringConexao);
+            return new OracleConnection(StringConexao);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO categories (category_name) VALUES (?Category_name)", cg);
+            connection.Execute(@"INSERT INTO categories (category_name) VALUES (:Category_name)", cg);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -40,7 +40,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE categories SET category_name = ?Category_name WHERE id_category = ?Id_category", cg);
+            conncetion.Execute(@"UPDATE categories SET category_name = :Category_name WHERE id_category = :Id_category", cg);
 
             return "Categoria alterada com sucesso!";
         }
@@ -86,12 +86,12 @@ namespace DapperTrabalhoFinal.Controllers
             using var connection = c.RealizarConexao();
 
             DynamicParameters obj = new();
-            obj.Add("?id_categ", id_category, direction: ParameterDirection.Input);
-            obj.Add("?returns", "", direction: ParameterDirection.Output);
+            obj.Add(":id_categ", id_category, direction: ParameterDirection.Input);
+            obj.Add(":returns", "", direction: ParameterDirection.Output);
 
             connection.Query<Message>("validate_removal", obj, commandType: CommandType.StoredProcedure).ToString();
 
-            m.ReturnMessage = obj.Get<string>("?returns");
+            m.ReturnMessage = obj.Get<string>(":returns");
 
             return m;
         }

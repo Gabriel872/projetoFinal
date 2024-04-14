@@ -2,7 +2,6 @@
 using DapperTrabalhoFinal.Config;
 using DapperTrabalhoFinal.Models;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 
 namespace DapperTrabalhoFinal.Controllers
@@ -11,11 +10,13 @@ namespace DapperTrabalhoFinal.Controllers
     [ApiController]
     public class RegistrationController
     {
+
         [HttpGet("Connection")]
         public string TestarConexao()
         {
             Connection c = new();
-            MySqlConnection obj = c.RealizarConexao();
+
+            var obj = c.RealizarConexao();
 
             obj.Open();
 
@@ -29,42 +30,34 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 Mensagem = "Falha ao cadastrar";
             }
-
             return Mensagem;
         }
 
         [HttpGet]
         public IEnumerable<Registration> ListUsers()
         {
-            Connection c = new();
+            Connection c = new Connection();
+
             using var connection = c.RealizarConexao();
 
             return connection.Query<Registration>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPost]
-        public string RegisterUsers([FromBody] Registration registration)
+        public string RegisterUsers([FromBody] Registration r)
         {
             Connection c = new();
+
             using var connection = c.RealizarConexao();
 
-            bool validEmail = IsValidEmail(registration.User_email);
-            bool validPassword = IsValidPassword(registration.User_password);
-            bool validName = IsValidUserName(registration.User_name);
 
-            if (validEmail && validPassword && validName)
+            bool verificacaoEmail = IsValidEmail(r.User_email);
+            bool verificacaoSenha = isValidPassword(r.User_password);
+            bool verificacaoNome = isValidUserName(r.User_name);
+
+            if (verificacaoEmail && verificacaoSenha && verificacaoNome)
             {
-                connection.Execute(@"
-INSERT INTO usuarios 
-            (user_name, 
-            user_email, 
-            user_password, 
-            user_role) 
-     VALUES (?User_name, 
-            ?User_email, 
-            ?User_password, 
-            ?User_role)", registration);
-
+                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", r);
                 return "Cadastro efetuado com sucesso!";
             }
             else
@@ -73,7 +66,7 @@ INSERT INTO usuarios
             }
         }
 
-        private static bool IsValidPassword(string password)
+        private bool isValidPassword(string password)
         {
             var input = password;
 
@@ -81,7 +74,7 @@ INSERT INTO usuarios
             {
                 throw new Exception("Password should not be empty");
             }
-
+            //usuarios Q123@abc
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasMiniMaxChars = new Regex(@".{6,15}");
@@ -104,6 +97,7 @@ INSERT INTO usuarios
             {
                 return false;
             }
+
             else if (!hasSymbols.IsMatch(input))
             {
                 return false;
@@ -114,7 +108,7 @@ INSERT INTO usuarios
             }
         }
 
-        private static bool IsValidUserName(string name)
+        private bool isValidUserName(string name)
         {
             bool isIntString = name.All(char.IsDigit);
 
@@ -128,20 +122,20 @@ INSERT INTO usuarios
             }
         }
 
-        private static bool IsValidEmail(string email)
+        private bool IsValidEmail(string email)
         {
-            var trimEmail = email.Trim();
 
-            if (trimEmail.EndsWith("."))
+            var trimmedEmail = email.Trim();
+
+            if (trimmedEmail.EndsWith("."))
             {
                 return false;
             }
-
             try
             {
-                var MailAddress = new System.Net.Mail.MailAddress(email);
+                var addr = new System.Net.Mail.MailAddress(email);
 
-                if (MailAddress.Address == trimEmail)
+                if (addr.Address == trimmedEmail)
                 {
                     try
                     {

@@ -26,7 +26,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO classes (class_title, class_video, class_complete) VALUES (?Class_title, ?Class_video, ?Class_complete)", cl);
+            connection.Execute(@"INSERT INTO classes (class_title, class_video, class_complete) VALUES (:Class_title, :Class_video, :Class_complete)", cl);
 
             return "Cadastro efetuado com sucesso!";
         }
@@ -38,7 +38,7 @@ namespace DapperTrabalhoFinal.Controllers
 
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE classes SET class_title = ?Class_title, class_video = ?Class_video, class_complete = ?Class_complete WHERE id_class = ?Id_class", cl);
+            conncetion.Execute(@"UPDATE classes SET class_title = :Class_title, class_video = :Class_video, class_complete = :Class_complete WHERE id_class = :Id_class", cl);
 
             return "Classe alterada com sucesso!";
         }

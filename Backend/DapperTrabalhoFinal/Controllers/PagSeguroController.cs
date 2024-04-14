@@ -6,23 +6,31 @@ using System.Text.RegularExpressions;
 
 namespace DapperTrabalhoFinal.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
+
+
     public class PagseguroController
     {
         [HttpGet]
+
         public IEnumerable<Pagseguro> ListPagseguro()
         {
-            Connection c = new();
+            Connection c = new Connection();
+
             using var connection = c.RealizarConexao();
 
             return connection.Query<Pagseguro>("SELECT * FROM pagseguro").ToList();
+
         }
 
         [HttpPost]
+
         public string RegisterPagseguro([FromBody] Pagseguro pg)
         {
             Connection c = new();
+
             using var connection = c.RealizarConexao();
 
             bool verificacaoEmail = IsValidEmail(pg.Pagseguro_email);
@@ -30,31 +38,29 @@ namespace DapperTrabalhoFinal.Controllers
 
             if (verificacaoEmail && verificaCpf)
             {
-                connection.Execute(@"
-INSERT INTO pagseguro (pagseguro_name, pagseguro_email, pagseguro_cpf) 
-VALUES (?Pagseguro_name, ?Pagseguro_email, ?Pagseguro_cpf)", pg);
+                connection.Execute(@"INSERT INTO pagseguro (pagseguro_name, pagseguro_email, pagseguro_cpf) VALUES (:Pagseguro_name, :Pagseguro_email, :Pagseguro_cpf)", pg);
                 return "Email e cpf cadastrado com sucesso!";
             }
             else
             {
                 return "Falha no cadastro";
             }
+
         }
 
-        private static bool IsValidEmail(string email)
+        private bool IsValidEmail(string email)
         {
-            var trimEmail = email.Trim();
+            var trimmedEmail = email.Trim();
 
-            if (trimEmail.EndsWith("."))
+            if (trimmedEmail.EndsWith("."))
             {
                 return false;
-            }
-
+            }      
             try
             {
-                var mailAddress = new System.Net.Mail.MailAddress(email);
+                var addr = new System.Net.Mail.MailAddress(email);
 
-                if (mailAddress.Address == trimEmail)
+                if (addr.Address == trimmedEmail)
                 {
                     try
                     {
@@ -78,64 +84,65 @@ VALUES (?Pagseguro_name, ?Pagseguro_email, ?Pagseguro_cpf)", pg);
             }
         }
 
-        private static bool VerifyCpf(string cpf)
+        private bool VerifyCpf(string cpf)
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-            string tempCpf, digit;
-            int sum, resto;
+
+            string tempCpf, digito;
+
+            int soma, resto;
 
             cpf = cpf.Trim();
+
             cpf = cpf.Replace(".", "").Replace("-", "");
 
             if (cpf.Length != 11)
-            {
+
                 return false;
-            }
 
             tempCpf = cpf.Substring(0, 9);
-            sum = 0;
+
+            soma = 0;
 
             for (int i = 0; i < 9; i++)
-            {
-                sum += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
-            }
 
-            resto = sum % 11;
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+
+            resto = soma % 11;
 
             if (resto < 2)
-            {
+
                 resto = 0;
-            }
+
             else
-            {
+
                 resto = 11 - resto;
-            }
 
-            digit = resto.ToString();
-            tempCpf += digit;
+            digito = resto.ToString();
 
-            sum = 0;
+            tempCpf = tempCpf + digito;
+
+            soma = 0;
 
             for (int i = 0; i < 10; i++)
-            {
-                sum += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
-            }
 
-            resto = sum % 11;
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
 
             if (resto < 2)
-            {
+
                 resto = 0;
-            }
+
             else
-            {
+
                 resto = 11 - resto;
-            }
 
-            digit += resto.ToString();
+            digito += resto.ToString();
 
-            return cpf.EndsWith(digit);
+            return cpf.EndsWith(digito);
         }
     }
 }

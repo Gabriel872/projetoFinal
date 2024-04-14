@@ -2,6 +2,7 @@
 {
     public class User
     {
+
         private int id_user;
         private string user_name;
         private string user_email;
