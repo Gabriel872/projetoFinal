@@ -10,21 +10,17 @@ namespace DapperTrabalhoFinal.Controllers
     public class UserCourseController
     {
         [HttpGet]
-
         public IEnumerable<UserCourse> ListUsersCourses()
         {
             Connection c = new Connection();
-
             using var connection = c.RealizarConexao();
 
             return connection.Query<UserCourse>("SELECT * FROM user_courses");
         }
 
-
         [HttpGet("{id_user}")]
         public IEnumerable<CardCourse> ListCoursesById(int id_user)
         {
-
             Connection c = new();
             using var connection = c.RealizarConexao();
 
@@ -47,30 +43,30 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpPost]
-        public string RegisterUsersCourses([FromBody] UserCourse uc)
+        public string RegisterUsersCourses([FromBody] UserCourse userCourse)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO user_courses (id_user, id_course) VALUES (?Id_user, ?Id_course)", uc);
+            connection.Execute(@"
+INSERT INTO user_courses 
+            (id_user, id_course) 
+     VALUES (?Id_user, ?Id_course)", userCourse);
 
             return "Cadastro efetuado com sucesso!";
         }
-
 
         [HttpDelete("{id_user_course}")]
         public string DeleteUsersCourses(int id_user_course)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
             int count = Contabilizar(id_user_course);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM user_courses WHERE id_user_course = " + id_user_course);
+                connection.Execute($@"DELETE FROM user_courses WHERE id_user_course = {id_user_course}");
                 return "Removido com sucesso!";
             }
             else
@@ -82,10 +78,9 @@ namespace DapperTrabalhoFinal.Controllers
         private static int Contabilizar(int id)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM user_courses WHERE id_user_course = " + id);
+            return connection.ExecuteScalar<int>($@"SELECT COUNT(*) FROM user_courses WHERE id_user_course = {id}");
         }
     }
 }

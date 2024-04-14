@@ -6,18 +6,14 @@ using System.Data;
 
 namespace DapperTrabalhoFinal.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-
     public class UserController
     {
-
         [HttpGet]
         public IEnumerable<User> ListUsers()
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
             return connection.Query<User>("SELECT * FROM usuarios").ToList();
@@ -29,10 +25,10 @@ namespace DapperTrabalhoFinal.Controllers
             Connection c = new();
             using var connection = c.RealizarConexao();
 
-            DynamicParameters Parametro = new DynamicParameters();
+            DynamicParameters Parametro = new();
             Parametro.Add("?id_user", id_user);
 
-            var builder = new SqlBuilder();
+            SqlBuilder builder = new();
             builder.Where("?id_user = id_user", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM usuarios /**where**/");
@@ -45,44 +41,42 @@ namespace DapperTrabalhoFinal.Controllers
         [HttpGet("validateInstructor/{id_instructor}")]
         public Message ValidateInstructor(int id_instructor)
         {
+            Message message = new();
 
-            // Instanciar objeto da classe Mensagem
-            Message m = new();
-
-            // Instanciar objeto da classe Conexão
             Connection c = new();
-
-            // Realizar conexão com o banco de dados Oracle - DAPPER
             using var connection = c.RealizarConexao();
 
-            // Objeto dinâmico para executar a procedure
             DynamicParameters obj = new();
             obj.Add("?id_instructor", id_instructor, direction: ParameterDirection.Input);
             obj.Add("?returns", "", direction: ParameterDirection.Output);
 
-            // Executar a inserção
             connection.Query<Message>("validate_instructor", obj, commandType: CommandType.StoredProcedure).ToString();
 
-            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.ReturnMessage = obj.Get<string>("?returns");
+            message.ReturnMessage = obj.Get<string>("?returns");
 
-            // Retorno da API
-            return m;
+            return message;
         }
 
         [HttpPost]
-
-        public string RegisterUsersTeste([FromBody] User u)
+        public string RegisterUsersTeste([FromBody] User user)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            bool existeEmail = emailExiste(u.User_email);
+            bool existeEmail = EmailExiste(user.User_email);
 
             if (existeEmail == true)
             {
-                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (:User_name, :User_email, :User_password, :User_role)", u);
+                connection.Execute(@"
+INSERT INTO usuarios 
+            (user_name, 
+            user_email, 
+            user_password, 
+            user_role) 
+     VALUES (?User_name, 
+            ?User_email, 
+            ?User_password, 
+            ?User_role)", user);
 
                 return "Cadastro efetuado com sucesso!";
             }
@@ -90,13 +84,13 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 return "Falha no cadastro";
             }
-
         }
-        private bool emailExiste(string email)
-        {
-            Registration cd = new();
 
-            if (email == cd.User_email)
+        private static bool EmailExiste(string email)
+        {
+            Registration registration = new();
+
+            if (email == registration.User_email)
             {
                 return false;
             }
@@ -107,44 +101,56 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpPut]
-
-        public string UpdateUsers([FromBody] User u)
+        public string UpdateUsers([FromBody] User user)
         {
             Connection c = new();
-
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE usuarios SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description, user_link = :User_link, user_socialmedia = :User_socialmedia, user_profession = :User_profession, user_hours_week = :User_hours_week, user_experience = :User_experience, user_role = :User_Role WHERE id_user = :Id_user", u);
+            conncetion.Execute(@"
+UPDATE usuarios 
+   SET user_name = ?User_name, 
+       user_email = ?User_email, 
+       user_password = ?User_password, 
+       user_description = ?User_description, 
+       user_link = ?User_link, 
+       user_socialmedia = ?User_socialmedia, 
+       user_profession = ?User_profession, 
+       user_hours_week = ?User_hours_week, 
+       user_experience = ?User_experience, 
+       user_role = ?User_Role 
+ WHERE id_user = ?Id_user", user);
 
             return "Pessoa alterada com sucesso!";
         }
 
         [HttpPut("profile")]
-
-        public string UpdateUsersPerfil([FromBody] User u)
+        public string UpdateUsersPerfil([FromBody] User user)
         {
             Connection c = new();
-
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE usuarios SET user_name = :User_name, user_email = :User_email, user_password = :User_password, user_description = :User_description WHERE id_user = :Id_user", u);
+            conncetion.Execute(@"
+UPDATE usuarios 
+   SET user_name = ?User_name, 
+       user_email = ?User_email, 
+       user_password = ?User_password, 
+       user_description = ?User_description 
+ WHERE id_user = ?Id_user", user);
 
             return "Pessoa alterada com sucesso!";
         }
 
         [HttpDelete("{id_user}")]
-
         public string DeleteUsers(int id_user)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_user);
+            int count = Contabilizar(id_user);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM usuarios WHERE id_user = " + id_user);
+                connection.Execute($@"DELETE FROM usuarios WHERE id_user = {id_user}");
                 return "Removido com sucesso!";
             }
             else
@@ -153,14 +159,12 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private int contabilizar(int id)
+        private static int Contabilizar(int id)
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM usuarios WHERE id_user = " + id);
+            return connection.ExecuteScalar<int>($@"SELECT COUNT(*) FROM usuarios WHERE id_user = {id}");
         }
-
     }
 }

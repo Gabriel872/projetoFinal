@@ -5,19 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DapperTrabalhoFinal.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-
     public class PriceCourseController
     {
-
         [HttpGet]
-
         public IEnumerable<PriceCourse> ListPriceCourses()
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
             return connection.Query<PriceCourse>("SELECT * FROM price_courses").ToList();
@@ -26,61 +21,63 @@ namespace DapperTrabalhoFinal.Controllers
         [HttpGet("{id_price_course}")]
         public IEnumerable<PriceCourse> ListPriceCourseById(int id_price_course)
         {
-            Connection c = new Connection();
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_price_course", id_price_course);
+            DynamicParameters Parametro = new();
+            Parametro.Add("?id_price_course", id_price_course);
 
             var builder = new SqlBuilder();
-            builder.Where(":id_price_course = id_price_course", Parametro);
+            builder.Where("?id_price_course = id_price_course", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM price_courses /**where**/");
 
             var price_courses = connection.Query<PriceCourse>(builderTemplate.RawSql, builderTemplate.Parameters).ToList();
-
             return price_courses;
         }
 
         [HttpPost]
-
-        public string RegisterPriceCourses([FromBody] PriceCourse pc)
+        public string RegisterPriceCourses([FromBody] PriceCourse priceCourse)
         {
             Connection c = new();
 
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_discount) VALUES (:Price_course_value, :Price_course_coin, :Price_discount)", pc);
+            connection.Execute(@"INSERT INTO price_courses (price_course_value, price_course_coin, price_discount) VALUES (?Price_course_value, ?Price_course_coin, ?Price_discount)", priceCourse);
 
             return "Cadastro efetuado com sucesso!";
         }
 
         [HttpPut]
-
-        public string UpdatePriceCourses([FromBody] PriceCourse pc)
+        public string UpdatePriceCourses([FromBody] PriceCourse priceCourse)
         {
             Connection c = new();
-
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE price_courses SET price_course_value = :Price_course_value, price_course_coin = :Price_course_coin, price_discount = :Price_discount WHERE id_price_course = :Id_price_course", pc);
+            conncetion.Execute(@"
+UPDATE price_courses 
+   SET price_course_value = ?Price_course_value,
+       price_course_coin = ?Price_course_coin,
+       price_discount = ?Price_discount 
+ WHERE id_price_course = ?Id_price_course", priceCourse);
 
             return "Preço curso alterado com sucesso!";
         }
 
         [HttpDelete("{id_price_course}")]
-
         public string DeletePriceCourses(int id_price_course)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_price_course);
+            int count = Contabilizar(id_price_course);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM price_courses WHERE id_price_course = " + id_price_course);
+                connection.Execute($@"
+DELETE FROM price_courses 
+      WHERE id_price_course = {id_price_course}");
+
                 return "Removido com sucesso!";
             }
             else
@@ -89,15 +86,13 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private int contabilizar(int id)
+        private static int Contabilizar(int id)
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM price_courses WHERE id_price_course = " + id);
+            return connection.ExecuteScalar<int>($@"SELECT COUNT(*) FROM price_courses WHERE id_price_course = {id}");
         }
-
     }
 }
 

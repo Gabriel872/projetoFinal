@@ -6,23 +6,10 @@ namespace DapperTrabalhoFinal.Config
     {
         public MySqlConnection RealizarConexao()
         {
-            string StringConexao = "Server=127.0.0.1;Port=3306;Database=qestudos;Uid=root;Pwd=ghra5897;";
+            string StringConexao = "Server=127.0.0.1;Port=3306;Database=qestudos;Uid=root;Pwd=123456;";
 
-            // retorno contendo o acesso ao banco de dados
             return new MySqlConnection(StringConexao);
         }
-
-        //public OracleConnection RealizarConexao()
-        //{
-        //    string StringConexao = "DATA SOURCE = (DESCRIPTION ="
-        //        + "(ADDRESS = (PROTOCOL = TCP)(HOST=192.168.15.18)(PORT=1521))"
-        //        + "(CONNECT_DATA =(SERVER = DEDICATED)"
-        //        + "(SERVICE_NAME = TREINAMENTO))));"
-        //        + "User Id=aluno04;Password=aluno04;";
-
-        //    // retorno contendo o acesso ao banco de dados
-        //    return new OracleConnection(StringConexao);
-        //}
     }
 }
 

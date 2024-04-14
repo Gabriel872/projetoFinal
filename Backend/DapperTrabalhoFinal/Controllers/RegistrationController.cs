@@ -11,12 +11,10 @@ namespace DapperTrabalhoFinal.Controllers
     [ApiController]
     public class RegistrationController
     {
-
         [HttpGet("Connection")]
         public string TestarConexao()
         {
             Connection c = new();
-
             MySqlConnection obj = c.RealizarConexao();
 
             obj.Open();
@@ -31,34 +29,42 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 Mensagem = "Falha ao cadastrar";
             }
+
             return Mensagem;
         }
 
         [HttpGet]
         public IEnumerable<Registration> ListUsers()
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
             return connection.Query<Registration>("SELECT * FROM usuarios").ToList();
         }
 
         [HttpPost]
-        public string RegisterUsers([FromBody] Registration r)
+        public string RegisterUsers([FromBody] Registration registration)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
+            bool validEmail = IsValidEmail(registration.User_email);
+            bool validPassword = IsValidPassword(registration.User_password);
+            bool validName = IsValidUserName(registration.User_name);
 
-            bool verificacaoEmail = IsValidEmail(r.User_email);
-            bool verificacaoSenha = isValidPassword(r.User_password);
-            bool verificacaoNome = isValidUserName(r.User_name);
-
-            if (verificacaoEmail && verificacaoSenha && verificacaoNome)
+            if (validEmail && validPassword && validName)
             {
-                connection.Execute(@"INSERT INTO usuarios (user_name, user_email, user_password, user_role) VALUES (?User_name, ?User_email, ?User_password, ?User_role)", r);
+                connection.Execute(@"
+INSERT INTO usuarios 
+            (user_name, 
+            user_email, 
+            user_password, 
+            user_role) 
+     VALUES (?User_name, 
+            ?User_email, 
+            ?User_password, 
+            ?User_role)", registration);
+
                 return "Cadastro efetuado com sucesso!";
             }
             else
@@ -67,7 +73,7 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private bool isValidPassword(string password)
+        private static bool IsValidPassword(string password)
         {
             var input = password;
 
@@ -75,7 +81,7 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 throw new Exception("Password should not be empty");
             }
-            //usuarios Q123@abc
+
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasMiniMaxChars = new Regex(@".{6,15}");
@@ -98,7 +104,6 @@ namespace DapperTrabalhoFinal.Controllers
             {
                 return false;
             }
-
             else if (!hasSymbols.IsMatch(input))
             {
                 return false;
@@ -109,7 +114,7 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private bool isValidUserName(string name)
+        private static bool IsValidUserName(string name)
         {
             bool isIntString = name.All(char.IsDigit);
 
@@ -123,20 +128,20 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private bool IsValidEmail(string email)
+        private static bool IsValidEmail(string email)
         {
+            var trimEmail = email.Trim();
 
-            var trimmedEmail = email.Trim();
-
-            if (trimmedEmail.EndsWith("."))
+            if (trimEmail.EndsWith("."))
             {
                 return false;
             }
+
             try
             {
-                var addr = new System.Net.Mail.MailAddress(email);
+                var MailAddress = new System.Net.Mail.MailAddress(email);
 
-                if (addr.Address == trimmedEmail)
+                if (MailAddress.Address == trimEmail)
                 {
                     try
                     {

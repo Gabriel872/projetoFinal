@@ -11,10 +11,9 @@ namespace DapperTrabalhoFinal.Controllers
     public class CourseController
     {
         [HttpGet]
-
         public IEnumerable<Course> ListCourses()
         {
-            Connection c = new Connection();
+            Connection c = new();
 
             using var connection = c.RealizarConexao();
 
@@ -22,17 +21,16 @@ namespace DapperTrabalhoFinal.Controllers
         }
 
         [HttpGet("{id_course}")]
-
         public IEnumerable<Course> ListCoursesById(int id_course)
         {
-            Connection c = new Connection();
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            DynamicParameters Parametro = new DynamicParameters();
-            Parametro.Add(":id_course", id_course);
+            DynamicParameters Parametro = new();
+            Parametro.Add("?id_course", id_course);
 
-            var builder = new SqlBuilder();
-            builder.Where(":id_course = id_course", Parametro);
+            SqlBuilder builder = new();
+            builder.Where("?id_course = id_course", Parametro);
 
             var builderTemplate = builder.AddTemplate("SELECT * FROM courses /**where**/");
 
@@ -44,71 +42,76 @@ namespace DapperTrabalhoFinal.Controllers
         [HttpGet("validateCourse/{id_course}")]
         public Message ValidateCourse(int id_course)
         {
+            Message message = new();
 
-            // Instanciar objeto da classe Mensagem
-            Message m = new Message();
-
-            // Instanciar objeto da classe Conexão
             Connection c = new();
 
-            // Realizar conexão com o banco de dados Oracle - DAPPER
             using var connection = c.RealizarConexao();
 
-            // Objeto dinâmico para executar a procedure
-            var obj = new DynamicParameters();
-            obj.Add(":id_cours", id_course, direction: ParameterDirection.Input);
-            obj.Add(":returns", "", direction: ParameterDirection.Output);
+            DynamicParameters obj = new();
+            obj.Add("?id_cours", id_course, direction: ParameterDirection.Input);
+            obj.Add("?returns", "", direction: ParameterDirection.Output);
 
-            // Executar a inserção
             connection.Query<Message>("validate_course", obj, commandType: CommandType.StoredProcedure).ToString();
 
-            // Retornar a mensagem e armazenar em um objeto do tipo Mensagem
-            m.ReturnMessage = obj.Get<string>(":returns");
+            message.ReturnMessage = obj.Get<string>(":returns");
 
-            // Retorno da API
-            return m;
+            return message;
         }
 
         [HttpPost]
-
         public string RegisterCourses([FromBody] Course cs)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO courses (course_name, course_subtitle, course_people_amt, course_rating, course_language, course_creation_date, course_description, course_requirements, course_time, course_link, course_audience, course_learnings, course_knowledge_level, course_message, id_author, id_category, id_price_course)  VALUES (:Course_name, :Course_subtitle, :Course_people_amt, :Course_rating, :Course_language, :Course_creation_date, :Course_description, :Course_requirements, :Course_time, :Course_link, :Course_audience, :Course_learnings, :Course_knowledge_level, :Course_message, :Id_author, :Id_category, :Id_price_course)", cs);
+            connection.Execute(@"
+INSERT INTO 
+courses (course_name, course_subtitle, course_people_amt, course_rating, course_language, course_creation_date, course_description, course_requirements, course_time, course_link, course_audience, course_learnings, course_knowledge_level, course_message, id_author, id_category, id_price_course)  
+VALUES (?Course_name, ?Course_subtitle, ?Course_people_amt, ?Course_rating, ?Course_language, ?Course_creation_date, ?Course_description, ?Course_requirements, ?Course_time, ?Course_link, ?Course_audience, ?Course_learnings, ?Course_knowledge_level, ?Course_message, ?Id_author, ?Id_category, ?Id_price_course)", cs);
 
             return "Cadastro efetuado com sucesso!";
         }
-
        
         [HttpPut]
-
         public string UpdateCourses([FromBody] Course cs)
         {
             Connection c = new();
-
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE courses SET course_name = :Course_name, course_subtitle = :Course_subtitle, course_people_amt = :Course_people_amt, course_rating = :Course_rating, course_language = :Course_language, course_creation_date = :Course_creation_date, course_description = :Course_description, course_requirements = :Course_requirements, course_time = :Course_time, course_link = :Course_link, course_audience = :Course_audience, course_learnings = :Course_learnings, course_knowledge_level = :Course_knowledge_level, course_message = :Course_message, id_category = :Id_category WHERE id_course = :Id_course", cs);
+            conncetion.Execute(@"
+UPDATE courses 
+SET course_name = :Course_name,
+course_subtitle = :Course_subtitle,
+course_people_amt = :Course_people_amt, 
+course_rating = :Course_rating,
+course_language = :Course_language,
+course_creation_date = :Course_creation_date,
+course_description = :Course_description,
+course_requirements = :Course_requirements,
+course_time = :Course_time,
+course_link = :Course_link,
+course_audience = :Course_audience,
+course_learnings = :Course_learnings,
+course_knowledge_level = ?Course_knowledge_level,
+course_message = ?Course_message,
+id_category = ?Id_category
+WHERE id_course = ?Id_course", cs);
 
             return "Curso alterado com sucesso!";
         }
 
         [HttpDelete("{id_course}")]
-
         public string DeleteCourses(int id_course)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_course);
+            int count = Contabilizar(id_course);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM courses WHERE id_course = " + id_course);
+                connection.Execute($@"DELETE FROM courses WHERE id_course = {id_course}");
                 return "Curso removido com sucesso!";
             }
             else
@@ -117,13 +120,12 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private int contabilizar(int id)
+        private static int Contabilizar(int id)
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM courses WHERE id_course = " + id);
+            return connection.ExecuteScalar<int>($@"SELECT COUNT(*) FROM courses WHERE id_course = {id}");
         }
     }
 }

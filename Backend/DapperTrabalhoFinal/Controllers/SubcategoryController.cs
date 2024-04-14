@@ -5,62 +5,61 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DapperTrabalhoFinal.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class SubcategoryController
     {
-
         [HttpGet]
-
         public IEnumerable<Subcategory> ListSubcategories()
         {
             Connection c = new Connection();
-
             using var connection = c.RealizarConexao();
 
             return connection.Query<Subcategory>("SELECT * FROM subcategories").ToList();
-        }                                                                                                                                                                                                                                                                                   
+        }
 
         [HttpPost]
-
-        public string RegisterSubcategories([FromBody] Subcategory sb)
+        public string RegisterSubcategories([FromBody] Subcategory subCategory)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            connection.Execute(@"INSERT INTO subcategories (subcategory_name, id_category) VALUES (:Subcategory_name, :Id_category)", sb);
+            connection.Execute(@"
+INSERT INTO subcategories 
+            (subcategory_name, 
+            id_category) 
+     VALUES (?Subcategory_name, 
+            ?Id_category)", subCategory);
 
             return "Cadastro efetuado com sucesso!";
         }
 
         [HttpPut]
-
-        public string UpdateSubcategories([FromBody] Subcategory sb)
-        {       
+        public string UpdateSubcategories([FromBody] Subcategory subCategory)
+        {
             Connection c = new();
-
             using var conncetion = c.RealizarConexao();
 
-            conncetion.Execute(@"UPDATE subcategories SET subcategory_name = :Subcategory_name, id_category = :Id_category WHERE id_subcategory = :Id_subcategory", sb);
+            conncetion.Execute(@"
+UPDATE subcategories 
+   SET subcategory_name = ?Subcategory_name, 
+       id_category = ?Id_category 
+ WHERE id_subcategory = ?Id_subcategory", subCategory);
 
             return "Subcategoria alterada com sucesso!";
         }
 
         [HttpDelete("{id_subcategory}")]
-
         public string DeleteSubcategories(int id_subcategory)
         {
             Connection c = new();
-
             using var connection = c.RealizarConexao();
 
-            int count = contabilizar(id_subcategory);
+            int count = Contabilizar(id_subcategory);
 
             if (count > 0)
             {
-                connection.Execute(@"DELETE FROM subcategories WHERE id_subcategory = " + id_subcategory);
+                connection.Execute($@"DELETE FROM subcategories WHERE id_subcategory = {id_subcategory}");
                 return "Subcategoria removida com sucesso!";
             }
             else
@@ -69,13 +68,12 @@ namespace DapperTrabalhoFinal.Controllers
             }
         }
 
-        private int contabilizar(int id)
+        private static int Contabilizar(int id)
         {
-            Connection c = new Connection();
-
+            Connection c = new();
             using var connection = c.RealizarConexao();
 
-            return connection.ExecuteScalar<int>(@"SELECT COUNT(*) FROM subcategories WHERE id_subcategory = " + id);
+            return connection.ExecuteScalar<int>($@"SELECT COUNT(*) FROM subcategories WHERE id_subcategory = {id}");
         }
     }
 }
