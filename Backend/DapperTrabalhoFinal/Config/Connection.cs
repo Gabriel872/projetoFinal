@@ -7,10 +7,10 @@ namespace DapperTrabalhoFinal.Config
         public OracleConnection RealizarConexao()
         {
             string StringConexao = "DATA SOURCE = (DESCRIPTION ="
-                + "(ADDRESS = (PROTOCOL = TCP)(HOST=192.168.15.18)(PORT=1521))"
+                + "(ADDRESS = (PROTOCOL = TCP)(HOST=127.0.0.1)(PORT=3036))"
                 + "(CONNECT_DATA =(SERVER = DEDICATED)"
-                + "(SERVICE_NAME = TREINAMENTO))));"
-                + "User Id=aluno04;Password=aluno04;";
+                + "(SERVICE_NAME = TESTE))));"
+                + "User Id=teste;Password=teste;";
 
             return new OracleConnection(StringConexao);
         }
